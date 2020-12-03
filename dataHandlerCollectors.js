@@ -219,7 +219,13 @@ Data.prototype.getPlacements = function(roomId){
   }
   else return {};
 }
-
+Data.prototype.getSkillsOnSale = function(roomId){
+  let room = this.rooms[roomId];
+  if (typeof room !== 'undefined') {
+    return room.skillsOnSale;
+  }
+  else return [];
+}
 Data.prototype.getItemsOnSale = function(roomId){
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
