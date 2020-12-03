@@ -22,6 +22,7 @@
         <CollectorsCard
           v-for="(card, index) in skillsOnSale"
           :card="card"
+          :availableAction="card.available"
           :key="index"
         />
       </div>
@@ -68,6 +69,12 @@
         />
       </p>
     </footer>
+    
+    <CollectorsPlayerBoard
+    v-if="players[playerId]"
+        :player="players[playerId]"
+        />
+    <CollectorsBottle/>
     <CollectorsGameBoard/>
   </div>
 </template>
@@ -78,6 +85,8 @@
 import CollectorsCard from "@/components/CollectorsCard.vue";
 import CollectorsBuyActions from "@/components/CollectorsBuyActions.vue";
 import CollectorsGameBoard from "@/components/CollectorsGameBoard.vue";
+import CollectorsPlayerBoard from "@/components/CollectorsPlayerBoard.vue";
+import CollectorsBottle from "@/components/CollectorsBottle.vue";
 
 export default {
   name: "Collectors",
@@ -85,6 +94,8 @@ export default {
     CollectorsCard,
     CollectorsBuyActions,
     CollectorsGameBoard,
+    CollectorsPlayerBoard,
+    CollectorsBottle
   },
   data: function () {
     return {
