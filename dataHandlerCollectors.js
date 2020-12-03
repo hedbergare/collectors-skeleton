@@ -243,14 +243,6 @@ Data.prototype.getMarketValues = function(roomId){
   else return [];
 }
 
-Data.prototype.getSkillsOnSale = function(roomId){
-  let room = this.rooms[roomId];
-  if (typeof room !== 'undefined') {
-    return room.skillsOnSale;
-  }
-  else return [];
-}
-
 Data.prototype.getAuctionCards = function(roomId){
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
