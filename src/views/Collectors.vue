@@ -69,15 +69,12 @@
         />
       </p>
     </footer>
-<<<<<<< HEAD
     <CollectorsGameBoard/>
-=======
     <CollectorsPlayerBoard
     v-if="players[playerId]"
         :player="players[playerId]"
         />
     <CollectorsBottle/>
->>>>>>> 1b556ead286a18105fd303bdb528152988e15e54
   </div>
 </template>
 
@@ -86,24 +83,18 @@
 
 import CollectorsCard from "@/components/CollectorsCard.vue";
 import CollectorsBuyActions from "@/components/CollectorsBuyActions.vue";
-<<<<<<< HEAD
 import CollectorsGameBoard from "@/components/CollectorsGameBoard.vue";
-=======
 import CollectorsPlayerBoard from "@/components/CollectorsPlayerBoard.vue";
 import CollectorsBottle from "@/components/CollectorsBottle.vue";
 
->>>>>>> 1b556ead286a18105fd303bdb528152988e15e54
 export default {
   name: "Collectors",
   components: {
     CollectorsCard,
     CollectorsBuyActions,
-<<<<<<< HEAD
     CollectorsGameBoard,
-=======
     CollectorsPlayerBoard,
     CollectorsBottle
->>>>>>> 1b556ead286a18105fd303bdb528152988e15e54
   },
   data: function () {
     return {
