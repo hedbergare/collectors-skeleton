@@ -69,12 +69,13 @@
         />
       </p>
     </footer>
-    <CollectorsGameBoard/>
+    
     <CollectorsPlayerBoard
     v-if="players[playerId]"
         :player="players[playerId]"
         />
     <CollectorsBottle/>
+    <CollectorsGameBoard/>
   </div>
 </template>
 
