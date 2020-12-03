@@ -68,6 +68,7 @@
         />
       </p>
     </footer>
+    <CollectorsGameBoard/>
   </div>
 </template>
 
@@ -76,12 +77,13 @@
 
 import CollectorsCard from "@/components/CollectorsCard.vue";
 import CollectorsBuyActions from "@/components/CollectorsBuyActions.vue";
-
+import CollectorsGameBoard from "@/components/CollectorsGameBoard.vue";
 export default {
   name: "Collectors",
   components: {
     CollectorsCard,
     CollectorsBuyActions,
+    CollectorsGameBoard,
   },
   data: function () {
     return {
