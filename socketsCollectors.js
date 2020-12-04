@@ -23,6 +23,7 @@ function sockets(io, socket, data) {
       );
     });
     socket.on('collectorsBuyCard', function(d) {
+      console.log("3. collectorsBuyCard i socketsCollectors")
       data.buyCard(d.roomId, d.playerId, d.card, d.cost)
       io.to(d.roomId).emit('collectorsCardBought', { 
           playerId: d.playerId,
