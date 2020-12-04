@@ -111,7 +111,10 @@
           />
         </div>
         <div id="auctionBox2">
-          <img id="auctionBottle2" src="/images/auctionPic/auctionBottle2.png"/>
+          <img
+            id="auctionBottle2"
+            src="/images/auctionPic/auctionBottle2.png"
+          />
         </div>
       </div>
       <div id="auction2Boxes2">
@@ -184,6 +187,18 @@
         <img id="imageTeknik" src="/images/marketPic/image_Tech.png" />
       </div>
     </div>
+    <div class="cardBox">
+      <!-- Här gör vi card box -->
+      <div id="cardBox1">
+        <img id="imageCard" src="/images/cardPic/imageCard.png" />
+      </div>
+    </div>
+    <div class="cardBoxTop">
+      <!-- Här gör vi card box Top -->
+      <div id="cardTop">
+        <img id="imageCard" src="/images/cardPic/imageCard.png" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -196,20 +211,20 @@
   color: black;
   width: 50%;
   height: 100vh;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 5vh 15vh 21vh 21vh 21vh 17vh;
   margin-bottom: 60px;
 }
 .itemBox {
   border: solid white;
-  grid-column: 1 / span 4;
-  grid-row: 1;
+  grid-column: 2 / span 4;
+  grid-row: 2;
   display: grid;
   grid-template-columns: auto auto auto auto auto;
-  grid-template-rows: 5vh 10vh;
+  grid-template-rows: 5vh 7.5vh;
   padding: 5px;
   text-align: center;
   max-width: 100%;
-  height: 15vh;
   background-color: rgb(247, 193, 230);
   color: white;
 }
@@ -218,30 +233,27 @@
   display: grid;
   text-align: center;
   grid-template-columns: auto auto;
-  grid-template-rows: 10vh 10vh 10vh 10vh 10vh 10vh;
+  grid-template-rows: 7vh 11vh 11vh 11vh 11vh 11vh;
   padding: 5px;
   box-align: center;
   max-width: 100%;
-  height: 60vh;
   background-color: rgb(127, 241, 127);
   color: white;
-  grid-column: 1;
-  grid-row: 2 / span 3;
+  grid-column: 2;
+  grid-row: 3 / span 3;
 }
 .workBox {
   border: solid white;
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 10vh 10vh 10vh 10vh 10vh 10vh;
+  grid-template-rows: 8vh 9vh 11vh 11vh 11vh 11vh;
   padding: 5px;
   max-width: 100%;
-  height: 60vh;
   background-color: rgb(243, 243, 125);
   opacity: 70%;
   color: white;
-  grid-column: 2;
-  grid-row: 2 / span 3;
-  grid-auto-rows: max-content;
+  grid-column: 3;
+  grid-row: 3 / span 3;
 }
 .auctionBox {
   border: solid white;
@@ -249,13 +261,12 @@
   padding: 5px;
   text-align: center;
   grid-template-columns: auto auto auto;
-  grid-template-rows: 20vh 20vh 20vh;
+  grid-template-rows: 22vh 22vh 22vh;
   background-color: rgb(245, 179, 104);
   color: white;
-  grid-column: 3 / span 4;
-  grid-row: 2 / span 3;
+  grid-column: 4 / span 2;
+  grid-row: 3 / span 3;
   max-width: 100%;
-  height: 60vh;
 }
 .marketBox {
   border: solid white;
@@ -263,15 +274,38 @@
   padding: 11px;
   text-align: center;
   grid-template-columns: auto auto auto auto auto;
-  grid-template-rows: 10vh 10vh;
+  grid-template-rows: 7vh 6vh;
   background-color: rgb(189, 189, 241);
   color: white;
-  grid-column: 1 / span 4;
-  grid-row: 5;
+  grid-column: 2 / span 4;
+  grid-row: 6;
   max-width: 100%;
-  height: 20vh;
 }
-
+.cardBox {
+  border: solid white;
+  display: grid;
+  grid-template-columns: auto;
+  max-width: 100%;
+  background-color: rgb(243, 243, 125);
+  opacity: 70%;
+  color: white;
+  grid-column: 1;
+  grid-row: 3 / span 3;
+  grid-auto-rows: max-content;
+}
+.cardBoxTop {
+  border: solid white;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 5vh;
+  max-width: 100%;
+  background-color: rgb(243, 243, 125);
+  opacity: 70%;
+  color: white;
+  grid-column: 2 / span 7;
+  grid-row: 1;
+  grid-auto-rows: max-content;
+}
 /* Flaskor till Item */
 #bottle1 {
   max-width: 50%;
@@ -746,5 +780,13 @@
   position: absolute;
   display: none;
   width: 90%;
+}
+#cardBox {
+  max-width: 100%;
+  max-height: 100%;
+}
+#cardBox {
+  max-width: 100%;
+  max-height: 100%;
 }
 </style>
