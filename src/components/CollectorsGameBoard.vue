@@ -102,35 +102,30 @@
     </div>
 
     <div class="auctionBox">
-      <div id="auctionBoxes">
-        <!-- Här gör vi auction box med flaskor -->
-        <div id="auction2Boxes1">
-          <div id="auctionBox1">
-            <img
-              id="auctionBottle1"
-              src="/images/auctionPic/auctionBottle1.png"
-            />
-          </div>
-          <div id="auctionBox2">
-            <img
-              id="auctionBottle2"
-              src="/images/auctionPic/auctionBottle2.png"
-            />
-          </div>
+      <!-- Här gör vi auction box med flaskor -->
+      <div id="auction2Boxes1">
+        <div id="auctionBox1">
+          <img
+            id="auctionBottle1"
+            src="/images/auctionPic/auctionBottle1.png"
+          />
         </div>
-        <div id="auction2Boxes2">
-          <div id="auctionBox3">
-            <img
-              id="auctionBottle3"
-              src="/images/auctionPic/auctionBottle3.png"
-            />
-          </div>
-          <div id="auctionBox4">
-            <img
-              id="auctionBottle4"
-              src="/images/auctionPic/auctionBottle3.png"
-            />
-          </div>
+        <div id="auctionBox2">
+          <img id="auctionBottle2" src="/images/auctionPic/auctionBottle2.png"/>
+        </div>
+      </div>
+      <div id="auction2Boxes2">
+        <div id="auctionBox3">
+          <img
+            id="auctionBottle3"
+            src="/images/auctionPic/auctionBottle3.png"
+          />
+        </div>
+        <div id="auctionBox4">
+          <img
+            id="auctionBottle4"
+            src="/images/auctionPic/auctionBottle3.png"
+          />
         </div>
       </div>
 
@@ -153,6 +148,9 @@
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
       </div>
+      <div id="auctionInfo">
+        <img id="auctionInfo1" src="/images/auctionPic/auction_Info.png" />
+      </div>
     </div>
 
     <div class="marketBox">
@@ -168,6 +166,7 @@
       </div>
       <div id="buyMarketBoxInfo">
         <img id="marketInfo" src="/images/marketPic/marketInfo.png" />
+        <img id="testhover" src="/images/marketPic/marketBottle1.png" />
       </div>
       <div id="MarketArrow1">
         <img id="imagePingvin" src="/images/marketPic/image_Penguin.png" />
@@ -191,92 +190,88 @@
 <style scoped>
 /* Main boxes */
 .wrapper {
-  margin-right: 20px;
+  margin: auto;
   display: grid;
-  grid-gap: 5px;
   background-color: white;
   color: black;
   width: 50%;
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin-bottom: 60px;
 }
 .itemBox {
+  border: solid white;
   grid-column: 1 / span 4;
   grid-row: 1;
-
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: auto auto auto auto auto;
+  grid-template-rows: 5vh 10vh;
   padding: 5px;
-  grid-gap: 7px;
   text-align: center;
   max-width: 100%;
-
+  height: 15vh;
   background-color: rgb(247, 193, 230);
   color: white;
 }
 .skillBox {
+  border: solid white;
   display: grid;
   text-align: center;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 7px;
+  grid-template-columns: auto auto;
+  grid-template-rows: 10vh 10vh 10vh 10vh 10vh 10vh;
   padding: 5px;
   box-align: center;
   max-width: 100%;
-
+  height: 60vh;
   background-color: rgb(127, 241, 127);
   color: white;
   grid-column: 1;
   grid-row: 2 / span 3;
 }
 .workBox {
+  border: solid white;
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-gap: 7px;
+  grid-template-columns: auto;
+  grid-template-rows: 10vh 10vh 10vh 10vh 10vh 10vh;
   padding: 5px;
   max-width: 100%;
+  height: 60vh;
   background-color: rgb(243, 243, 125);
   opacity: 70%;
   color: white;
   grid-column: 2;
   grid-row: 2 / span 3;
+  grid-auto-rows: max-content;
 }
 .auctionBox {
+  border: solid white;
   display: grid;
   padding: 5px;
-  grid-gap: 7px;
   text-align: center;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 20vh 20vh 20vh;
   background-color: rgb(245, 179, 104);
   color: white;
   grid-column: 3 / span 4;
   grid-row: 2 / span 3;
   max-width: 100%;
-}
-.auctionBoxes {
-  display: grid;
-  text-align: center;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
-  background-color: rgb(245, 179, 104);
-  color: white;
-  grid-column: 1;
-  grid-row: 1 / span 2;
-  max-width: 100%;
+  height: 60vh;
 }
 .marketBox {
+  border: solid white;
   display: grid;
-  padding: 5px;
-  grid-gap: 7px;
+  padding: 11px;
   text-align: center;
-
-  grid-template-columns: 1fr 1fr 1fr 1fr 1ft;
+  grid-template-columns: auto auto auto auto auto;
+  grid-template-rows: 10vh 10vh;
   background-color: rgb(189, 189, 241);
   color: white;
   grid-column: 1 / span 4;
   grid-row: 5;
   max-width: 100%;
+  height: 20vh;
 }
+
 /* Flaskor till Item */
 #bottle1 {
   max-width: 50%;
@@ -299,6 +294,7 @@
   grid-column: 1;
   grid-row: 2;
   max-width: 100%;
+  max-height: 10vh;
 }
 
 #buyItemBox2 {
@@ -325,6 +321,7 @@
   grid-column: 5;
   grid-row: 2;
   max-width: 100%;
+  max-height: 100%;
 }
 #buyItemBoxInfo {
   color: black;
@@ -340,6 +337,7 @@
 #buyItemBox5 img,
 #buyItemBoxInfo img {
   max-width: 100%;
+  max-height: 100%;
 }
 /* Pilar till Item */
 #itemArrow1 {
@@ -374,25 +372,32 @@
 #itemArrow4 img,
 #itemArrow5 img {
   max-width: 100%;
+  max-height: 100%;
 }
 
 #skillButton {
   max-width: 100%;
+  max-height: 100%;
 }
 #skillBottle1 {
   max-width: 100%;
+  max-height: 100%;
 }
 #skillBottle2 {
   max-width: 100%;
+  max-height: 100%;
 }
 #skillBottle3 {
   max-width: 100%;
+  max-height: 100%;
 }
 #skillBottle4 {
   max-width: 100%;
+  max-height: 100%;
 }
 #skillBottle5 {
   max-width: 100%;
+  max-height: 100%;
 }
 
 /* Small boxes in SkillBox */
@@ -483,42 +488,43 @@
 /* Small boxes in WorkBox */
 #buyWorkInfo {
   text-align: center;
-  border: dashed;
+  border: dashed 1px;
   color: black;
   grid-row: 1;
   max-width: 100%;
+  max-height: 100%;
 }
 #buyWorkBox1 {
   text-align: center;
-  border: dashed;
+  border: dashed 1px;
   color: black;
   grid-row: 2;
   max-width: 100%;
 }
 #buyWorkBox2 {
   text-align: center;
-  border: dashed;
+  border: dashed 1px;
   color: black;
   grid-row: 3;
   max-width: 100%;
 }
 #buyWorkBox3 {
   text-align: center;
-  border: dashed;
+  border: dashed 1px;
   color: black;
   grid-row: 4;
   max-width: 100%;
 }
 #buyWorkBox4 {
   text-align: center;
-  border: dashed;
+  border: dashed 1px;
   color: black;
   grid-row: 5;
   max-width: 100%;
 }
 #buyWorkBox5 {
   text-align: center;
-  border: dashed;
+  border: dashed 1px;
   color: black;
   grid-row: 6;
   max-width: 100%;
@@ -531,50 +537,66 @@
 #buyWorkBox4 img,
 #buyWorkBox5 img {
   max-width: 100%;
+  max-height: 100%;
 }
 
 /* Small boxes in auctionBox */
 #auction2Boxes1 {
+  grid-template-columns: auto;
+  grid-template-rows: 10vh 10vh;
   display: grid;
-  grid-gap: 5px;
   grid-column: 1;
   grid-row: 1;
   max-width: 50%;
+  max-height: 100%;
 }
 #auctionBox1 {
   grid-column: 1;
   grid-row: 1;
   max-width: 100%;
+  max-height: 100%;
 }
 #auctionBox2 {
   grid-column: 1;
   grid-row: 2;
   max-width: 100%;
+  max-height: 100%;
 }
 #auctionBox1 img,
 #auctionBox2 img {
   max-width: 100%;
+  max-height: 100%;
 }
-#auctionBoxes2 {
+#auction2Boxes2 {
+  grid-template-columns: auto;
+  grid-template-rows: 10vh 10vh;
   display: grid;
-  grid-gap: 5px;
+  text-align: center;
   grid-column: 1;
   grid-row: 2;
   max-width: 50%;
+  max-height: 100%;
 }
 #auctionBox3 {
   grid-column: 1;
-  grid-row: 3;
+  grid-row: 1;
   max-width: 100%;
+  max-height: 100%;
 }
 #auctionBox4 {
   grid-column: 1;
-  grid-row: 4;
+  grid-row: 2;
   max-width: 100%;
+  max-height: 100%;
 }
 #auctionBox3 img,
 #auctionBox4 img {
   max-width: 100%;
+  max-height: 100%;
+}
+#startAuction img {
+  max-height: 50%;
+  max-width: 50%;
 }
 
 /* Pilar i auctionbox */
@@ -582,31 +604,48 @@
   grid-column: 2;
   grid-row: 1;
   max-width: 100%;
+  max-height: 100%;
 }
 #auctionArrow2 {
   grid-column: 3;
   grid-row: 1;
   max-width: 100%;
+  max-height: 100%;
 }
 #auctionArrow3 {
   grid-column: 3;
   grid-row: 2;
   max-width: 100%;
+  max-height: 100%;
 }
 #auctionArrow4 {
   grid-column: 1;
   grid-row: 3;
   max-width: 100%;
+  max-height: 100%;
 }
 #auctionArrow5 {
   grid-column: 2;
   grid-row: 3;
   max-width: 100%;
+  max-height: 100%;
 }
 #auctionArrow6 {
   grid-column: 3;
   grid-row: 3;
   max-width: 100%;
+  max-height: 100%;
+}
+#auctionInfo {
+  grid-column: 2;
+  grid-row: 2;
+  max-width: 100%;
+  max-height: 100%;
+}
+#auctionInfo1 {
+  max-width: 100%;
+  max-height: 100%;
+  text-align: center;
 }
 
 #auctionArrow1 img,
@@ -616,6 +655,7 @@
 #auctionArrow5 img,
 #auctionArrow6 img {
   max-width: 100%;
+  max-height: 100%;
 }
 
 /* Small boxes in MarketBox */
@@ -664,30 +704,47 @@
 /* Bilder till Market Value */
 
 #marketBottle1 {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 100%;
 }
 #marketBottle2 {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 100%;
 }
 #marketBottle3 {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 100%;
 }
 #marketInfo {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 100%;
 }
 #imagePingvin {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 100%;
 }
 #imageRobot {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 100%;
 }
 #imageMusik {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 100%;
 }
 #imageFilm {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 100%;
 }
 #imageTeknik {
-  max-width: 50%;
+  max-width: 100%;
+  max-height: 100%;
+}
+#marketInfo:hover + #testhover {
+  display: inline-block;
+}
+#testhover {
+  position: absolute;
+  display: none;
+  width: 90%;
 }
 </style>
