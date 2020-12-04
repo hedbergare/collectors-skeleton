@@ -100,6 +100,8 @@ Data.prototype.joinGame = function (roomId, playerId) {
       return true;
     }
     else if (Object.keys(room.players).length < room.playerCount) {
+      //Här har jag lagt till färger till varje spelare i en lista
+      let colors = ["rgb(125, 38, 125, 0.4)", "rgb(19, 186, 170, 0.4)", "rgb(193, 151, 105, 0.4)", "rgb(69, 72, 73, 0.4)"];
       console.log("Player", playerId, "joined for the first time");
       room.players[playerId] = { hand: [], 
                                  money: 1,
@@ -107,7 +109,9 @@ Data.prototype.joinGame = function (roomId, playerId) {
                                  skills: [],
                                  items: [],
                                  income: [],
-                                 secret: [] };
+                                 secret: [],
+                                 color: colors[Object.keys(room.players).length], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
+                                 pId: playerId};
       return true;
     }
     console.log("Player", playerId, "was declined due to player limit");

@@ -24,7 +24,11 @@ function sockets(io, socket, data) {
     });
 
     socket.on('collectorsBuyCard', function(d) {
+<<<<<<< HEAD
       console.log("Eller hit 2")
+=======
+      console.log("3. collectorsBuyCard i socketsCollectors")
+>>>>>>> 624f227de41bb8583fd8c4461fb04d1bcfee78de
       data.buyCard(d.roomId, d.playerId, d.card, d.cost)
       io.to(d.roomId).emit('collectorsCardBought', { 
           playerId: d.playerId,

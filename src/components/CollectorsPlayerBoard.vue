@@ -1,5 +1,5 @@
 <template>
-  <div id="wrapper">
+  <div id="wrapper" :style="'background-color:' + player.color"><!-- Här läggs det in vilken färg man "är" -->
     <div id="topRow">
       <div id="wallet">
         <div id="money">
@@ -56,10 +56,13 @@
           <div id="cardsImage">
             <img src="images/player_board/card_hand.png" />
           </div>
-          <div v-for="(card, index) in player.items" :key="index">
-            <CollectorsCard 
-            :card="card" 
-            :availableAction="card.available" 
+          <!-- Ingen annan än en själv får se korten på handen -->
+          <div class="handPopup" v-if="playerId == player.pId">
+            <CollectorsCard
+              v-for="(card, index) in player.hand"
+              :key="index"
+              :card="card"
+              :availableAction="card.available"
             />
           </div>
         </div>
@@ -96,6 +99,11 @@ export default {
   props: {
     player: Object,
   },
+  computed: {
+    playerId: function () {
+      return this.$store.state.playerId;
+    },
+  }
 };
 </script>
 <style scoped>
@@ -103,7 +111,6 @@ export default {
   width: 40%;
   display: grid;
   border: 3px solid black;
-  background-color: rgb(125, 38, 125, 0.4);
   position: relative;
 }
 
@@ -194,7 +201,28 @@ export default {
   display: grid;
   grid-template-rows: 5fr 1fr;
 }
-
+.handPopup > *{
+  position:relative;
+  transform:scale(0.5);
+  top:0;
+  left:0;
+  
+}
+#cardsImage:hover + .handPopup{
+  display:grid;
+  position:absolute;
+  top:0;
+  left:0;
+}
+.handPopup {
+  display:none;
+  position:absolute;
+  grid-template-columns: repeat(auto-fill, 130px);
+  grid-template-rows: repeat(auto-fill, 180px);
+  top:0;
+  left:0;
+  width:100%;
+}
 #items {
   display: grid;
   grid-template-columns: 5fr 1fr;
