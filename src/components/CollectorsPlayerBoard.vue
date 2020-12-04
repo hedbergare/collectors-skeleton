@@ -5,14 +5,14 @@
         <div id="money">
           <div class="helper_wrapper">
             <span class="helper"></span>
-            <img src="images/current_money.png" />
+            <img src="images/player_board/current_money.png" />
           </div>
           <p>{{ player.money }}</p>
         </div>
         <div id="income">
           <div>
             <span class="helper"></span>
-            <img src="images/passive_income.png" />
+            <img src="images/player_board/passive_income.png" />
           </div>
           <p>5</p>
         </div>
@@ -20,35 +20,33 @@
     </div>
     <div id="midRow">
       <div class="box">
-        <img class="x bottle" src="images/bottle.JPG" />
+        <img class="x bottle" src="images/player_board/bottle.JPG" />
       </div>
       <div class="box">
-        <img class="x bottle" src="images/bottle.JPG" />
+        <img class="x bottle" src="images/player_board/bottle.JPG" />
       </div>
       <div class="box">
-        <img class="x addCard" src="images/add_card.JPG" />
+        <img class="x addCard" src="images/player_board/add_card.JPG" />
       </div>
       <div class="box">
-        <img class="x oneDollar" src="images/1_dollar.JPG" />
+        <img class="x oneDollar" src="images/player_board/1_dollar.JPG" />
       </div>
       <div class="box">
-        <img class="x twoDollar" src="images/2_dollar.JPG" />
+        <img class="x twoDollar" src="images/player_board/2_dollar.JPG" />
       </div>
     </div>
     <div id="bottomRow">
       <div id="skills">
         <div id="skillsImage">
           <span class="helper"></span>
-          <img id="skillsButton" src="images/skills_clear.png" />
-          <img id="skillsInfo" src="images/skills_info.PNG" />
+          <img id="skillsButton" src="images/player_board/skills_clear.png" />
+          <img id="skillsInfo" src="images/player_board/skills_info.PNG" />
         </div>
         <div id="skillsRefill">
-          hej
-          {{ player.skills }}
           <div v-for="(card, index) in player.skills" :key="index">
             <img
               class="skillsIcons"
-              :src="'images/skill_logos/' + card.skill + '_item.png'"
+              :src="'images/skill_logos/' + card.skill + '_skill.png'"
             />
           </div>
         </div>
@@ -56,7 +54,7 @@
       <div id="hand">
         <div id="cards">
           <div id="cardsImage">
-            <img src="images/card_hand.png" />
+            <img src="images/player_board/card_hand.png" />
           </div>
           <div v-for="(card, index) in player.items" :key="index">
             <CollectorsCard 
@@ -66,7 +64,7 @@
           </div>
         </div>
         <div id="secret">
-          <img src="images/treasure.PNG" />
+          <img src="images/player_board/treasure.PNG" />
         </div>
       </div>
       <div id="items">
@@ -80,18 +78,19 @@
         </div>
         <div id="itemsImage">
           <span class="helper"></span>
-          <img src="images/item_button_clean.png" />
+          <img src="images/player_board/item_button_clean.png" />
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import CollectorsCard from "@/components/CollectorsCard.vue";
 
 export default {
   name: "CollectorsPlayerBoard",
-  component: {
+  components: {
     CollectorsCard,
   },
   props: {
@@ -206,9 +205,21 @@ export default {
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+
+#skillsRefill {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
 .itemIcons {
   max-width: 100%;
 }
+
+.skillsIcons {
+  max-width: 100%;
+}
+
 #itemsImage img {
   max-width: 100%;
 }

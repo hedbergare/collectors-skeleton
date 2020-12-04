@@ -12,11 +12,25 @@
         @buyCard="buyCard($event)"
         @placeBottle="placeBottle('buy', $event)"
       />
+
+      <CollectorsBuySkills
+        v-if="players[playerId]"
+        :labels="labels"
+        :player="players[playerId]"
+        :skillsOnSale="skillsOnSale"
+        :marketValues="marketValues"
+        :placement="skillPlacement"
+        @buySkill="buySkill($event)"
+        @placeBottle="placeBottle('skill', $event)"
+      />
+
       <div class="buttons">
+        Draw a card here
         <button @click="drawCard">
           {{ labels.draw }}
         </button>
       </div>
+      
       Skills
       <div class="cardslots">
         <CollectorsCard
@@ -26,6 +40,7 @@
           :key="index"
         />
       </div>
+
       Auction
       <div class="cardslots">
         <CollectorsCard
@@ -34,6 +49,7 @@
           :key="index"
         />
       </div>
+
       Hand
       <div class="cardslots" v-if="players[playerId]">
         <CollectorsCard
@@ -69,13 +85,14 @@
         />
       </p>
     </footer>
-    
+
     <CollectorsPlayerBoard
-    v-if="players[playerId]"
-        :player="players[playerId]"
-        />
-    <CollectorsBottle/>
-    <CollectorsGameBoard/>
+      v-if="players[playerId]"
+      :player="players[playerId]"
+    />
+    <CollectorsBottle />
+    <CollectorsGameBoard />
+    <CollectorsInfoBoard/>
   </div>
 </template>
 
@@ -87,15 +104,19 @@ import CollectorsBuyActions from "@/components/CollectorsBuyActions.vue";
 import CollectorsGameBoard from "@/components/CollectorsGameBoard.vue";
 import CollectorsPlayerBoard from "@/components/CollectorsPlayerBoard.vue";
 import CollectorsBottle from "@/components/CollectorsBottle.vue";
+import CollectorsBuySkills from "@/components/CollectorsBuySkills.vue";
+import CollectorsInfoBoard from "@/components/CollectorsInfoBoard.vue";
 
 export default {
   name: "Collectors",
   components: {
     CollectorsCard,
     CollectorsBuyActions,
+    CollectorsBuySkills,
     CollectorsGameBoard,
     CollectorsPlayerBoard,
-    CollectorsBottle
+    CollectorsBottle,
+    CollectorsInfoBoard,
   },
   data: function () {
     return {
@@ -208,12 +229,23 @@ export default {
         this.itemsOnSale = d.itemsOnSale;
       }.bind(this)
     );
+
+    this.$store.state.socket.on(
+      "collectorsSkillBought",
+      function (d) {
+        console.log(d.playerId, "bought a skill");
+        this.players = d.players;
+        this.skillsOnSale = d.skillsOnSale;
+      }.bind(this)
+    );
   },
+
   methods: {
     selectAll: function (n) {
       n.target.select();
     },
     placeBottle: function (action, cost) {
+      console.log("Placebottle i collectors.vue");
       this.chosenPlacementCost = cost;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
@@ -229,8 +261,18 @@ export default {
       });
     },
     buyCard: function (card) {
+      console.log("Här tar vi vägen 1")
       console.log("buyCard", card);
       this.$store.state.socket.emit("collectorsBuyCard", {
+        roomId: this.$route.params.id,
+        playerId: this.playerId,
+        card: card,
+        cost: this.marketValues[card.market] + this.chosenPlacementCost,
+      });
+    },
+    buySkill: function (card) {
+      console.log("buySkill", card);
+      this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,

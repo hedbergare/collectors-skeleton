@@ -22,12 +22,24 @@ function sockets(io, socket, data) {
         data.drawCard(d.roomId, d.playerId)
       );
     });
+
     socket.on('collectorsBuyCard', function(d) {
+      console.log("Eller hit 2")
       data.buyCard(d.roomId, d.playerId, d.card, d.cost)
       io.to(d.roomId).emit('collectorsCardBought', { 
           playerId: d.playerId,
           players: data.getPlayers(d.roomId),
           itemsOnSale: data.getItemsOnSale(d.roomId) 
+        }
+      );
+    });
+
+    socket.on('collectorsBuySkills', function(d) {
+      data.buySkill(d.roomId, d.playerId, d.card, d.cost)
+      io.to(d.roomId).emit('collectorsSkillBought', { 
+          playerId: d.playerId,
+          players: data.getPlayers(d.roomId),
+          skillsOnSale: data.getSkillsOnSale(d.roomId) 
         }
       );
     });
