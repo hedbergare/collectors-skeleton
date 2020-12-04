@@ -111,10 +111,7 @@
           />
         </div>
         <div id="auctionBox2">
-          <img
-            id="auctionBottle2"
-            src="/images/auctionPic/auctionBottle2.png"
-          />
+          <img id="auctionBottle2" src="/images/auctionPic/auctionBottle2.png"/>
         </div>
       </div>
       <div id="auction2Boxes2">
