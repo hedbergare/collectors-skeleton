@@ -43,7 +43,6 @@
     </div>
 
     <div class="skillBox">
-      
       <!-- Här gör vi skill box med köprutor -->
       <div id="buySkillBox1">
         <img id="skillBottle1" src="/images/buySkillPic/skill_Bottle1.png" />
@@ -190,19 +189,25 @@
     </div>
 
     <!-- Här gör vi card box Left -->
-    
+
     <div class="cardBoxLeft">
+      <div></div>
       <div
         class="skillsOnSaleIconCont"
         v-for="(card, index) in skillsOnSale"
         :key="index"
+        @click="buySkill(card)"
       >
         <div class="skillsOnSaleCont" v-if="card.skill !== undefined">
           <img
             class="skillsOnSaleIcon"
             :src="'images/skill_logos/' + card.skill + '_skill.png'"
           />
-          <CollectorsCard :card="skillsOnSale[index]" id="skillsOnSalePic" />
+          <CollectorsCard
+            :card="skillsOnSale[index]"
+            :availableAction="card.available"
+            id="skillsOnSalePic"
+          />
         </div>
       </div>
     </div>
@@ -213,18 +218,22 @@
         class="itemsOnSaleIconCont"
         v-for="(card, index) in itemsOnSale"
         :key="index"
+        @click="buyCard(card)"
       >
         <div class="itemsOnSaleIconCont1" v-if="card.item !== undefined">
           <img
             class="itemsOnSaleIcon"
             :src="'images/item_logos/' + card.item + '_item.png'"
           />
-          <CollectorsCard :card="itemsOnSale[index]" id="itemsOnSalePic" />
+          <CollectorsCard
+            :card="itemsOnSale[index]"
+            :availableAction="card.available"
+            id="itemsOnSalePic"
+          />
         </div>
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
@@ -236,8 +245,27 @@ export default {
     CollectorsCard,
   },
   props: {
-    itemsOnSale: Array,
+    labels: Object,
+    player: Object,
     skillsOnSale: Array,
+    itemsOnSale: Array,
+    marketValues: Object,
+    placement: Array,
+  },
+  methods: {
+    buySkill: function (card) {
+      if (card.available) {
+        console.log(card.available);
+        this.$emit("buySkill", card);
+        console.log("hej 1");
+      }
+    },
+    buyCard: function (card) {
+      if (card.available) {
+        console.log(card.available);
+        this.$emit("buyCard", card);
+      }
+    },
   },
 };
 </script>

@@ -130,6 +130,8 @@
       v-if="itemsOnSale"
       :itemsOnSale="itemsOnSale"
       :skillsOnSale="skillsOnSale"
+      @buyCard="buyCard($event)"
+      @buySkill="buySkill($event)"
     />
     <CollectorsInfoBoard />
   </div>
@@ -264,7 +266,7 @@ export default {
     this.$store.state.socket.on(
       "collectorsCardBought",
       function (d) {
-        console.log("sista som händer", d.playerId, "bought a card");
+        console.log( d.playerId, "bought a card");
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
       }.bind(this)
@@ -329,12 +331,14 @@ export default {
     },
     buySkill: function (card) {
       console.log("buySkill", card);
+      console.log("hej 2");
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
+      console.log("hej");
     },
   },
 };
