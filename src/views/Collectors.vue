@@ -98,7 +98,10 @@
       
     </div>
     <CollectorsBottle/>
-    <CollectorsGameBoard/>
+    <CollectorsGameBoard
+    v-if="itemsOnSale"
+    :itemsOnSale="itemsOnSale"
+    :skillsOnSale="skillsOnSale"/>
     <CollectorsInfoBoard/>
     
   </div>

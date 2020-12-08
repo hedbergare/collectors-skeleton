@@ -43,6 +43,7 @@
     </div>
 
     <div class="skillBox">
+      
       <!-- Här gör vi skill box med köprutor -->
       <div id="buySkillBox1">
         <img id="skillBottle1" src="/images/buySkillPic/skill_Bottle1.png" />
@@ -187,23 +188,64 @@
         <img id="imageTeknik" src="/images/marketPic/image_Tech.png" />
       </div>
     </div>
-    <div class="cardBox">
-      <!-- Här gör vi card box -->
-      <div id="cardBox1">
-        <img id="imageCard" src="/images/cardPic/imageCard.png" />
+
+    <!-- Här gör vi card box Left -->
+    
+    <div class="cardBoxLeft">
+      <div
+        class="skillsOnSaleIconCont"
+        v-for="(card, index) in skillsOnSale"
+        :key="index"
+      >
+        <div class="skillsOnSaleCont" v-if="card.skill !== undefined">
+          <img
+            class="skillsOnSaleIcon"
+            :src="'images/skill_logos/' + card.skill + '_skill.png'"
+          />
+          <CollectorsCard :card="skillsOnSale[index]" id="skillsOnSalePic" />
+        </div>
       </div>
     </div>
+
+    <!-- Här gör vi card box Top -->
     <div class="cardBoxTop">
-      <!-- Här gör vi card box Top -->
-      <div id="cardTop">
-        <img id="imageCard" src="/images/cardPic/imageCard.png" />
+      <div
+        class="itemsOnSaleIconCont"
+        v-for="(card, index) in itemsOnSale"
+        :key="index"
+      >
+        <div class="itemsOnSaleIconCont1" v-if="card.item !== undefined">
+          <img
+            class="itemsOnSaleIcon"
+            :src="'images/item_logos/' + card.item + '_item.png'"
+          />
+          <CollectorsCard :card="itemsOnSale[index]" id="itemsOnSalePic" />
+        </div>
       </div>
     </div>
   </div>
+  
 </template>
+
+<script>
+import CollectorsCard from "@/components/CollectorsCard.vue";
+
+export default {
+  name: "CollectorsGameBoard",
+  components: {
+    CollectorsCard,
+  },
+  props: {
+    itemsOnSale: Array,
+    skillsOnSale: Array,
+  },
+};
+</script>
+
 
 <style scoped>
 /* Main boxes */
+
 .wrapper {
   margin: auto;
   display: grid;
@@ -250,7 +292,6 @@
   padding: 5px;
   max-width: 100%;
   background-color: rgb(243, 243, 125);
-  opacity: 70%;
   color: white;
   grid-column: 3;
   grid-row: 3 / span 3;
@@ -281,13 +322,12 @@
   grid-row: 6;
   max-width: 100%;
 }
-.cardBox {
+.cardBoxLeft {
   border: solid white;
   display: grid;
   grid-template-columns: auto;
+  grid-template-rows: 10vh 10vh 10vh 10vh 10vh 10vh;
   max-width: 100%;
-  background-color: rgb(243, 243, 125);
-  opacity: 70%;
   color: white;
   grid-column: 1;
   grid-row: 3 / span 3;
@@ -296,16 +336,27 @@
 .cardBoxTop {
   border: solid white;
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5vh;
   max-width: 100%;
-  background-color: rgb(243, 243, 125);
-  opacity: 70%;
   color: white;
   grid-column: 2 / span 7;
   grid-row: 1;
-  grid-auto-rows: max-content;
 }
+.itemsOnSaleIcon {
+  max-height: 6vh;
+  max-width: 100%;
+}
+.skillsOnSaleIcon {
+  max-height: 30vh;
+  max-width: 100%;
+}
+.itemsOnSaleIconCont1,
+.skillsOnSaleIconCont {
+  max-height: 100%;
+  text-align: center;
+}
+
 /* Flaskor till Item */
 #bottle1 {
   max-width: 50%;
@@ -737,42 +788,19 @@
 
 /* Bilder till Market Value */
 
+#imageTeknik,
+#imageFilm,
+#imageMusik,
+#imageRobot,
+#imagePingvin,
+#marketInfo,
+#marketBottle3,
+#marketBottle2,
 #marketBottle1 {
   max-width: 100%;
   max-height: 100%;
 }
-#marketBottle2 {
-  max-width: 100%;
-  max-height: 100%;
-}
-#marketBottle3 {
-  max-width: 100%;
-  max-height: 100%;
-}
-#marketInfo {
-  max-width: 100%;
-  max-height: 100%;
-}
-#imagePingvin {
-  max-width: 100%;
-  max-height: 100%;
-}
-#imageRobot {
-  max-width: 100%;
-  max-height: 100%;
-}
-#imageMusik {
-  max-width: 100%;
-  max-height: 100%;
-}
-#imageFilm {
-  max-width: 100%;
-  max-height: 100%;
-}
-#imageTeknik {
-  max-width: 100%;
-  max-height: 100%;
-}
+
 #marketInfo:hover + #testhover {
   display: inline-block;
 }
@@ -781,12 +809,24 @@
   display: none;
   width: 90%;
 }
-#cardBox {
-  max-width: 100%;
-  max-height: 100%;
+.itemsOnSaleIcon:hover + #itemsOnSalePic {
+  display: inline-block;
+  height: 43vh;
+  width: 30vh;
 }
-#cardBox {
-  max-width: 100%;
-  max-height: 100%;
+#itemsOnSalePic {
+  position: absolute;
+  display: none;
+  width: 90%;
+}
+.skillsOnSaleIcon:hover + #skillsOnSalePic {
+  display: inline-block;
+  height: 43vh;
+  width: 30vh;
+}
+#skillsOnSalePic {
+  position: absolute;
+  display: none;
+  width: 90%;
 }
 </style>
