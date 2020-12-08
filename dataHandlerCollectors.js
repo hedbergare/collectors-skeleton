@@ -112,6 +112,8 @@ Data.prototype.joinGame = function (roomId, playerId) {
                                  secret: [],
                                  color: colors[Object.keys(room.players).length], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
                                  pId: playerId};
+      //Här vill vi meddela till alla andra spelare att en ny spelare har joinat
+      
       return true;
     }
     console.log("Player", playerId, "was declined due to player limit");
