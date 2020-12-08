@@ -18,7 +18,6 @@
         :labels="labels"
         :player="players[playerId]"
         :skillsOnSale="skillsOnSale"
-        :marketValues="marketValues"
         :placement="skillPlacement"
         @buySkill="buySkill($event)"
         @placeBottle="placeBottle('skill', $event)"
@@ -127,14 +126,12 @@
       <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
     </div>
     <CollectorsBottle />
-    <CollectorsInfoBoard />
-    <CollectorsBottle/>
     <CollectorsGameBoard
-    v-if="itemsOnSale"
-    :itemsOnSale="itemsOnSale"
-    :skillsOnSale="skillsOnSale"/>
-    <CollectorsInfoBoard/>
-    
+      v-if="itemsOnSale"
+      :itemsOnSale="itemsOnSale"
+      :skillsOnSale="skillsOnSale"
+    />
+    <CollectorsInfoBoard />
   </div>
 </template>
 
@@ -307,6 +304,7 @@ export default {
     },
     placeBottle: function (action, cost) {
       console.log("Placebottle i collectors.vue");
+      console.log(cost);
       this.chosenPlacementCost = cost;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
