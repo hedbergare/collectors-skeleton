@@ -30,7 +30,7 @@
           {{ labels.draw }}
         </button>
       </div>
-      
+
       Skills
       <div class="cardslots">
         <CollectorsCard
@@ -87,23 +87,21 @@
     </footer>
 
     <CollectorsPlayerBoard
-    v-if="players[playerId]"
-        :player="players[playerId]"
-        />
+      v-if="players[playerId]"
+      :player="players[playerId]"
+    />
     <div v-for="(p, index) in players" :key="index">
-      <CollectorsPlayerBoard
-      v-if="p !== players[playerId]"
-      :player = p
-      />
-      
+      <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
     </div>
-    <CollectorsBottle/>
+    <CollectorsBottle />
     <CollectorsGameBoard
-    v-if="itemsOnSale"
-    :itemsOnSale="itemsOnSale"
-    :skillsOnSale="skillsOnSale"/>
-    <CollectorsInfoBoard/>
-    
+      v-if="itemsOnSale"
+      :itemsOnSale="itemsOnSale"
+      :skillsOnSale="skillsOnSale"
+      @buyCard="buyCard($event)"
+      @buySkill="buySkill($event)"
+    />
+    <CollectorsInfoBoard />
   </div>
 </template>
 
@@ -236,7 +234,7 @@ export default {
     this.$store.state.socket.on(
       "collectorsCardBought",
       function (d) {
-        console.log("sista som händer", d.playerId, "bought a card");
+        console.log( d.playerId, "bought a card");
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
       }.bind(this)
@@ -282,12 +280,14 @@ export default {
     },
     buySkill: function (card) {
       console.log("buySkill", card);
+      console.log("hej 2");
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
+      console.log("hej");
     },
   },
 };

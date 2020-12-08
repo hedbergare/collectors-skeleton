@@ -91,7 +91,7 @@ export default {
       if (card.available) {
         console.log(card.available)
         this.$emit("buySkill", card);
-        this.highlightAvailableSkills();
+
       }
     },
   },
