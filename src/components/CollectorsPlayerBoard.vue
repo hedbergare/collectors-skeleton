@@ -1,5 +1,6 @@
 <template>
   <div id="wrapper" :style="'background-color:' + player.color"><!-- Här läggs det in vilken färg man "är" -->
+    <!-- Översta raden - där det visas hur mycket pengar och income man har -->
     <div id="topRow">
       <div id="wallet">
         <div id="money">
@@ -18,6 +19,7 @@
         </div>
       </div>
     </div>
+    <!-- Mellersta raden, där ens "bottles" ska ligga -->
     <div id="midRow">
       <div class="box">
         <img class="x bottle" src="images/player_board/bottle.JPG" />
@@ -35,6 +37,7 @@
         <img class="x twoDollar" src="images/player_board/2_dollar.JPG" />
       </div>
     </div>
+    <!-- Understa raden -->
     <div id="bottomRow">
       <div id="skills">
         <div id="skillsImage">
@@ -42,6 +45,7 @@
           <img id="skillsButton" src="images/player_board/skills_clear.png" />
           <img id="skillsInfo" src="images/player_board/skills_info.PNG" />
         </div>
+        <!-- Här skapas bilder för de skills som man äger -->
         <div id="skillsRefill">
           <div v-for="(card, index) in player.skills" :key="index">
             <img
@@ -56,7 +60,7 @@
           <div id="cardsImage">
             <img src="images/player_board/card_hand.png" />
           </div>
-          <!-- Ingen annan än en själv får se korten på handen -->
+          <!-- Det som kommer upp när man hoverar - Ingen annan än en själv får se korten på handen -->
           <div class="handPopup" v-if="playerId == player.pId">
             <CollectorsCard
               v-for="(card, index) in player.hand"
@@ -71,6 +75,7 @@
         </div>
       </div>
       <div id="items">
+        <!-- Här skapas bilder för de items man äger -->
         <div id="itemsRefill">
           <div v-for="(card, index) in player.items" :key="index">
             <img
@@ -97,6 +102,7 @@ export default {
     CollectorsCard,
   },
   props: {
+    /* Tar in player som object, så att vi vet  */
     player: Object,
   },
   computed: {
@@ -158,6 +164,7 @@ export default {
   text-align: center;
 }
 
+/* Rutorna i mellersta raden som innehåller bilder/bottles */
 .x {
   width: 60%;
   max-width: 150px;
@@ -176,7 +183,7 @@ export default {
   grid-template-columns: 1fr 5fr;
   border: 2px dashed black;
 }
-
+/* En hjälp-div som gör att bilder centresas vertikalt */
 .helper {
   display: inline-block;
   height: 100%;
@@ -196,33 +203,7 @@ export default {
   display: none;
   width: 90%;
 }
-
-#hand {
-  display: grid;
-  grid-template-rows: 5fr 1fr;
-}
-.handPopup > *{
-  position:relative;
-  transform:scale(0.5);
-  top:0;
-  left:0;
-  
-}
-#cardsImage:hover + .handPopup{
-  display:grid;
-  position:absolute;
-  top:0;
-  left:0;
-}
-.handPopup {
-  display:none;
-  position:absolute;
-  grid-template-columns: repeat(auto-fill, 130px);
-  grid-template-rows: repeat(auto-fill, 180px);
-  top:0;
-  left:0;
-  width:100%;
-}
+/* Items- och skillsrutorna */
 #items {
   display: grid;
   grid-template-columns: 5fr 1fr;
@@ -251,14 +232,41 @@ export default {
 #itemsImage img {
   max-width: 100%;
 }
-
+/* Hand-ikonen */
 #cardsImage {
   text-align: center;
 }
 #cardsImage img {
   max-width: 100%;
 }
+#hand {
+  display: grid;
+  grid-template-rows: 5fr 1fr;
+}
+.handPopup > *{
+  position:relative;
+  transform:scale(0.5);
+  top:0;
+  left:0;
+  
+}
+#cardsImage:hover + .handPopup{
+  display:grid;
+  position:absolute;
+  top:0;
+  left:0;
+}
+.handPopup {
+  display:none;
+  position:absolute;
+  grid-template-columns: repeat(auto-fill, 130px);
+  grid-template-rows: repeat(auto-fill, 180px);
+  top:0;
+  left:0;
+  width:100%;
+}
 
+/* Secret */
 #secret {
   border: solid black;
   text-align: center;
