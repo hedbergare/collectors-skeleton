@@ -127,8 +127,14 @@
       <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
     </div>
     <CollectorsBottle />
-    <CollectorsGameBoard />
     <CollectorsInfoBoard />
+    <CollectorsBottle/>
+    <CollectorsGameBoard
+    v-if="itemsOnSale"
+    :itemsOnSale="itemsOnSale"
+    :skillsOnSale="skillsOnSale"/>
+    <CollectorsInfoBoard/>
+    
   </div>
 </template>
 
