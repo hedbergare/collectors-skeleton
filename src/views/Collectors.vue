@@ -84,16 +84,6 @@
         />
       </p>
     </footer>
-<<<<<<< HEAD
-
-    <CollectorsPlayerBoard
-      v-if="players[playerId]"
-      :player="players[playerId]"
-    />
-    <div v-for="(p, index) in players" :key="index">
-      <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
-    </div>
-=======
     <!-- Flikarna för de olika spelarnas player board  -->
     <div id="playerBoardContainer">
       <!-- Sin egen flik ska skapas först -->
@@ -135,17 +125,13 @@
     >
       <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
     </div>
->>>>>>> 4697d06fb6c3031b053584f451e221c4973242e6
     <CollectorsBottle />
     <CollectorsGameBoard
       v-if="itemsOnSale"
       :itemsOnSale="itemsOnSale"
       :skillsOnSale="skillsOnSale"
-<<<<<<< HEAD
       @buyCard="buyCard($event)"
       @buySkill="buySkill($event)"
-=======
->>>>>>> 4697d06fb6c3031b053584f451e221c4973242e6
     />
     <CollectorsInfoBoard />
   </div>
