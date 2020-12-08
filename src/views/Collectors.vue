@@ -18,7 +18,6 @@
         :labels="labels"
         :player="players[playerId]"
         :skillsOnSale="skillsOnSale"
-        :marketValues="marketValues"
         :placement="skillPlacement"
         @buySkill="buySkill($event)"
         @placeBottle="placeBottle('skill', $event)"
@@ -85,6 +84,7 @@
         />
       </p>
     </footer>
+<<<<<<< HEAD
 
     <CollectorsPlayerBoard
       v-if="players[playerId]"
@@ -93,13 +93,59 @@
     <div v-for="(p, index) in players" :key="index">
       <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
     </div>
+=======
+    <!-- Flikarna för de olika spelarnas player board  -->
+    <div id="playerBoardContainer">
+      <!-- Sin egen flik ska skapas först -->
+      <div v-if="players[playerId]">
+        <div
+          class="playerBoardTab"
+          :style="'background-color:' + players[playerId].color"
+          @click="showCorrectPlayerBoard(playerId)"
+        >
+          <p>{{ playerId }}</p>
+        </div>
+      </div>
+      <!-- Sedan skapas flikarna för de andra spelarna -->
+      <div v-for="(player, index) in players" :key="index">
+        <div
+          v-if="player.pId !== playerId"
+          class="playerBoardTab"
+          :style="'background-color:' + player.color"
+          @click="showCorrectPlayerBoard(player.pId)"
+        >
+          <p>{{ player.pId }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Sitt eget player board -->
+    <div :id="playerId">
+      <CollectorsPlayerBoard
+        v-if="players[playerId]"
+        :player="players[playerId]"
+        :class="playerId"
+      />
+    </div>
+    <!-- De andras player board -->
+    <div
+      v-for="(p, index) in players"
+      :key="index"
+      :id="p.pId"
+      :style="'display:none'"
+    >
+      <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
+    </div>
+>>>>>>> 4697d06fb6c3031b053584f451e221c4973242e6
     <CollectorsBottle />
     <CollectorsGameBoard
       v-if="itemsOnSale"
       :itemsOnSale="itemsOnSale"
       :skillsOnSale="skillsOnSale"
+<<<<<<< HEAD
       @buyCard="buyCard($event)"
       @buySkill="buySkill($event)"
+=======
+>>>>>>> 4697d06fb6c3031b053584f451e221c4973242e6
     />
     <CollectorsInfoBoard />
   </div>
@@ -251,11 +297,30 @@ export default {
   },
 
   methods: {
+    showCorrectPlayerBoard: function (clickedId) {
+      //Den här funktionen visar rätt player board när man klickar på en "tab"
+      for (let p in this.players) {
+        if (p !== clickedId) {
+          document.getElementById(p).style.display = "none";
+        }
+        document.getElementById(clickedId).style.display = "block";
+      }
+      /* Tar bort den tomma fliken */
+      let children = document.getElementById("playerBoardContainer").childNodes;
+      for (let i in children) {
+        if (children[i].tagName == "DIV") {
+          if (children[i].childNodes[0].tagName !== "DIV") {
+            children[i].style = "display:none;";
+          }
+        }
+      }
+    },
     selectAll: function (n) {
       n.target.select();
     },
     placeBottle: function (action, cost) {
       console.log("Placebottle i collectors.vue");
+      console.log(cost);
       this.chosenPlacementCost = cost;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
@@ -327,7 +392,26 @@ footer a:visited {
   transform: scale(1) translate(-25%, 0);
   z-index: 1;
 }
-
+#playerBoardContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  max-width: 40%;
+}
+.playerBoardTab {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  font-weight: bold;
+}
+.playerBoardTab p {
+  margin: 0;
+  padding: 0.5em;
+}
+.playerBoardTab:hover {
+  cursor: pointer;
+}
 @media screen and (max-width: 800px) {
   main {
     width: 90vw;

@@ -40,56 +40,43 @@ export default {
     labels: Object,
     player: Object,
     skillsOnSale: Array,
-    marketValues: Object,
     placement: Array,
   },
   methods: {
+    /* Kollar om player har råd med skillsen */
     cannotAfford: function (cost) {
-      let minCost = 100;
-      for (let key in this.marketValues) {
-        if (cost + this.marketValues[key] < minCost)
-          minCost = cost + this.marketValues[key];
+      if (this.player.money < cost) {
+        return true;
+      } else {
+        return false;
       }
-      return this.player.money < minCost;
     },
+    /* Returnerar hur mycket ett skill kostar */
     skillCost: function (card) {
-      return this.marketValues[card.market];
+      return this.placement[card];
     },
     placeBottle: function (p) {
-      console.log("Placebottle i buyskill");
       this.$emit("placeBottle", p.cost);
       this.highlightAvailableSkills(p.cost);
     },
     highlightAvailableSkills: function (cost = 100) {
       /* Kollar på skillsen som ligger på brädet */
       for (let i = 0; i < this.skillsOnSale.length; i += 1) {
-        if (
-          this.marketValues[this.skillsOnSale[i].item] <=
-          this.player.money - cost
-        ) {
+         
           this.$set(this.skillsOnSale[i], "available", true);
-        } else {
-          this.$set(this.skillsOnSale[i], "available", false);
-        }
-        this.chosenPlacementCost = cost;
       }
+      this.chosenPlacementCost = cost;
       /* Kollar på skillsen som ligger på handen */
       for (let i = 0; i < this.player.hand.length; i += 1) {
-        if (
-          this.marketValues[this.player.hand[i].item] <=
-          this.player.money - cost
-        ) {
           this.$set(this.player.hand[i], "available", true);
+        } 
           this.chosenPlacementCost = cost;
-        } else {
-          this.$set(this.player.hand[i], "available", false);
-          this.chosenPlacementCost = cost;
-        }
-      }
-    },
+        
+      },
     buySkill: function (card) {
+      console.log(card.available);
       if (card.available) {
-        console.log(card.available)
+        console.log(card.available);
         this.$emit("buySkill", card);
 
       }
