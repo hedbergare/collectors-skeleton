@@ -18,7 +18,6 @@
         :labels="labels"
         :player="players[playerId]"
         :skillsOnSale="skillsOnSale"
-        :marketValues="marketValues"
         :placement="skillPlacement"
         @buySkill="buySkill($event)"
         @placeBottle="placeBottle('skill', $event)"
@@ -93,6 +92,8 @@
           :itemsOnSale="itemsOnSale"
           :skillsOnSale="skillsOnSale"
           :auctionCards="auctionCards"
+          @buyCard="buyCard($event)"
+          @buySkill="buySkill($event)"
         />
       </div>
       <div id="rightColumn">
@@ -276,7 +277,7 @@ export default {
     this.$store.state.socket.on(
       "collectorsCardBought",
       function (d) {
-        console.log("sista som händer", d.playerId, "bought a card");
+        console.log( d.playerId, "bought a card");
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
       }.bind(this)
@@ -316,6 +317,7 @@ export default {
     },
     placeBottle: function (action, cost) {
       console.log("Placebottle i collectors.vue");
+      console.log(cost);
       this.chosenPlacementCost = cost;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
@@ -340,12 +342,14 @@ export default {
     },
     buySkill: function (card) {
       console.log("buySkill", card);
+      console.log("hej 2");
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
+      console.log("hej");
     },
   },
 };
