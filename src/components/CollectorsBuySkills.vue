@@ -9,6 +9,7 @@
           @doAction="buySkill(card)"
         />
         {{ skillCost(card) }}
+        {{ card.available }}
       </div>
     </div>
     <div>
@@ -46,8 +47,11 @@ export default {
   methods: {
     cannotAfford: function (cost) {
       let minCost = 100;
+      console.log("har inte råd funktion")
+      console.log(cost)
       for (let key in this.marketValues) {
         if (cost + this.marketValues[key] < minCost)
+        console.log(minCost)
           minCost = cost + this.marketValues[key];
       }
       return this.player.money < minCost;

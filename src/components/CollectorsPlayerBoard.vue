@@ -113,11 +113,13 @@ export default {
 };
 </script>
 <style scoped>
+
 #wrapper {
-  width: 40%;
+  max-width: 1000px;
   display: grid;
   border: 3px solid black;
   position: relative;
+  min-height: 350px;
 }
 
 #topRow {
@@ -157,6 +159,7 @@ export default {
   grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  min-height: 110px;
 }
 
 .box {
@@ -176,6 +179,7 @@ export default {
   grid-row: 3;
   display: grid;
   grid-template-columns: 2fr 1fr 2fr;
+  min-height: 260px;
 }
 
 #skills {
