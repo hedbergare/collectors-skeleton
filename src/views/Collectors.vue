@@ -146,34 +146,6 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
-    <!-- Sitt eget player board -->
-    <div :id="playerId">
-      <CollectorsPlayerBoard
-        v-if="players[playerId]"
-        :player="players[playerId]"
-        :class="playerId"
-      />
-    </div>
-    <!-- De andras player board -->
-    <div
-      v-for="(p, index) in players"
-      :key="index"
-      :id="p.pId"
-      :style="'display:none'"
-    >
-      <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
-    </div>
-    <CollectorsBottle />
-    <CollectorsBottle />
-    <CollectorsGameBoard
-      v-if="itemsOnSale"
-      :itemsOnSale="itemsOnSale"
-      :skillsOnSale="skillsOnSale"
-    />
-    <CollectorsInfoBoard :room="roomId" />
-=======
->>>>>>> 60b3a75f947e68c595804ecfada4d85669daac03
   </div>
 </template>
 
