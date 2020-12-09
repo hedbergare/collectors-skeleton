@@ -30,7 +30,9 @@
           {{ labels.draw }}
         </button>
       </div>
-
+      <!-- Testknapp för "fill pools"
+    <button @click="fillPools()">HEJ</button> -->
+    <button @click="changeTurn()">Byt tur</button>
       Skills
       <div class="cardslots">
         <CollectorsCard
@@ -127,14 +129,13 @@
       <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
     </div>
     <CollectorsBottle />
-    <CollectorsInfoBoard />
-    <CollectorsBottle/>
+    <CollectorsBottle />
     <CollectorsGameBoard
-    v-if="itemsOnSale"
-    :itemsOnSale="itemsOnSale"
-    :skillsOnSale="skillsOnSale"/>
-    <CollectorsInfoBoard/>
-    
+      v-if="itemsOnSale"
+      :itemsOnSale="itemsOnSale"
+      :skillsOnSale="skillsOnSale"
+    />
+    <CollectorsInfoBoard :room="roomId" />
   </div>
 </template>
 
@@ -199,6 +200,9 @@ export default {
     playerId: function () {
       return this.$store.state.playerId;
     },
+    roomId: function () {
+      return this.$route.params.id;
+    },
   },
   watch: {
     players: function (newP, oldP) {
@@ -247,6 +251,7 @@ export default {
         this.skillPlacement = d.skillPlacement;
         this.marketPlacement = d.marketPlacement;
         this.auctionPlacement = d.auctionPlacement;
+        console.log("Bottle has been placed");
       }.bind(this)
     );
 
@@ -281,9 +286,50 @@ export default {
         this.skillsOnSale = d.skillsOnSale;
       }.bind(this)
     );
+    this.$store.state.socket.on(
+      "collectorsPoolsFilled",
+      function (d) {
+        console.log("Pools have been filled");
+        this.itemsOnSale = d.itemsOnSale;
+        this.skillsOnSale = d.skillsOnSale;
+        this.auctionCards = d.auctionCards;
+      }.bind(this)
+    );
+    this.$store.state.socket.on(
+      "turnChanged",
+      function (d) {
+        console.log("turn has changed");
+        this.players = d.players;
+      }.bind(this)
+    );
   },
 
   methods: {
+    fillPools: function () {
+      console.log("fillPools i Collectors");
+      this.$store.state.socket.emit("fillPools", {
+        roomId: this.$route.params.id,
+      });
+    },
+    changeTurn: function(){
+      this.players[this.playerId].isTurn = false;
+      let playerIndex = Object.keys(this.players).indexOf(this.playerId);
+      console.log("Vårat index just nu " + playerIndex);
+      let newPlayerIndex;
+      if (playerIndex == Object.keys(this.players).length-1){
+        newPlayerIndex = 0;
+      }
+      else {
+        newPlayerIndex = playerIndex + 1;
+      }
+      console.log("Vi ska byta till" + newPlayerIndex);
+      Object.values(this.players)[newPlayerIndex].isTurn = true;
+      this.$store.state.socket.emit("changeTurn", {
+      players: this.players,
+      roomId: this.$route.params.id,
+    });
+    },
+
     showCorrectPlayerBoard: function (clickedId) {
       //Den här funktionen visar rätt player board när man klickar på en "tab"
       for (let p in this.players) {

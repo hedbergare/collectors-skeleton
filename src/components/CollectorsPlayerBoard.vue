@@ -89,6 +89,7 @@
           <img src="images/player_board/item_button_clean.png" />
         </div>
       </div>
+      {{player.isTurn}}
     </div>
   </div>
 </template>

@@ -16,7 +16,6 @@
     </div>
   </div>
 </template>
-
 <style scoped>
 #infoWrapper {
   display: grid;
