@@ -43,7 +43,6 @@
     </div>
 
     <div class="skillBox">
-      
       <!-- Här gör vi skill box med köprutor -->
       <div id="buySkillBox1">
         <img id="skillBottle1" src="/images/buySkillPic/skill_Bottle1.png" />
@@ -141,16 +140,20 @@
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
       </div>
       <div id="auctionArrow3">
+        <CollectorsCard :card="auctionCards[0]"/>
         <img id="auctionCard1" src="/images/auctionPic/auctionArrowDown.png" />
       </div>
       <div id="auctionArrow4">
         <img id="auctionCard2" src="/images/auctionPic/auctionArrowBlue.png" />
+        <CollectorsCard :card="auctionCards[1]"/>
       </div>
       <div id="auctionArrow5">
         <img id="auctionCard3" src="/images/auctionPic/auctionArrowLeft.png" />
+        <CollectorsCard :card="auctionCards[2]"/>
       </div>
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
+        <CollectorsCard :card="auctionCards[3]"/>
       </div>
       <div id="auctionInfo">
         <img id="auctionInfo1" src="/images/auctionPic/auction_Info.png" />
@@ -190,19 +193,25 @@
     </div>
 
     <!-- Här gör vi card box Left -->
-    
+
     <div class="cardBoxLeft">
+      <div></div>
       <div
         class="skillsOnSaleIconCont"
         v-for="(card, index) in skillsOnSale"
         :key="index"
+        @click="buySkill(card)"
       >
         <div class="skillsOnSaleCont" v-if="card.skill !== undefined">
           <img
             class="skillsOnSaleIcon"
             :src="'images/skill_logos/' + card.skill + '_skill.png'"
           />
-          <CollectorsCard :card="skillsOnSale[index]" id="skillsOnSalePic" />
+          <CollectorsCard
+            :card="skillsOnSale[index]"
+            :availableAction="card.available"
+            id="skillsOnSalePic"
+          />
         </div>
       </div>
     </div>
@@ -213,18 +222,22 @@
         class="itemsOnSaleIconCont"
         v-for="(card, index) in itemsOnSale"
         :key="index"
+        @click="buyCard(card)"
       >
         <div class="itemsOnSaleIconCont1" v-if="card.item !== undefined">
           <img
             class="itemsOnSaleIcon"
             :src="'images/item_logos/' + card.item + '_item.png'"
           />
-          <CollectorsCard :card="itemsOnSale[index]" id="itemsOnSalePic" />
+          <CollectorsCard
+            :card="itemsOnSale[index]"
+            :availableAction="card.available"
+            id="itemsOnSalePic"
+          />
         </div>
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
@@ -236,8 +249,28 @@ export default {
     CollectorsCard,
   },
   props: {
-    itemsOnSale: Array,
+    labels: Object,
+    player: Object,
     skillsOnSale: Array,
+    auctionCards: Array,
+    itemsOnSale: Array,
+    marketValues: Object,
+    placement: Array,
+  },
+  methods: {
+    buySkill: function (card) {
+      if (card.available) {
+        console.log(card.available);
+        this.$emit("buySkill", card);
+        console.log("hej 1");
+      }
+    },
+    buyCard: function (card) {
+      if (card.available) {
+        console.log(card.available);
+        this.$emit("buyCard", card);
+      }
+    },
   },
 };
 </script>
@@ -251,7 +284,7 @@ export default {
   display: grid;
   background-color: white;
   color: black;
-  width: 50%;
+  width: 100%;
   height: 100vh;
   grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5vh 15vh 21vh 21vh 21vh 17vh;
@@ -429,22 +462,29 @@ export default {
   grid-column: 1;
   grid-row: 1;
   max-width: 100%;
+  position: relative
 }
 
 #itemArrow2 {
   grid-column: 2;
   grid-row: 1;
   max-width: 100%;
+  position: relative
+
 }
 #itemArrow3 {
   grid-column: 3;
   grid-row: 1;
   max-width: 100%;
+  position: relative
+
 }
 #itemArrow4 {
   grid-column: 4;
   grid-row: 1;
   max-width: 100%;
+  position: relative
+
 }
 #itemArrow5 {
   grid-column: 5;
@@ -696,12 +736,14 @@ export default {
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow3 {
   grid-column: 3;
   grid-row: 2;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow4 {
   grid-column: 1;
@@ -731,6 +773,18 @@ export default {
   max-width: 100%;
   max-height: 100%;
   text-align: center;
+}
+
+/* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
+/* Ta tillbaka transform scale om korten är ivägen */
+.card {
+ /*  top: 0;
+  left: 0;*/
+/*   transform: scale(0.3, 0.3);
+ */  transform-origin: center;
+/*   margin-top: -105%;
+  margin-left: -75px;  */
+  position: absolute;
 }
 
 #auctionArrow1 img,

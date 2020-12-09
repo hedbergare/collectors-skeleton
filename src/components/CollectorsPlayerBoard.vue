@@ -47,7 +47,7 @@
         </div>
         <!-- Här skapas bilder för de skills som man äger -->
         <div id="skillsRefill">
-          <div v-for="(card, index) in player.skills" :key="index">
+          <div v-for="(card, index) in player.skills" :key="index" style="max-height: 100%">
             <img
               class="skillsIcons"
               :src="'images/skill_logos/' + card.skill + '_skill.png'"
@@ -114,11 +114,13 @@ export default {
 };
 </script>
 <style scoped>
+
 #wrapper {
-  width: 40%;
+  max-width: 1000px;
   display: grid;
   border: 3px solid black;
   position: relative;
+  min-height: 350px;
 }
 
 #topRow {
@@ -158,6 +160,7 @@ export default {
   grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  min-height: 110px;
 }
 
 .box {
@@ -177,6 +180,7 @@ export default {
   grid-row: 3;
   display: grid;
   grid-template-columns: 2fr 1fr 2fr;
+  min-height: 260px;
 }
 
 #skills {
@@ -228,6 +232,7 @@ export default {
 
 .skillsIcons {
   max-width: 100%;
+  max-height: 100%;
 }
 
 #itemsImage img {

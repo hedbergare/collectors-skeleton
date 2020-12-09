@@ -18,7 +18,6 @@
         :labels="labels"
         :player="players[playerId]"
         :skillsOnSale="skillsOnSale"
-        :marketValues="marketValues"
         :placement="skillPlacement"
         @buySkill="buySkill($event)"
         @placeBottle="placeBottle('skill', $event)"
@@ -87,30 +86,67 @@
         />
       </p>
     </footer>
-    <!-- Flikarna för de olika spelarnas player board  -->
-    <div id="playerBoardContainer">
-      <!-- Sin egen flik ska skapas först -->
-      <div v-if="players[playerId]">
-        <div
-          class="playerBoardTab"
-          :style="'background-color:' + players[playerId].color"
-          @click="showCorrectPlayerBoard(playerId)"
-        >
-          <p>{{ playerId }}</p>
-        </div>
+    <CollectorsBottle />
+
+    <div id="browserWrapper">
+      <div id="gameboardColumn">
+        <CollectorsGameBoard
+          :itemsOnSale="itemsOnSale"
+          :skillsOnSale="skillsOnSale"
+          :auctionCards="auctionCards"
+          @buyCard="buyCard($event)"
+          @buySkill="buySkill($event)"
+        />
       </div>
-      <!-- Sedan skapas flikarna för de andra spelarna -->
-      <div v-for="(player, index) in players" :key="index">
-        <div
-          v-if="player.pId !== playerId"
-          class="playerBoardTab"
-          :style="'background-color:' + player.color"
-          @click="showCorrectPlayerBoard(player.pId)"
-        >
-          <p>{{ player.pId }}</p>
+      <div id="rightColumn">
+        <div id="infoboardColumn">
+          <CollectorsInfoBoard />
+        </div>
+        <div id="playerboardRow">
+          <div id="playerBoardContainer">
+            <!-- Sin egen flik ska skapas först -->
+            <div v-if="players[playerId]">
+              <div
+                class="playerBoardTab"
+                :style="'background-color:' + players[playerId].color"
+                @click="showCorrectPlayerBoard(playerId)"
+              >
+                <p>{{ playerId }}</p>
+              </div>
+            </div>
+            <!-- Sedan skapas flikarna för de andra spelarna -->
+            <div v-for="(player, index) in players" :key="index">
+              <div
+                v-if="player.pId !== playerId"
+                class="playerBoardTab"
+                :style="'background-color:' + player.color"
+                @click="showCorrectPlayerBoard(player.pId)"
+              >
+                <p>{{ player.pId }}</p>
+              </div>
+            </div>
+          </div>
+          <!-- Sitt eget player board -->
+          <div :id="playerId">
+            <CollectorsPlayerBoard
+              v-if="players[playerId]"
+              :player="players[playerId]"
+              :class="playerId"
+            />
+          </div>
+          <!-- De andras player board -->
+          <div
+            v-for="(p, index) in players"
+            :key="index"
+            :id="p.pId"
+            :style="'display:none'"
+          >
+            <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
+          </div>
         </div>
       </div>
     </div>
+<<<<<<< HEAD
     <!-- Sitt eget player board -->
     <div :id="playerId">
       <CollectorsPlayerBoard
@@ -136,8 +172,11 @@
       :skillsOnSale="skillsOnSale"
     />
     <CollectorsInfoBoard :room="roomId" />
+=======
+>>>>>>> 60b3a75f947e68c595804ecfada4d85669daac03
   </div>
 </template>
+
 
 <script>
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
@@ -272,7 +311,7 @@ export default {
     this.$store.state.socket.on(
       "collectorsCardBought",
       function (d) {
-        console.log("sista som händer", d.playerId, "bought a card");
+        console.log( d.playerId, "bought a card");
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
       }.bind(this)
@@ -353,6 +392,7 @@ export default {
     },
     placeBottle: function (action, cost) {
       console.log("Placebottle i collectors.vue");
+      console.log(cost);
       this.chosenPlacementCost = cost;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
@@ -377,12 +417,14 @@ export default {
     },
     buySkill: function (card) {
       console.log("buySkill", card);
+      console.log("hej 2");
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
+      console.log("hej");
     },
   },
 };
@@ -446,5 +488,33 @@ footer a:visited {
   main {
     width: 90vw;
   }
+}
+
+/* PLayerboard layout för browsern */
+#browserWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-height: 100vh;
+}
+
+#gameboardColumn {
+  display: grid;
+}
+
+#infoboardColumn {
+  display: grid;
+  display: table-cell;
+  vertical-align: bottom;
+}
+
+#playerboardRow {
+  display: grid;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+#rightColumn {
+  display: grid;
+  grid-template-rows: 1fr 3fr;
 }
 </style>
