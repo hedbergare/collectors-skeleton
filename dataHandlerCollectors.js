@@ -216,11 +216,16 @@ Data.prototype.placeBottle = function (roomId, playerId, action, cost) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
     let activePlacement = [];
-    if (action === "buy") {
+    if (action === "item") {
       activePlacement = room.buyPlacement;
+      console.log(activePlacement)
+      console.log(playerId)
     }
     else if (action === "skill") {
       activePlacement = room.skillPlacement;
+      console.log(activePlacement)
+      console.log(playerId)
+
     }
     else if (action === "auction") {
       activePlacement = room.auctionPlacement;

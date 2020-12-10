@@ -126,12 +126,20 @@
       <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
     </div>
     <CollectorsBottle />
+
     <CollectorsGameBoard
       v-if="itemsOnSale"
+      :player="players[playerId]"
+      :labels="labels"
       :itemsOnSale="itemsOnSale"
       :skillsOnSale="skillsOnSale"
+      :marketValues="marketValues"
+      :buyPlacement="buyPlacement"
+      :skillPlacement="skillPlacement"
       @buyCard="buyCard($event)"
       @buySkill="buySkill($event)"
+      @placeBottle="placeBottle($event)"
+
     />
     <CollectorsInfoBoard />
   </div>
@@ -266,7 +274,7 @@ export default {
     this.$store.state.socket.on(
       "collectorsCardBought",
       function (d) {
-        console.log( d.playerId, "bought a card");
+        console.log(d.playerId, "bought a card");
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
       }.bind(this)
@@ -304,16 +312,19 @@ export default {
     selectAll: function (n) {
       n.target.select();
     },
-    placeBottle: function (action, cost) {
+    placeBottle: function (p) {
       console.log("Placebottle i collectors.vue");
-      console.log(cost);
-      this.chosenPlacementCost = cost;
+      console.log(p.cost);
+      this.chosenPlacementCost = p.cost;
+      console.log(p.action);
+      console.log(p.playerId)
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
-        action: action,
-        cost: cost,
-      });
+        action: p.action,
+        cost: p.cost,
+      }
+      );
     },
     drawCard: function () {
       this.$store.state.socket.emit("collectorsDrawCard", {
