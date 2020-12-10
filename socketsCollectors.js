@@ -47,6 +47,20 @@ function sockets(io, socket, data) {
       data.placeBottle(d.roomId, d.playerId, d.action, d.cost);
       io.to(d.roomId).emit('collectorsBottlePlaced', data.getPlacements(d.roomId));
     });
+    socket.on('fillPools', function(d) {
+      data.fillPools(d.roomId);
+      io.to(d.roomId).emit('collectorsPoolsFilled', {
+        skillsOnSale: data.getSkillsOnSale(d.roomId),
+        itemsOnSale: data.getItemsOnSale(d.roomId),
+        auctionCards: data.getAuctionCards(d.roomId)
+      });
+    });
+    socket.on('changeTurn', function(d) {
+      data.turnChanged(d.players, d.roomId);
+      io.to(d.roomId).emit('turnChanged', {
+        players: data.getPlayers(d.roomId),
+      })
+      });
 }
 
 module.exports = sockets;

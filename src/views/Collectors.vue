@@ -29,7 +29,9 @@
           {{ labels.draw }}
         </button>
       </div>
-
+      <!-- Testknapp för "fill pools"
+    <button @click="fillPools()">HEJ</button> -->
+    <button @click="changeTurn()">Byt tur</button>
       Skills
       <div class="cardslots">
         <CollectorsCard
@@ -84,27 +86,63 @@
         />
       </p>
     </footer>
-    <!-- Flikarna för de olika spelarnas player board  -->
-    <div id="playerBoardContainer">
-      <!-- Sin egen flik ska skapas först -->
-      <div v-if="players[playerId]">
-        <div
-          class="playerBoardTab"
-          :style="'background-color:' + players[playerId].color"
-          @click="showCorrectPlayerBoard(playerId)"
-        >
-          <p>{{ playerId }}</p>
-        </div>
+    <CollectorsBottle />
+
+    <div id="browserWrapper">
+      <div id="gameboardColumn">
+        <CollectorsGameBoard
+          :itemsOnSale="itemsOnSale"
+          :skillsOnSale="skillsOnSale"
+          :auctionCards="auctionCards"
+          @buyCard="buyCard($event)"
+          @buySkill="buySkill($event)"
+        />
       </div>
-      <!-- Sedan skapas flikarna för de andra spelarna -->
-      <div v-for="(player, index) in players" :key="index">
-        <div
-          v-if="player.pId !== playerId"
-          class="playerBoardTab"
-          :style="'background-color:' + player.color"
-          @click="showCorrectPlayerBoard(player.pId)"
-        >
-          <p>{{ player.pId }}</p>
+      <div id="rightColumn">
+        <div id="infoboardColumn">
+          <CollectorsInfoBoard />
+        </div>
+        <div id="playerboardRow">
+          <div id="playerBoardContainer">
+            <!-- Sin egen flik ska skapas först -->
+            <div v-if="players[playerId]">
+              <div
+                class="playerBoardTab"
+                :style="'background-color:' + players[playerId].color"
+                @click="showCorrectPlayerBoard(playerId)"
+              >
+                <p>{{ playerId }}</p>
+              </div>
+            </div>
+            <!-- Sedan skapas flikarna för de andra spelarna -->
+            <div v-for="(player, index) in players" :key="index">
+              <div
+                v-if="player.pId !== playerId"
+                class="playerBoardTab"
+                :style="'background-color:' + player.color"
+                @click="showCorrectPlayerBoard(player.pId)"
+              >
+                <p>{{ player.pId }}</p>
+              </div>
+            </div>
+          </div>
+          <!-- Sitt eget player board -->
+          <div :id="playerId">
+            <CollectorsPlayerBoard
+              v-if="players[playerId]"
+              :player="players[playerId]"
+              :class="playerId"
+            />
+          </div>
+          <!-- De andras player board -->
+          <div
+            v-for="(p, index) in players"
+            :key="index"
+            :id="p.pId"
+            :style="'display:none'"
+          >
+            <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
+          </div>
         </div>
       </div>
     </div>
@@ -144,6 +182,7 @@
     <CollectorsInfoBoard />
   </div>
 </template>
+
 
 <script>
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
@@ -206,6 +245,9 @@ export default {
     playerId: function () {
       return this.$store.state.playerId;
     },
+    roomId: function () {
+      return this.$route.params.id;
+    },
   },
   watch: {
     players: function (newP, oldP) {
@@ -254,6 +296,7 @@ export default {
         this.skillPlacement = d.skillPlacement;
         this.marketPlacement = d.marketPlacement;
         this.auctionPlacement = d.auctionPlacement;
+        console.log("Bottle has been placed");
       }.bind(this)
     );
 
@@ -288,9 +331,50 @@ export default {
         this.skillsOnSale = d.skillsOnSale;
       }.bind(this)
     );
+    this.$store.state.socket.on(
+      "collectorsPoolsFilled",
+      function (d) {
+        console.log("Pools have been filled");
+        this.itemsOnSale = d.itemsOnSale;
+        this.skillsOnSale = d.skillsOnSale;
+        this.auctionCards = d.auctionCards;
+      }.bind(this)
+    );
+    this.$store.state.socket.on(
+      "turnChanged",
+      function (d) {
+        console.log("turn has changed");
+        this.players = d.players;
+      }.bind(this)
+    );
   },
 
   methods: {
+    fillPools: function () {
+      console.log("fillPools i Collectors");
+      this.$store.state.socket.emit("fillPools", {
+        roomId: this.$route.params.id,
+      });
+    },
+    changeTurn: function(){
+      this.players[this.playerId].isTurn = false;
+      let playerIndex = Object.keys(this.players).indexOf(this.playerId);
+      console.log("Vårat index just nu " + playerIndex);
+      let newPlayerIndex;
+      if (playerIndex == Object.keys(this.players).length-1){
+        newPlayerIndex = 0;
+      }
+      else {
+        newPlayerIndex = playerIndex + 1;
+      }
+      console.log("Vi ska byta till" + newPlayerIndex);
+      Object.values(this.players)[newPlayerIndex].isTurn = true;
+      this.$store.state.socket.emit("changeTurn", {
+      players: this.players,
+      roomId: this.$route.params.id,
+    });
+    },
+
     showCorrectPlayerBoard: function (clickedId) {
       //Den här funktionen visar rätt player board när man klickar på en "tab"
       for (let p in this.players) {
@@ -413,5 +497,33 @@ footer a:visited {
   main {
     width: 90vw;
   }
+}
+
+/* PLayerboard layout för browsern */
+#browserWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-height: 100vh;
+}
+
+#gameboardColumn {
+  display: grid;
+}
+
+#infoboardColumn {
+  display: grid;
+  display: table-cell;
+  vertical-align: bottom;
+}
+
+#playerboardRow {
+  display: grid;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+#rightColumn {
+  display: grid;
+  grid-template-rows: 1fr 3fr;
 }
 </style>
