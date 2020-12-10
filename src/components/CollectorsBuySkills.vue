@@ -8,7 +8,7 @@
           :availableAction="card.available"
           @doAction="buySkill(card)"
         />
-        {{ skillCost(card) }}
+        {{ skillCost(card) }} 
         {{ card.available }}
       </div>
     </div>
