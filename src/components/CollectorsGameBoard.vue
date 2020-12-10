@@ -167,20 +167,20 @@
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
       </div>
       <div id="auctionArrow3">
-        <CollectorsCard :card="auctionCards[0]"/>
+        <!--         <CollectorsCard :card="auctionCards[0]"/> -->
         <img id="auctionCard1" src="/images/auctionPic/auctionArrowDown.png" />
       </div>
       <div id="auctionArrow4">
         <img id="auctionCard2" src="/images/auctionPic/auctionArrowBlue.png" />
-        <CollectorsCard :card="auctionCards[1]"/>
+        <!--         <CollectorsCard :card="auctionCards[1]"/> -->
       </div>
       <div id="auctionArrow5">
         <img id="auctionCard3" src="/images/auctionPic/auctionArrowLeft.png" />
-        <CollectorsCard :card="auctionCards[2]"/>
+        <!--         <CollectorsCard :card="auctionCards[2]"/> -->
       </div>
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
-        <CollectorsCard :card="auctionCards[3]"/>
+        <!--         <CollectorsCard :card="auctionCards[3]"/> -->
       </div>
       <div id="auctionInfo">
         <img id="auctionInfo1" src="/images/auctionPic/auction_Info.png" />
@@ -271,7 +271,9 @@ export default {
         this.highlightAvailableCards();
       }
     },
+
     placeBottle: function (p, action) {
+      console.log("hejsan");
       console.log(action);
       this.$emit("placeBottle", {
         cost: p.cost,
@@ -310,6 +312,7 @@ export default {
         }
       }
     },
+
     cannotAffordItem: function (cost) {
       let minCost = 100;
       for (let key in this.marketValues) {
@@ -318,6 +321,7 @@ export default {
       }
       return this.player.money < minCost;
     },
+
     cardCost: function (card) {
       return this.marketValues[card.market];
     },
@@ -344,11 +348,13 @@ export default {
       return this.placement[card];
     },
     cannotAffordSkill: function (cost) {
+      console.log("här1");
       if (this.player.money < cost) {
         return true;
       } else {
         return false;
       }
+      
     },
   },
 };
@@ -486,8 +492,11 @@ export default {
 
 /* small boxes in itemBox */
 
-.placeBottleItem{
- color: blue;
+.placeBottleItem {
+  color: blue;
+}
+.placeBottleSkill {
+  color: blue;
 }
 
 #buyItemBoxInfo {
@@ -506,29 +515,26 @@ export default {
   grid-column: 1;
   grid-row: 1;
   max-width: 100%;
-  position: relative
+  position: relative;
 }
 
 #itemArrow2 {
   grid-column: 2;
   grid-row: 1;
   max-width: 100%;
-  position: relative
-
+  position: relative;
 }
 #itemArrow3 {
   grid-column: 3;
   grid-row: 1;
   max-width: 100%;
-  position: relative
-
+  position: relative;
 }
 #itemArrow4 {
   grid-column: 4;
   grid-row: 1;
   max-width: 100%;
-  position: relative
-
+  position: relative;
 }
 #itemArrow5 {
   grid-column: 5;
@@ -545,6 +551,7 @@ export default {
 }
 .bottleSkill {
   color: blue;
+  padding: 8px;
 }
 
 #skillButton {
@@ -825,11 +832,12 @@ export default {
 /* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
 /* Ta tillbaka transform scale om korten är ivägen */
 .card {
- /*  top: 0;
+  /*  top: 0;
   left: 0;*/
-/*   transform: scale(0.3, 0.3);
- */  transform-origin: center;
-/*   margin-top: -105%;
+  /*   transform: scale(0.3, 0.3);
+ */
+  transform-origin: center;
+  /*   margin-top: -105%;
   margin-left: -75px;  */
   position: absolute;
 }

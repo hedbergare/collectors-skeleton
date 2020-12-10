@@ -90,13 +90,20 @@
 
     <div id="browserWrapper">
       <div id="gameboardColumn">
-        <CollectorsGameBoard
-          :itemsOnSale="itemsOnSale"
-          :skillsOnSale="skillsOnSale"
-          :auctionCards="auctionCards"
-          @buyCard="buyCard($event)"
-          @buySkill="buySkill($event)"
-        />
+    <CollectorsGameBoard
+      v-if="itemsOnSale"
+      :player="players[playerId]"
+      :labels="labels"
+      :itemsOnSale="itemsOnSale"
+      :skillsOnSale="skillsOnSale"
+      :marketValues="marketValues"
+      :buyPlacement="buyPlacement"
+      :skillPlacement="skillPlacement"
+      @buyCard="buyCard($event)"
+      @buySkill="buySkill($event)"
+      @placeBottle="placeBottle($event)"
+
+    />
       </div>
       <div id="rightColumn">
         <div id="infoboardColumn">
@@ -146,41 +153,8 @@
         </div>
       </div>
     </div>
-    <!-- Sitt eget player board -->
-    <div :id="playerId">
-      <CollectorsPlayerBoard
-        v-if="players[playerId]"
-        :player="players[playerId]"
-        :class="playerId"
-      />
-    </div>
-    <!-- De andras player board -->
-    <div
-      v-for="(p, index) in players"
-      :key="index"
-      :id="p.pId"
-      :style="'display:none'"
-    >
-      <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
-    </div>
-    <CollectorsBottle />
-
-    <CollectorsGameBoard
-      v-if="itemsOnSale"
-      :player="players[playerId]"
-      :labels="labels"
-      :itemsOnSale="itemsOnSale"
-      :skillsOnSale="skillsOnSale"
-      :marketValues="marketValues"
-      :buyPlacement="buyPlacement"
-      :skillPlacement="skillPlacement"
-      @buyCard="buyCard($event)"
-      @buySkill="buySkill($event)"
-      @placeBottle="placeBottle($event)"
-
-    />
-    <CollectorsInfoBoard />
   </div>
+
 </template>
 
 
@@ -356,23 +330,22 @@ export default {
         roomId: this.$route.params.id,
       });
     },
-    changeTurn: function(){
+    changeTurn: function () {
       this.players[this.playerId].isTurn = false;
       let playerIndex = Object.keys(this.players).indexOf(this.playerId);
       console.log("Vårat index just nu " + playerIndex);
       let newPlayerIndex;
-      if (playerIndex == Object.keys(this.players).length-1){
+      if (playerIndex == Object.keys(this.players).length - 1) {
         newPlayerIndex = 0;
-      }
-      else {
+      } else {
         newPlayerIndex = playerIndex + 1;
       }
       console.log("Vi ska byta till" + newPlayerIndex);
       Object.values(this.players)[newPlayerIndex].isTurn = true;
       this.$store.state.socket.emit("changeTurn", {
-      players: this.players,
-      roomId: this.$route.params.id,
-    });
+        players: this.players,
+        roomId: this.$route.params.id,
+      });
     },
 
     showCorrectPlayerBoard: function (clickedId) {
@@ -401,14 +374,13 @@ export default {
       console.log(p.cost);
       this.chosenPlacementCost = p.cost;
       console.log(p.action);
-      console.log(p.playerId)
+      console.log(p.playerId);
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         action: p.action,
         cost: p.cost,
-      }
-      );
+      });
     },
     drawCard: function () {
       this.$store.state.socket.emit("collectorsDrawCard", {
