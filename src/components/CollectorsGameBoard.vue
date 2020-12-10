@@ -167,20 +167,20 @@
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
       </div>
       <div id="auctionArrow3">
-        <!--         <CollectorsCard :card="auctionCards[0]"/> -->
+        <!-- <CollectorsCard :card="auctionCards[0]"/> -->
         <img id="auctionCard1" src="/images/auctionPic/auctionArrowDown.png" />
       </div>
       <div id="auctionArrow4">
         <img id="auctionCard2" src="/images/auctionPic/auctionArrowBlue.png" />
-        <!--         <CollectorsCard :card="auctionCards[1]"/> -->
+        <!-- <CollectorsCard :card="auctionCards[1]"/> -->
       </div>
       <div id="auctionArrow5">
         <img id="auctionCard3" src="/images/auctionPic/auctionArrowLeft.png" />
-        <!--         <CollectorsCard :card="auctionCards[2]"/> -->
+        <!-- <CollectorsCard :card="auctionCards[2]"/> -->
       </div>
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
-        <!--         <CollectorsCard :card="auctionCards[3]"/> -->
+        <!-- <CollectorsCard :card="auctionCards[3]"/> -->
       </div>
       <div id="auctionInfo">
         <img id="auctionInfo1" src="/images/auctionPic/auction_Info.png" />
@@ -200,7 +200,7 @@
       </div>
       <div id="buyMarketBoxInfo">
         <img id="marketInfo" src="/images/marketPic/marketInfo.png" />
-        <img id="testhover" src="/images/marketPic/marketBottle1.png" />
+        <img id="testhover" src="/images/marketPic/info.png" />
       </div>
       <div id="MarketArrow1">
         <img id="imagePingvin" src="/images/marketPic/image_Penguin.png" />
