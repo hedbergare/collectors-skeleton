@@ -85,12 +85,10 @@
           ${{ p.cost }}
         </button>
 
-        <div v-for="(p, index) in skillPlacement" :key="index">
           <img
             class="skillBottles"
-            :src="'images/buySkillPic/skill_Bottle/' + p.cost"
+            :src="'images/buySkillPic/skill_Bottle_' + p.cost +'.png'"
           />
-        </div>
 
         <div v-if="p.playerId !== null">
           {{ p.playerId }}
