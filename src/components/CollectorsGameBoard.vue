@@ -264,17 +264,13 @@ export default {
     skillPlacement: Array,
   },
   methods: {
+    /* Här är funktionerna till item */
     buyCard: function (card) {
       if (card.available) {
-        console.log(card.available);
         this.$emit("buyCard", card);
-        this.highlightAvailableCards();
       }
     },
-
     placeBottle: function (p, action) {
-      console.log("hejsan");
-      console.log(action);
       this.$emit("placeBottle", {
         cost: p.cost,
         action: action,
@@ -326,6 +322,15 @@ export default {
       return this.marketValues[card.market];
     },
 
+    getPoints: function (card) {
+      console.log(this.player.points);
+      let newPoints = this.cardCost(card);
+      this.player.points += newPoints;
+      console.log(this.player.points);
+      return this.player.points;
+    },
+
+/* Här är funktionerna till skills */
     buySkill: function (card) {
       if (card.available) {
         console.log(card.available);

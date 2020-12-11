@@ -29,8 +29,8 @@
           {{ labels.draw }}
         </button>
       </div>
-      <!-- Testknapp för "fill pools"
-    <button @click="fillPools()">HEJ</button> -->
+      <!-- Testknapp för "fill pools" -->
+    <button @click="fillPools()">HEJ</button> 
     <button @click="changeTurn()">Byt tur</button>
       Skills
       <div class="cardslots">
