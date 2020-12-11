@@ -140,20 +140,20 @@
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
       </div>
       <div id="auctionArrow3">
-        <CollectorsCard :card="auctionCards[0]"/>
+        <!-- <CollectorsCard :card="auctionCards[0]"/> -->
         <img id="auctionCard1" src="/images/auctionPic/auctionArrowDown.png" />
       </div>
       <div id="auctionArrow4">
         <img id="auctionCard2" src="/images/auctionPic/auctionArrowBlue.png" />
-        <CollectorsCard :card="auctionCards[1]"/>
+        <!-- <CollectorsCard :card="auctionCards[1]"/> -->
       </div>
       <div id="auctionArrow5">
         <img id="auctionCard3" src="/images/auctionPic/auctionArrowLeft.png" />
-        <CollectorsCard :card="auctionCards[2]"/>
+        <!-- <CollectorsCard :card="auctionCards[2]"/> -->
       </div>
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
-        <CollectorsCard :card="auctionCards[3]"/>
+        <!-- <CollectorsCard :card="auctionCards[3]"/> -->
       </div>
       <div id="auctionInfo">
         <img id="auctionInfo1" src="/images/auctionPic/auction_Info.png" />
@@ -778,13 +778,10 @@ export default {
 /* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
 /* Ta tillbaka transform scale om korten är ivägen */
 .card {
- /*  top: 0;
-  left: 0;*/
-/*   transform: scale(0.3, 0.3);
- */  transform-origin: center;
-/*   margin-top: -105%;
-  margin-left: -75px;  */
-  position: absolute;
+  position:absolute;
+  transform:scale(0.2) translate(-80%, -80%);
+
+  
 }
 
 #auctionArrow1 img,
