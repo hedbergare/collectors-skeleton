@@ -49,8 +49,8 @@
       <div class="bottleItem" v-for="(p, index) in buyPlacement" :key="index">
         <button
           class="placeBottleItem"
-          v-if="p.playerId === null"
           :disabled="cannotAffordItem(p.cost)"
+          v-if="p.playerId === null"
           @click="placeBottle(p, 'item')"
         >
           ${{ p.cost }}
@@ -78,12 +78,19 @@
       >
         <button
           class="placeBottleSkill"
-          v-if="p.playerId === null"
           :disabled="cannotAffordSkill(p.cost)"
+          v-if="p.playerId === null"
           @click="placeBottle(p, 'skill')"
         >
           ${{ p.cost }}
         </button>
+
+        <div v-for="(p, index) in skillPlacement" :key="index">
+          <img
+            class="skillBottles"
+            :src="'images/buySkillPic/skill_Bottle/' + p.cost"
+          />
+        </div>
 
         <div v-if="p.playerId !== null">
           {{ p.playerId }}
@@ -203,19 +210,19 @@
         <img id="testhover" src="/images/marketPic/info.png" />
       </div>
       <div id="MarketArrow1">
-        <img id="imagePingvin" src="/images/marketPic/image_Penguin.png" />
+        <img id="imagePingvin" src="/images/marketPic/image_fastival.png" />
       </div>
       <div id="MarketArrow2">
-        <img id="imageRobot" src="/images/marketPic/image_Figure.png" />
+        <img id="imageRobot" src="/images/marketPic/image_figure.png" />
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
       </div>
       <div id="MarketArrow4">
-        <img id="imageFilm" src="/images/marketPic/image_Film.png" />
+        <img id="imageFilm" src="/images/marketPic/image_movie.png" />
       </div>
       <div id="MarketArrow5">
-        <img id="imageTeknik" src="/images/marketPic/image_Tech.png" />
+        <img id="imageTeknik" src="/images/marketPic/image_technology.png" />
       </div>
     </div>
 
@@ -253,6 +260,7 @@ export default {
   components: {
     CollectorsCard,
   },
+
   props: {
     labels: Object,
     player: Object,
@@ -273,7 +281,6 @@ export default {
     },
 
     placeBottle: function (p, action) {
-      console.log("hejsan");
       console.log(action);
       this.$emit("placeBottle", {
         cost: p.cost,
@@ -286,6 +293,7 @@ export default {
         this.highlightAvailableSkills(p.cost);
       }
     },
+
     highlightAvailableCards: function (cost = 100) {
       for (let i = 0; i < this.itemsOnSale.length; i += 1) {
         if (
@@ -315,6 +323,7 @@ export default {
 
     cannotAffordItem: function (cost) {
       let minCost = 100;
+      console.log("dolle");
       for (let key in this.marketValues) {
         if (cost + this.marketValues[key] < minCost)
           minCost = cost + this.marketValues[key];
@@ -332,6 +341,7 @@ export default {
         this.$emit("buySkill", card);
       }
     },
+
     highlightAvailableSkills: function (cost = 100) {
       /* Kollar på skillsen som ligger på brädet */
       for (let i = 0; i < this.skillsOnSale.length; i += 1) {
@@ -344,17 +354,18 @@ export default {
       }
       this.chosenPlacementCost = cost;
     },
+
     skillCost: function (card) {
       return this.placement[card];
     },
+
     cannotAffordSkill: function (cost) {
-      console.log("här1");
+      console.log("här2");
       if (this.player.money < cost) {
         return true;
       } else {
         return false;
       }
-      
     },
   },
 };
@@ -367,7 +378,6 @@ export default {
 .wrapper {
   margin: auto;
   display: grid;
-  background-color: white;
   color: black;
   width: 100%;
   height: 100vh;
@@ -376,7 +386,6 @@ export default {
   margin-bottom: 60px;
 }
 .itemBox {
-  border: solid white;
   grid-column: 2 / span 4;
   grid-row: 2;
   display: grid;
@@ -389,7 +398,6 @@ export default {
   color: white;
 }
 .skillBox {
-  border: solid white;
   display: grid;
   text-align: center;
   grid-template-columns: auto auto;
@@ -403,7 +411,6 @@ export default {
   grid-row: 3 / span 3;
 }
 .workBox {
-  border: solid white;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: 8vh 9vh 11vh 11vh 11vh 11vh;
@@ -415,7 +422,6 @@ export default {
   grid-row: 3 / span 3;
 }
 .auctionBox {
-  border: solid white;
   display: grid;
   padding: 5px;
   text-align: center;
@@ -428,7 +434,6 @@ export default {
   max-width: 100%;
 }
 .marketBox {
-  border: solid white;
   display: grid;
   padding: 11px;
   text-align: center;
@@ -441,7 +446,6 @@ export default {
   max-width: 100%;
 }
 .cardBoxLeft {
-  border: solid white;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: 10vh 10vh 10vh 10vh 10vh 10vh;
@@ -452,7 +456,6 @@ export default {
   grid-auto-rows: max-content;
 }
 .cardBoxTop {
-  border: solid white;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5vh;
@@ -938,4 +941,5 @@ export default {
   display: none;
   width: 90%;
 }
+
 </style>
