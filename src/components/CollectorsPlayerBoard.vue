@@ -3,6 +3,7 @@
     <!-- Översta raden - där det visas hur mycket pengar och income man har -->
     <div id="topRow">
       <div id="wallet">
+
         <div id="money">
           <div class="helper_wrapper">
             <span class="helper"></span>
@@ -10,6 +11,7 @@
           </div>
           <p>{{ player.money }}</p>
         </div>
+
         <div id="income">
           <div>
             <span class="helper"></span>
@@ -17,6 +19,14 @@
           </div>
           <p>5</p>
         </div>
+
+        <div id="currentPoints">
+          <div>
+          <img src="images/player_board/score_points.png">
+          </div>
+          <p>{{ player.points }}</p>
+        </div>
+        
       </div>
     </div>
     <!-- Mellersta raden, där ens "bottles" ska ligga -->
@@ -71,7 +81,14 @@
           </div>
         </div>
         <div id="secret">
-          <img src="images/player_board/treasure.PNG" />
+          <img src="images/player_board/treasure.PNG"/>
+        </div>
+        <div class="secretPopup" v-if="playerId == player.pId">
+            <CollectorsCard
+              v-for="(card, index) in player.secret"
+              :key="index"
+              :card="card"
+            />
         </div>
       </div>
       <div id="items">
@@ -130,7 +147,7 @@ export default {
 #wallet {
   width: 20%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   float: right;
   font-size: 150%;
 }
@@ -145,13 +162,22 @@ export default {
   grid-template-columns: 2fr 1fr;
   width: 100%;
 }
+
+#currentPoints {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: 100%;
+}
+
 #money p,
-#income p {
+#income p, 
+#currentPoints p {
   margin: 0;
   margin-top: 0.3em;
 }
 #money img,
-#income img {
+#income img, 
+#currentPoints img {
   max-width: 80%;
   vertical-align: middle;
 }
@@ -187,6 +213,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr 5fr;
   border: 2px dashed black;
+  height: 30vh;
 }
 /* En hjälp-div som gör att bilder centresas vertikalt */
 .helper {
@@ -213,6 +240,7 @@ export default {
   display: grid;
   grid-template-columns: 5fr 1fr;
   border: 2px dashed black;
+  height: 30vh;
 }
 #itemsRefill {
   display: grid;
@@ -247,6 +275,7 @@ export default {
 }
 #hand {
   display: grid;
+  height: 10vh;
   grid-template-rows: 5fr 1fr;
 }
 .handPopup > *{
@@ -263,7 +292,8 @@ export default {
   left:0;
 }
 .handPopup {
-  display:none;
+  display:grid;
+  display: none;
   position:absolute;
   grid-template-columns: repeat(auto-fill, 130px);
   grid-template-rows: repeat(auto-fill, 180px);
@@ -272,13 +302,22 @@ export default {
   width:100%;
 }
 
-/* Secret */
+/* Secret chest */
 #secret {
   border: solid black;
   text-align: center;
   background-color: #f7d4c4;
 }
-#secret img {
-  max-width: 100%;
+
+#secret:hover +.secretPopup {
+  display: inline-block;
+  position: absolute;
+}
+
+.secretPopup {
+  display: none;
+  position:absolute;
+  transform:scale(0.5);
+  width:100%;
 }
 </style>
