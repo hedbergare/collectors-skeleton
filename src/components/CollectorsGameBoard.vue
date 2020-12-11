@@ -80,14 +80,15 @@
           class="placeBottleSkill"
           :disabled="cannotAffordSkill(p.cost)"
           v-if="p.playerId === null"
+          :style="'background-image: url(/images/buySkillPic/skill_Bottle_' + p.cost + '.png);'"
           @click="placeBottle(p, 'skill')"
         >
         </button>
 
-          <img
+          <!-- <img
             class="skillBottles"
             :src="'images/buySkillPic/skill_Bottle_' + p.cost +'.png'"
-          />
+          /> -->
 
         <div v-if="p.playerId !== null">
           {{ p.playerId }}
