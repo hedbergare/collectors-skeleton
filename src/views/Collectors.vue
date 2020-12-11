@@ -2,7 +2,7 @@
   <div>
     <main>
       <CollectorsAuction
-      v-if="false"
+        v-if="false"
         :auctionCards="auctionCards"
         :players="players"
         :cardUpForAuction="cardUpForAuction"
@@ -69,8 +69,8 @@
           v-for="(card, index) in players[playerId].hand"
           :card="card"
           :availableAction="card.available"
-          @doAction="buyCard(card)"
           :key="index"
+          @doAction="buyCard(card)"
         />
       </div>
       Items
@@ -103,11 +103,18 @@
     <div id="browserWrapper">
       <div id="gameboardColumn">
         <CollectorsGameBoard
+          v-if="itemsOnSale"
+          :player="players[playerId]"
+          :labels="labels"
           :itemsOnSale="itemsOnSale"
           :skillsOnSale="skillsOnSale"
-          :auctionCards="auctionCards"
+          :marketValues="marketValues"
+          :buyPlacement="buyPlacement"
+          :skillPlacement="skillPlacement"
           @buyCard="buyCard($event)"
+          @updatePoints="updatePoints($event)"
           @buySkill="buySkill($event)"
+          @placeBottle="placeBottle($event)"
         />
       </div>
       <div id="rightColumn">
@@ -279,13 +286,16 @@ export default {
         this.skillPlacement = d.skillPlacement;
         this.marketPlacement = d.marketPlacement;
         this.auctionPlacement = d.auctionPlacement;
-        console.log("Bottle has been placed");
       }.bind(this)
     );
 
+    /* Denna har något att göra med spelarnas poäng */
     this.$store.state.socket.on(
       "collectorsPointsUpdated",
-      (d) => (this.points = d)
+      /*       (d) => (this.points = d)
+       */ function (d) {
+        this.players = d.players;
+      }.bind(this)
     );
 
     this.$store.state.socket.on(
@@ -375,6 +385,12 @@ export default {
         leadingBet: leadingBet,
       });
     },
+    /* Fungerar ej men har potential  */
+    fillTreasure: function (card) {
+      let secretCard = this.players[this.playerId].hand.pop(card);
+      this.players[this.playerId].secret.push(secretCard);
+    },
+
     fillPools: function () {
       this.$store.state.socket.emit("fillPools", {
         roomId: this.$route.params.id,
@@ -417,15 +433,13 @@ export default {
     selectAll: function (n) {
       n.target.select();
     },
-    placeBottle: function (action, cost) {
-      console.log("Placebottle i collectors.vue");
-      console.log(cost);
-      this.chosenPlacementCost = cost;
+    placeBottle: function (p) {
+      this.chosenPlacementCost = p.cost;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
-        action: action,
-        cost: cost,
+        action: p.action,
+        cost: p.cost,
       });
     },
     drawCard: function () {
@@ -457,6 +471,12 @@ export default {
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,
         cardUpForAuction: this.cardUpForAuction,
+      });
+    },
+    updatePoints: function () {
+      console.log("updateP i collectors.vue");
+      this.$store.state.socket.emit("collectorsUpdatePoints", {
+        roomId: this.$route.params.id,
       });
     },
   },

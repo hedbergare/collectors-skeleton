@@ -8,7 +8,7 @@
           :availableAction="card.available"
           @doAction="buySkill(card)"
         />
-        {{ skillCost(card) }}
+        {{ skillCost(card) }} 
         {{ card.available }}
       </div>
     </div>
@@ -16,7 +16,7 @@
       <div class="buttons" v-for="(p, index) in placement" :key="index">
         <button
           v-if="p.playerId === null"
-          :disabled="cannotAfford(p.cost)"
+          :disabled="cannotAffordSkill(p.cost)"
           @click="placeBottle(p)"
         >
           ${{ p.cost }}
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     /* Kollar om player har råd med skillsen */
-    cannotAfford: function (cost) {
+    cannotAffordSkill: function (cost) {
       if (this.player.money < cost) {
         return true;
       } else {
@@ -75,9 +75,7 @@ export default {
         
       },
     buySkill: function (card) {
-      console.log(card.available);
       if (card.available) {
-        console.log(card.available);
         this.$emit("buySkill", card);
 
       }

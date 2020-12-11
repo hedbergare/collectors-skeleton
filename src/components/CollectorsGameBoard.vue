@@ -2,8 +2,31 @@
   <div class="wrapper">
     <!-- Hela Spelbrädet -->
 
+    <!-- Här gör vi card box Top -->
+    <div class="cardBoxTop">
+      <div
+        class="itemsOnSaleIconCont"
+        v-for="(card, index) in itemsOnSale"
+        :key="index"
+        @click="buyCard(card)"
+      >
+        <div class="itemsOnSaleIconCont1" v-if="card.item !== undefined">
+          <img
+            class="itemsOnSaleIcon"
+            :src="'images/item_logos/' + card.item + '_item.png'"
+          />
+          <CollectorsCard
+            :card="itemsOnSale[index]"
+            :availableAction="card.available"
+            id="itemsOnSalePic"
+          />
+        </div>
+      </div>
+    </div>
+
     <div class="itemBox">
       <!-- här gör vi pilarna till butItem -->
+
       <div id="itemArrow1">
         <img id="itemArrow1.1" src="/images/buyItemPic/ItemArrowGreen.png" />
       </div>
@@ -19,23 +42,22 @@
       <div id="itemArrow5">
         <img id="itemArrow1.5" src="/images/buyItemPic/ItemArrowRed.png" />
       </div>
+      <div></div>
 
       <!-- Här gör vi Item box med köprutor -->
 
-      <div id="buyItemBox1">
-        <img id="bottle1" src="/images/bottelPic/Bottle.png" />
-      </div>
-      <div id="buyItemBox2">
-        <img id="bottle1" src="/images/bottelPic/Bottle.png" />
-      </div>
-      <div id="buyItemBox3">
-        <img id="itemBottle2" src="/images/bottelPic/Item_Bottle2.png" />
-      </div>
-      <div id="buyItemBox4">
-        <img id="itemBottle2" src="/images/bottelPic/Item_Bottle2.png" />
-      </div>
-      <div id="buyItemBox5">
-        <img id="itemBottle3" src="/images/bottelPic/Item_Bottle3.png" />
+      <div class="bottleItem" v-for="(p, index) in buyPlacement" :key="index">
+        <button
+          class="placeBottleItem"
+          :disabled="cannotAffordItem(p.cost)"
+          v-if="p.playerId === null"
+          @click="placeBottle(p, 'item')"
+        >
+        </button>
+
+        <div v-if="p.playerId !== null">
+          {{ p.playerId }}
+        </div>
       </div>
       <div id="buyItemBoxInfo">
         <img id="itemInfo" src="/images/buyItemPic/BuyItemInfo.png" />
@@ -44,23 +66,33 @@
 
     <div class="skillBox">
       <!-- Här gör vi skill box med köprutor -->
-      <div id="buySkillBox1">
-        <img id="skillBottle1" src="/images/buySkillPic/skill_Bottle1.png" />
-      </div>
-      <div id="buySkillBox2">
-        <img id="skillBottle2" src="/images/buySkillPic/skill_Bottle2.png" />
-      </div>
-      <div id="buySkillBox3">
-        <img id="skillBottle3" src="/images/buySkillPic/skill_Bottle3.png" />
-      </div>
-      <div id="buySkillBox4">
-        <img id="skillBottle4" src="/images/buySkillPic/skill_Bottle4.png" />
-      </div>
-      <div id="buySkillBox5">
-        <img id="skillBottle5" src="/images/buySkillPic/skill_Bottle5.png" />
-      </div>
+      <div></div>
       <div id="buySkillInfo">
         <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" />
+      </div>
+      <div
+        class="bottleSkill"
+        v-for="(p, index) in skillPlacement"
+        :key="index"
+      >
+        <button
+
+          class="placeBottleSkill"
+          :disabled="cannotAffordSkill(p.cost)"
+          v-if="p.playerId === null"
+          :style="'background-image: url(/images/buySkillPic/skill_Bottle_' + p.cost + '.png);'"
+          @click="placeBottle(p, 'skill')"
+        >
+        </button>
+
+          <!-- <img
+            class="skillBottles"
+            :src="'images/buySkillPic/skill_Bottle_' + p.cost +'.png'"
+          /> -->
+
+        <div v-if="p.playerId !== null">
+          {{ p.playerId }}
+        </div>
       </div>
 
       <!-- här gör vi pilarna till skillBox -->
@@ -161,6 +193,7 @@
     </div>
 
     <div class="marketBox">
+
       <!-- Här gör vi market box med köprutor -->
       <div id="buyMarketBox1">
         <img id="marketBottle1" src="/images/marketPic/marketBottle1.png" />
@@ -173,22 +206,22 @@
       </div>
       <div id="buyMarketBoxInfo">
         <img id="marketInfo" src="/images/marketPic/marketInfo.png" />
-        <img id="testhover" src="/images/marketPic/marketBottle1.png" />
+        <img id="testhover" src="/images/marketPic/info.png" />
       </div>
       <div id="MarketArrow1">
-        <img id="imagePingvin" src="/images/marketPic/image_Penguin.png" />
+        <img id="imagePingvin" src="/images/marketPic/image_fastival.png" />
       </div>
       <div id="MarketArrow2">
-        <img id="imageRobot" src="/images/marketPic/image_Figure.png" />
+        <img id="imageRobot" src="/images/marketPic/image_figure.png" />
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
       </div>
       <div id="MarketArrow4">
-        <img id="imageFilm" src="/images/marketPic/image_Film.png" />
+        <img id="imageFilm" src="/images/marketPic/image_movie.png" />
       </div>
       <div id="MarketArrow5">
-        <img id="imageTeknik" src="/images/marketPic/image_Tech.png" />
+        <img id="imageTeknik" src="/images/marketPic/image_technology.png" />
       </div>
     </div>
 
@@ -215,28 +248,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Här gör vi card box Top -->
-    <div class="cardBoxTop">
-      <div
-        class="itemsOnSaleIconCont"
-        v-for="(card, index) in itemsOnSale"
-        :key="index"
-        @click="buyCard(card)"
-      >
-        <div class="itemsOnSaleIconCont1" v-if="card.item !== undefined">
-          <img
-            class="itemsOnSaleIcon"
-            :src="'images/item_logos/' + card.item + '_item.png'"
-          />
-          <CollectorsCard
-            :card="itemsOnSale[index]"
-            :availableAction="card.available"
-            id="itemsOnSalePic"
-          />
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -248,6 +259,7 @@ export default {
   components: {
     CollectorsCard,
   },
+
   props: {
     labels: Object,
     player: Object,
@@ -255,20 +267,107 @@ export default {
     auctionCards: Array,
     itemsOnSale: Array,
     marketValues: Object,
-    placement: Array,
+    buyPlacement: Array,
+    skillPlacement: Array,
   },
   methods: {
-    buySkill: function (card) {
-      if (card.available) {
-        console.log(card.available);
-        this.$emit("buySkill", card);
-        console.log("hej 1");
-      }
-    },
+    /* Här är funktionerna till item */
     buyCard: function (card) {
       if (card.available) {
-        console.log(card.available);
         this.$emit("buyCard", card);
+        this.updatePoints();
+      }
+    },
+    /* Funktionen som hanterar hur många poäng varje spelare har */
+    updatePoints: function() {
+        this.$emit("updatePoints");
+    },
+    placeBottle: function (p, action) {
+      this.$emit("placeBottle", {
+        cost: p.cost,
+        action: action,
+        playerId: p.playerId,
+      });
+      if (action === "item") {
+        this.highlightAvailableCards(p.cost);
+      } else if (action === "skill") {
+        this.highlightAvailableSkills(p.cost);
+      }
+    },
+
+    highlightAvailableCards: function (cost = 100) {
+      for (let i = 0; i < this.itemsOnSale.length; i += 1) {
+        if (
+          this.marketValues[this.itemsOnSale[i].item] <=
+          this.player.money - cost
+        ) {
+          this.$set(this.itemsOnSale[i], "available", true);
+        } else {
+          this.$set(this.itemsOnSale[i], "available", false);
+        }
+        this.chosenPlacementCost = cost;
+      }
+
+      for (let i = 0; i < this.player.hand.length; i += 1) {
+        if (
+          this.marketValues[this.player.hand[i].item] <=
+          this.player.money - cost
+        ) {
+          this.$set(this.player.hand[i], "available", true);
+          this.chosenPlacementCost = cost;
+        } else {
+          this.$set(this.player.hand[i], "available", false);
+          this.chosenPlacementCost = cost;
+        }
+      }
+    },
+
+    cannotAffordItem: function (cost) {
+      let minCost = 100;
+      console.log("dolle");
+      for (let key in this.marketValues) {
+        if (cost + this.marketValues[key] < minCost)
+          minCost = cost + this.marketValues[key];
+      }
+      if(this.player.money >= minCost && this.player.isTurn){
+          return false;
+      }
+      else{
+        return true;
+      }
+    },
+
+    /* Här är funktionerna till skills */
+    buySkill: function (card) {
+      if (card.available) {
+        this.$emit("buySkill", card);
+        this.updatePoints(); /* Även när man köper skills ska poängen uppdateras */
+      }
+    },
+
+    highlightAvailableSkills: function (cost = 100) {
+      /* Kollar på skillsen som ligger på brädet */
+      for (let i = 0; i < this.skillsOnSale.length; i += 1) {
+        this.$set(this.skillsOnSale[i], "available", true);
+      }
+      this.chosenPlacementCost = cost;
+      /* Kollar på skillsen som ligger på handen */
+      for (let i = 0; i < this.player.hand.length; i += 1) {
+        this.$set(this.player.hand[i], "available", true);
+      }
+      this.chosenPlacementCost = cost;
+    },
+
+    skillCost: function (card) {
+      return this.placement[card];
+    },
+
+    cannotAffordSkill: function (cost) {
+      console.log("här2");
+      if (this.player.money >= cost && this.player.isTurn) {
+        return false;
+      } else {
+        return true;
       }
     },
   },
@@ -282,7 +381,6 @@ export default {
 .wrapper {
   margin: auto;
   display: grid;
-  background-color: white;
   color: black;
   width: 100%;
   height: 100vh;
@@ -291,7 +389,6 @@ export default {
   margin-bottom: 60px;
 }
 .itemBox {
-  border: solid white;
   grid-column: 2 / span 4;
   grid-row: 2;
   display: grid;
@@ -304,7 +401,6 @@ export default {
   color: white;
 }
 .skillBox {
-  border: solid white;
   display: grid;
   text-align: center;
   grid-template-columns: auto auto;
@@ -318,7 +414,6 @@ export default {
   grid-row: 3 / span 3;
 }
 .workBox {
-  border: solid white;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: 8vh 9vh 11vh 11vh 11vh 11vh;
@@ -330,7 +425,6 @@ export default {
   grid-row: 3 / span 3;
 }
 .auctionBox {
-  border: solid white;
   display: grid;
   padding: 5px;
   text-align: center;
@@ -343,7 +437,6 @@ export default {
   max-width: 100%;
 }
 .marketBox {
-  border: solid white;
   display: grid;
   padding: 11px;
   text-align: center;
@@ -356,7 +449,6 @@ export default {
   max-width: 100%;
 }
 .cardBoxLeft {
-  border: solid white;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: 10vh 10vh 10vh 10vh 10vh 10vh;
@@ -367,7 +459,6 @@ export default {
   grid-auto-rows: max-content;
 }
 .cardBoxTop {
-  border: solid white;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5vh;
@@ -407,40 +498,24 @@ export default {
 
 /* small boxes in itemBox */
 
-#buyItemBox1 {
-  color: black;
-  grid-column: 1;
-  grid-row: 2;
-  max-width: 100%;
-  max-height: 10vh;
+.placeBottleItem {
+  color: blue;
+  background-image: url(/images/bottelPic/Bottle.png);
+  width: 50%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
-#buyItemBox2 {
-  color: black;
-  grid-column: 2;
-  grid-row: 2;
-  max-width: 100%;
+.placeBottleSkill {
+ color: blue;
+  background-image: url(/images/buySkillPic/skill_Bottle1.png);
+  width: 70%;
+  height: 70%;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
-#buyItemBox3 {
-  color: black;
-  grid-column: 3;
-  grid-row: 2;
-  max-width: 100%;
-}
-#buyItemBox4 {
-  color: black;
-  grid-column: 4;
-  grid-row: 2;
-  max-width: 100%;
-}
-#buyItemBox5 {
-  color: black;
-  grid-column: 5;
-  grid-row: 2;
-  max-width: 100%;
-  max-height: 100%;
-}
 #buyItemBoxInfo {
   color: black;
   grid-column: 6;
@@ -448,11 +523,6 @@ export default {
   max-width: 100%;
 }
 
-#buyItemBox1 img,
-#buyItemBox2 img,
-#buyItemBox3 img,
-#buyItemBox4 img,
-#buyItemBox5 img,
 #buyItemBoxInfo img {
   max-width: 100%;
   max-height: 100%;
@@ -462,29 +532,26 @@ export default {
   grid-column: 1;
   grid-row: 1;
   max-width: 100%;
-  position: relative
+  position: relative;
 }
 
 #itemArrow2 {
   grid-column: 2;
   grid-row: 1;
   max-width: 100%;
-  position: relative
-
+  position: relative;
 }
 #itemArrow3 {
   grid-column: 3;
   grid-row: 1;
   max-width: 100%;
-  position: relative
-
+  position: relative;
 }
 #itemArrow4 {
   grid-column: 4;
   grid-row: 1;
   max-width: 100%;
-  position: relative
-
+  position: relative;
 }
 #itemArrow5 {
   grid-column: 5;
@@ -498,6 +565,10 @@ export default {
 #itemArrow5 img {
   max-width: 100%;
   max-height: 100%;
+}
+.bottleSkill {
+  color: blue;
+  padding: 8px;
 }
 
 #skillButton {
@@ -778,10 +849,14 @@ export default {
 /* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
 /* Ta tillbaka transform scale om korten är ivägen */
 .card {
-  position:absolute;
-  transform:scale(0.2) translate(-80%, -80%);
-
-  
+  /*  top: 0;
+  left: 0;*/
+  /*   transform: scale(0.3, 0.3);
+ */
+  transform-origin: center;
+  /*   margin-top: -105%;
+  margin-left: -75px;  */
+  position: absolute;
 }
 
 #auctionArrow1 img,
@@ -880,4 +955,5 @@ export default {
   display: none;
   width: 90%;
 }
+
 </style>

@@ -2,28 +2,34 @@
   <!-- Bakgrundsrutan -->
   <div id="infoWrapper">
     <!-- Infoknapp -->
-    <div id="infoButton">Game Rules
-      <button type="button">Show me game rules!</button>
-    </div>
+    <a
+      href="https://docs.google.com/document/d/1R3R4nk1pNI_xqOas4X_5TR7AOW6FE_bXbMcdh1bZfI0/edit?usp=sharing"
+      target="_blank"
+      >Show me game rules!</a
+    >
 
     <!-- Boxen för vilken runda det är just nu -->
-    <div id="roundBox">Round 1/4</div>
+    <div id="roundBox">
+      <br />
+      Round 1/4
+    </div>
 
     <!-- Boxen för historik för vad de spelarna gör för handlingar -->
-    <div id="gameHistory">Game history</div>
+    <div id="gameHistory"><br />Game history</div>
 
     <!-- Boxen för Quit the game-knapp -->
     <div id="quitButton">
-      <img src="/images/QuitPlaying.jpg" />
+      <a href="http://localhost:8080/#/"
+        ><img src="/images/QuitPlaying.jpg"
+      /></a>
     </div>
   </div>
 </template>
+
 <style scoped>
 #infoWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 4px;
-  border: dashed black 2px;
   text-align: center;
   background-color: white;
   max-width: 100%;
@@ -33,16 +39,27 @@
   font-size: x-small;
 }
 
-#infoButton {
-  grid-column: 1;
+a:link,
+a:visited {
+  background-color: white;
+  color: black;
   text-align: center;
-  text-transform: uppercase;
-  font-size: 2em;
+  text-decoration: none;
+  display: inline-block;
+  border: dashed black 2px;
+  font-size: x-large;
+  max-height: 100%;
+}
+
+a:hover,
+a:active {
+  background-color: gray;
 }
 
 #roundBox {
   grid-column: 2;
   font-size: 2em;
+  border: dashed black 2px;
 }
 
 #gameHistory {
@@ -54,10 +71,10 @@
 #quitButton {
   grid-column: 4;
   max-width: 100%;
+  max-height: 100%;
 }
 
 #quitButton img {
-  max-width: 70%;
-  max-height: 100%;
+  max-width: 100%;
 }
 </style>

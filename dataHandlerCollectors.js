@@ -66,6 +66,8 @@ Data.prototype.createRoom = function (roomId, playerCount, lang = "en") {
   room.itemsOnSale = room.deck.splice(0, 5);
   room.skillsOnSale = room.deck.splice(0, 5);
   room.auctionCards = room.deck.splice(0, 4);
+  /*   room.playerId[hand] = room.deck.splice(0, 3);
+   */
   room.market = [];
   room.buyPlacement = [{ cost: 1, playerId: null },
   { cost: 1, playerId: null },
@@ -130,14 +132,35 @@ Data.prototype.joinGame = function (roomId, playerId) {
         auctionTurn: false,
         auctionPass: false,
       };
+      /* När spelare joinar ska dom ha rätt antal pengar från */
+      for (let i = 0; i < Object.keys(room.players).length + 1; i++) {
+        if (Object.keys(room.players)[i] == playerId) {
+          room.players[playerId] = {
+            hand: [room.deck.pop(), room.deck.pop(), room.deck.pop()],
+            money: i + 2,
+            points: 0,
+            skills: [],
+            items: [],
+            income: [],
+            secret: [],
+            color: colors[Object.keys(room.players).length], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
+            pId: playerId,
+            isTurn: turn,
+          }
+        }
+      };
+      let secretCard = room.players[playerId].hand.pop(0, 1);
+      room.players[playerId].secret.push(secretCard); 
+
       if (Object.keys(room.players).length == 1) {
         room.turn = playerId;
         console.log("Den första spelaren har joinat och den har id:  " + room.turn);
       }
-
       return true;
     }
     console.log("Player", playerId, "was declined due to player limit");
+    
+
   }
   return false;
 }
@@ -150,13 +173,22 @@ Data.prototype.getPlayers = function (id) {
   else return {};
 }
 
-Data.prototype.updatePoints = function (roomId, player, points) {
+/* Här har vi gjort funktionen som räknar ut hur många poäng varje spelare har */
+Data.prototype.updatePoints = function (roomId) {
   let room = this.rooms[roomId]
   if (typeof room !== 'undefined') {
-    room.points[player] += points;
-    return room.points;
+    let marketList = this.getMarketValues(roomId);
+    /* Uträkningar för hur många p varje spelare har */
+    let newPoints = 0;
+    for (let x in room.players ) {
+      room.players[x].points = 0;
+
+      for (let y in room.players[x].items) {
+        newPoints = marketList[room.players[x].items[y].item];
+        room.players[x].points += newPoints;
+      }
+    }
   }
-  else return {};
 }
 Data.prototype.updatePlayers = function (players, roomId) {
   let room = this.rooms[roomId]
@@ -203,7 +235,8 @@ Data.prototype.buyCard = function (roomId, playerId, card, cost) {
     room.players[playerId].items.push(...c);
     room.players[playerId].money -= cost;
 
-  }
+
+    }
 }
 
 /* moves card from skillsOnSale to a player's hand */
@@ -240,11 +273,12 @@ Data.prototype.placeBottle = function (roomId, playerId, action, cost) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
     let activePlacement = [];
-    if (action === "buy") {
+    if (action === "item") {
       activePlacement = room.buyPlacement;
     }
     else if (action === "skill") {
       activePlacement = room.skillPlacement;
+
     }
     else if (action === "auction") {
       activePlacement = room.auctionPlacement;
@@ -304,13 +338,13 @@ Data.prototype.getMarketValues = function (roomId) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
     return room.market.reduce(function (acc, curr) {
-      curr.market == "fastaval" ? acc.fastaval += 1 : null
-      curr.market == "movie" ? acc.movie += 1 : null
-      curr.market == "technology" ? acc.technology += 1 : null
-      curr.market == "figures" ? acc.figures += 1 : null
-      curr.market == "music" ? acc.music += 1 : null
+      curr.market == "fastaval" ? acc.fastaval += 1: null
+      curr.market == "movie" ? acc.movie += 1: null
+      curr.market == "technology" ? acc.technology += 1: null
+      curr.market == "figures" ? acc.figures += 1: null
+      curr.market == "music" ? acc.music += 1: null
 
-      return acc;
+      return acc
     },
       {
         fastaval: 0,
@@ -390,7 +424,6 @@ Data.prototype.fillPools = function (roomId) {
         /* Ta ut det kortet från skills on sale och sparar det som c */
         let c = room.skillsOnSale.splice(i, 1, {});
         /* Lägg till kortets "market" in i market value */
-
         room.market.push(c[0]);
         break;
       }
@@ -493,6 +526,4 @@ Data.prototype.fillWithCards = function (room) {
 }
 
 module.exports = Data;
-
-
 

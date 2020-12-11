@@ -86,6 +86,22 @@ function sockets(io, socket, data) {
       auctionWinner: data.getAuctionWinner(d.roomId),
     })
   });
+    socket.on('fillPools', function(d) {
+      data.fillPools(d.roomId);
+      io.to(d.roomId).emit('collectorsPoolsFilled', {
+        skillsOnSale: data.getSkillsOnSale(d.roomId),
+        itemsOnSale: data.getItemsOnSale(d.roomId),
+        auctionCards: data.getAuctionCards(d.roomId),
+        marketValues: data.getMarketValues(d.roomId)
+      });
+    });
+    
+    socket.on('collectorsUpdatePoints', function(d) {
+      data.updatePoints(d.roomId),
+      io.to(d.roomId).emit('collectorsPointsUpdated', {
+        players: data.getPlayers(d.roomId)
+      })
+    }); 
 }
 
 module.exports = sockets;
