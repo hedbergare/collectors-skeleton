@@ -270,16 +270,18 @@ export default {
     skillPlacement: Array,
   },
   methods: {
+    /* Här är funktionerna till item */
     buyCard: function (card) {
       if (card.available) {
-        console.log(card.available);
         this.$emit("buyCard", card);
-        this.highlightAvailableCards();
+        this.updatePoints();
       }
     },
-
+    /* Funktionen som hanterar hur många poäng varje spelare har */
+    updatePoints: function() {
+        this.$emit("updatePoints");
+    },
     placeBottle: function (p, action) {
-      console.log(action);
       this.$emit("placeBottle", {
         cost: p.cost,
         action: action,
@@ -329,14 +331,11 @@ export default {
       return this.player.money < minCost;
     },
 
-    cardCost: function (card) {
-      return this.marketValues[card.market];
-    },
-
+    /* Här är funktionerna till skills */
     buySkill: function (card) {
       if (card.available) {
-        console.log(card.available);
         this.$emit("buySkill", card);
+        this.updatePoints(); /* Även när man köper skills ska poängen uppdateras */
       }
     },
 
@@ -358,7 +357,6 @@ export default {
     },
 
     cannotAffordSkill: function (cost) {
-      console.log("här2");
       if (this.player.money < cost) {
         return true;
       } else {

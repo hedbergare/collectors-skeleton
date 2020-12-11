@@ -80,11 +80,10 @@ export default {
     },
     buyCard: function (card) {
       if (card.available) {
-        console.log("1. buyCard i collectorsbuyactions")
         this.$emit('buyCard', card)
-        this.highlightAvailableCards()
-      }
-    }
+/*         this.highlightAvailableCards()
+ */      }
+    }, 
   }
 }
 </script>

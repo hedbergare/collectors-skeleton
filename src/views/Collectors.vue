@@ -29,9 +29,9 @@
           {{ labels.draw }}
         </button>
       </div>
-      <!-- Testknapp för "fill pools"
-    <button @click="fillPools()">HEJ</button> -->
-    <button @click="changeTurn()">Byt tur</button>
+      <!-- Testknapp för "fill pools" -->
+      <button @click="fillPools()">Fill pools with new cards</button>
+      <button @click="changeTurn()">Byt tur</button>
       Skills
       <div class="cardslots">
         <CollectorsCard
@@ -57,8 +57,8 @@
           v-for="(card, index) in players[playerId].hand"
           :card="card"
           :availableAction="card.available"
-          @doAction="buyCard(card)"
           :key="index"
+          @doAction="buyCard(card)"
         />
       </div>
       Items
@@ -90,20 +90,20 @@
 
     <div id="browserWrapper">
       <div id="gameboardColumn">
-    <CollectorsGameBoard
-      v-if="itemsOnSale"
-      :player="players[playerId]"
-      :labels="labels"
-      :itemsOnSale="itemsOnSale"
-      :skillsOnSale="skillsOnSale"
-      :marketValues="marketValues"
-      :buyPlacement="buyPlacement"
-      :skillPlacement="skillPlacement"
-      @buyCard="buyCard($event)"
-      @buySkill="buySkill($event)"
-      @placeBottle="placeBottle($event)"
-
-    />
+        <CollectorsGameBoard
+          v-if="itemsOnSale"
+          :player="players[playerId]"
+          :labels="labels"
+          :itemsOnSale="itemsOnSale"
+          :skillsOnSale="skillsOnSale"
+          :marketValues="marketValues"
+          :buyPlacement="buyPlacement"
+          :skillPlacement="skillPlacement"
+          @buyCard="buyCard($event)"
+          @updatePoints="updatePoints($event)"
+          @buySkill="buySkill($event)"
+          @placeBottle="placeBottle($event)"
+        />
       </div>
       <div id="rightColumn">
         <div id="infoboardColumn">
@@ -154,7 +154,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 
@@ -270,14 +269,17 @@ export default {
         this.skillPlacement = d.skillPlacement;
         this.marketPlacement = d.marketPlacement;
         this.auctionPlacement = d.auctionPlacement;
-        console.log("Bottle has been placed");
       }.bind(this)
     );
 
+    /* Denna har något att göra med spelarnas poäng */
     this.$store.state.socket.on(
       "collectorsPointsUpdated",
-      (d) => (this.points = d)
-    );
+/*       (d) => (this.points = d)
+ */    function (d) {
+        this.players = d.players;
+ }.bind(this)
+   );
 
     this.$store.state.socket.on(
       "collectorsCardDrawn",
@@ -312,6 +314,7 @@ export default {
         this.itemsOnSale = d.itemsOnSale;
         this.skillsOnSale = d.skillsOnSale;
         this.auctionCards = d.auctionCards;
+        this.marketValues = d.marketValues;
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -324,8 +327,13 @@ export default {
   },
 
   methods: {
+    /* Fungerar ej men har potential  */
+    fillTreasure: function (card) {
+      let secretCard = this.players[this.playerId].hand.pop(card);
+      this.players[this.playerId].secret.push(secretCard);
+    },
+
     fillPools: function () {
-      console.log("fillPools i Collectors");
       this.$store.state.socket.emit("fillPools", {
         roomId: this.$route.params.id,
       });
@@ -333,14 +341,12 @@ export default {
     changeTurn: function () {
       this.players[this.playerId].isTurn = false;
       let playerIndex = Object.keys(this.players).indexOf(this.playerId);
-      console.log("Vårat index just nu " + playerIndex);
       let newPlayerIndex;
       if (playerIndex == Object.keys(this.players).length - 1) {
         newPlayerIndex = 0;
       } else {
         newPlayerIndex = playerIndex + 1;
       }
-      console.log("Vi ska byta till" + newPlayerIndex);
       Object.values(this.players)[newPlayerIndex].isTurn = true;
       this.$store.state.socket.emit("changeTurn", {
         players: this.players,
@@ -370,11 +376,7 @@ export default {
       n.target.select();
     },
     placeBottle: function (p) {
-      console.log("Placebottle i collectors.vue");
-      console.log(p.cost);
       this.chosenPlacementCost = p.cost;
-      console.log(p.action);
-      console.log(p.playerId);
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -398,14 +400,18 @@ export default {
     },
     buySkill: function (card) {
       console.log("buySkill", card);
-      console.log("hej 2");
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
-      console.log("hej");
+    },
+    updatePoints: function () {
+      console.log("updateP i collectors.vue");
+      this.$store.state.socket.emit("collectorsUpdatePoints", {
+        roomId: this.$route.params.id
+      });
     },
   },
 };

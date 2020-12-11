@@ -75,9 +75,7 @@ export default {
         
       },
     buySkill: function (card) {
-      console.log(card.available);
       if (card.available) {
-        console.log(card.available);
         this.$emit("buySkill", card);
 
       }
