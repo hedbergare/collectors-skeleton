@@ -83,6 +83,12 @@
           @click="placeBottle(p, 'skill')"
         >
         </button>
+
+          <img
+            class="skillBottles"
+            :src="'images/buySkillPic/skill_Bottle_' + p.cost +'.png'"
+          />
+
         <div v-if="p.playerId !== null">
           {{ p.playerId }}
         </div>
@@ -202,20 +208,19 @@
         <img id="testhover" src="/images/marketPic/info.png" />
       </div>
       <div id="MarketArrow1">
-        <img id="imagePingvin" src="/images/marketPic/image_Penguin.png" />
-                {{marketValues.fastaval}}
+        <img id="imagePingvin" src="/images/marketPic/image_fastival.png" />
       </div>
       <div id="MarketArrow2">
-        <img id="imageRobot" src="/images/marketPic/image_Figure.png" />
+        <img id="imageRobot" src="/images/marketPic/image_figure.png" />
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
       </div>
       <div id="MarketArrow4">
-        <img id="imageFilm" src="/images/marketPic/image_Film.png" />
+        <img id="imageFilm" src="/images/marketPic/image_movie.png" />
       </div>
       <div id="MarketArrow5">
-        <img id="imageTeknik" src="/images/marketPic/image_Tech.png" />
+        <img id="imageTeknik" src="/images/marketPic/image_technology.png" />
       </div>
     </div>
 
@@ -253,6 +258,7 @@ export default {
   components: {
     CollectorsCard,
   },
+
   props: {
     labels: Object,
     player: Object,
@@ -264,17 +270,18 @@ export default {
     skillPlacement: Array,
   },
   methods: {
+    /* Här är funktionerna till item */
     buyCard: function (card) {
       if (card.available) {
-        console.log(card.available);
         this.$emit("buyCard", card);
-        this.highlightAvailableCards();
+        this.updatePoints();
       }
     },
-  
+    /* Funktionen som hanterar hur många poäng varje spelare har */
+    updatePoints: function() {
+        this.$emit("updatePoints");
+    },
     placeBottle: function (p, action) {
-      console.log("hejsan");
-      console.log(action);
       this.$emit("placeBottle", {
         cost: p.cost,
         action: action,
@@ -286,6 +293,7 @@ export default {
         this.highlightAvailableSkills(p.cost);
       }
     },
+
     highlightAvailableCards: function (cost = 100) {
       for (let i = 0; i < this.itemsOnSale.length; i += 1) {
         if (
@@ -328,16 +336,14 @@ export default {
       }
     },
 
-    cardCost: function (card) {
-      return this.marketValues[card.market];
-    },
-
+    /* Här är funktionerna till skills */
     buySkill: function (card) {
       if (card.available) {
-        console.log(card.available);
         this.$emit("buySkill", card);
+        this.updatePoints(); /* Även när man köper skills ska poängen uppdateras */
       }
     },
+
     highlightAvailableSkills: function (cost = 100) {
       /* Kollar på skillsen som ligger på brädet */
       for (let i = 0; i < this.skillsOnSale.length; i += 1) {
@@ -350,9 +356,11 @@ export default {
       }
       this.chosenPlacementCost = cost;
     },
+
     skillCost: function (card) {
       return this.placement[card];
     },
+
     cannotAffordSkill: function (cost) {
       console.log("här2");
       if (this.player.money >= cost && this.player.isTurn) {
@@ -372,7 +380,6 @@ export default {
 .wrapper {
   margin: auto;
   display: grid;
-  background-color: white;
   color: black;
   width: 100%;
   height: 100vh;
@@ -381,7 +388,6 @@ export default {
   margin-bottom: 60px;
 }
 .itemBox {
-  border: solid white;
   grid-column: 2 / span 4;
   grid-row: 2;
   display: grid;
@@ -394,7 +400,6 @@ export default {
   color: white;
 }
 .skillBox {
-  border: solid white;
   display: grid;
   text-align: center;
   grid-template-columns: auto auto;
@@ -408,7 +413,6 @@ export default {
   grid-row: 3 / span 3;
 }
 .workBox {
-  border: solid white;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: 8vh 9vh 11vh 11vh 11vh 11vh;
@@ -420,7 +424,6 @@ export default {
   grid-row: 3 / span 3;
 }
 .auctionBox {
-  border: solid white;
   display: grid;
   padding: 5px;
   text-align: center;
@@ -433,7 +436,6 @@ export default {
   max-width: 100%;
 }
 .marketBox {
-  border: solid white;
   display: grid;
   padding: 11px;
   text-align: center;
@@ -446,7 +448,6 @@ export default {
   max-width: 100%;
 }
 .cardBoxLeft {
-  border: solid white;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: 10vh 10vh 10vh 10vh 10vh 10vh;
@@ -457,7 +458,6 @@ export default {
   grid-auto-rows: max-content;
 }
 .cardBoxTop {
-  border: solid white;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5vh;
@@ -954,4 +954,5 @@ export default {
   display: none;
   width: 90%;
 }
+
 </style>
