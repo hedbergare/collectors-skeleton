@@ -1,6 +1,18 @@
 <template>
   <div>
     <main>
+      <CollectorsAuction
+        v-if="false"
+        :auctionCards="auctionCards"
+        :players="players"
+        :cardUpForAuction="cardUpForAuction"
+        :leadingBet="leadingBet"
+        :auctionWinner="auctionWinner"
+        @startAuction="startAuction($event)"
+        @updatePlayers="updatePlayers($event)"
+        @updateLeadingBet="updateLeadingBet($event)"
+        @setAuctionWinner="setAuctionWinner($event)"
+      />
       {{ buyPlacement }} {{ chosenPlacementCost }}
       <CollectorsBuyActions
         v-if="players[playerId]"
@@ -29,9 +41,9 @@
           {{ labels.draw }}
         </button>
       </div>
-      <!-- Testknapp för "fill pools" -->
-      <button @click="fillPools()">Fill pools with new cards</button>
-      <button @click="changeTurn()">Byt tur</button>
+      Testknapp för "fill pools"
+      <button @click="fillPools()">Fill pools (fas 2) testknapp</button>
+      <button @click="changeTurn()">Byt tur testknapp</button>
       Skills
       <div class="cardslots">
         <CollectorsCard
@@ -167,6 +179,7 @@ import CollectorsPlayerBoard from "@/components/CollectorsPlayerBoard.vue";
 import CollectorsBottle from "@/components/CollectorsBottle.vue";
 import CollectorsBuySkills from "@/components/CollectorsBuySkills.vue";
 import CollectorsInfoBoard from "@/components/CollectorsInfoBoard.vue";
+import CollectorsAuction from "@/components/CollectorsAuction.vue";
 
 export default {
   name: "Collectors",
@@ -178,6 +191,7 @@ export default {
     CollectorsPlayerBoard,
     CollectorsBottle,
     CollectorsInfoBoard,
+    CollectorsAuction,
   },
   data: function () {
     return {
@@ -212,6 +226,9 @@ export default {
       skillsOnSale: [],
       auctionCards: [],
       playerid: 0,
+      cardUpForAuction: {},
+      auctionWinner: "",
+      leadingBet: 0,
     };
   },
   computed: {
@@ -272,14 +289,12 @@ export default {
       }.bind(this)
     );
 
-    /* Denna har något att göra med spelarnas poäng */
     this.$store.state.socket.on(
       "collectorsPointsUpdated",
-/*       (d) => (this.points = d)
- */    function (d) {
+      function (d) {
         this.players = d.players;
- }.bind(this)
-   );
+      }.bind(this)
+    );
 
     this.$store.state.socket.on(
       "collectorsCardDrawn",
@@ -298,7 +313,19 @@ export default {
         this.itemsOnSale = d.itemsOnSale;
       }.bind(this)
     );
-
+    this.$store.state.socket.on(
+      "auctionStarted",
+      function (d) {
+        console.log("Auction has been started");
+        this.cardUpForAuction = d.cardUpForAuction;
+      }.bind(this)
+    );
+    this.$store.state.socket.on(
+      "leadingBetUpdated",
+      function (d) {
+        this.leadingBet = d.leadingBet;
+      }.bind(this)
+    );
     this.$store.state.socket.on(
       "collectorsSkillBought",
       function (d) {
@@ -320,13 +347,42 @@ export default {
     this.$store.state.socket.on(
       "turnChanged",
       function (d) {
-        console.log("turn has changed");
         this.players = d.players;
+      }.bind(this)
+    );
+    this.$store.state.socket.on(
+      "playersUpdated",
+      function (d) {
+        this.players = d.players;
+      }.bind(this)
+    );
+    this.$store.state.socket.on(
+      "auctionWinnerSet",
+      function (d) {
+        this.auctionWinner = d.auctionWinner;
       }.bind(this)
     );
   },
 
   methods: {
+    setAuctionWinner: function (p) {
+      this.$store.state.socket.emit("setAuctionWinner", {
+        roomId: this.$route.params.id,
+        playerId: p,
+      });
+    },
+    updatePlayers: function (players) {
+      this.$store.state.socket.emit("updatePlayers", {
+        players: players,
+        roomId: this.$route.params.id,
+      });
+    },
+    updateLeadingBet: function (leadingBet) {
+      this.$store.state.socket.emit("updateLeadingBet", {
+        roomId: this.$route.params.id,
+        leadingBet: leadingBet,
+      });
+    },
     /* Fungerar ej men har potential  */
     fillTreasure: function (card) {
       let secretCard = this.players[this.playerId].hand.pop(card);
@@ -337,7 +393,9 @@ export default {
       this.$store.state.socket.emit("fillPools", {
         roomId: this.$route.params.id,
       });
+      this.updatePoints();
     },
+
     changeTurn: function () {
       this.players[this.playerId].isTurn = false;
       let playerIndex = Object.keys(this.players).indexOf(this.playerId);
@@ -399,7 +457,6 @@ export default {
       });
     },
     buySkill: function (card) {
-      console.log("buySkill", card);
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -407,10 +464,17 @@ export default {
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
     },
+    startAuction: function (card) {
+      console.log("auction ska börja med " + card);
+      this.cardUpForAuction = card;
+      this.$store.state.socket.emit("startAuction", {
+        roomId: this.$route.params.id,
+        cardUpForAuction: this.cardUpForAuction,
+      });
+    },
     updatePoints: function () {
-      console.log("updateP i collectors.vue");
       this.$store.state.socket.emit("collectorsUpdatePoints", {
-        roomId: this.$route.params.id
+        roomId: this.$route.params.id,
       });
     },
   },

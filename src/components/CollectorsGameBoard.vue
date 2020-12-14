@@ -50,10 +50,14 @@
         <button
           class="placeBottleItem"
           :disabled="cannotAffordItem(p.cost)"
+          :style="
+            'background-image: url(/images/bottelPic/Item_Bottle_' +
+            p.cost +
+            '.png);'
+          "
           v-if="p.playerId === null"
           @click="placeBottle(p, 'item')"
-        >
-        </button>
+        ></button>
 
         <div v-if="p.playerId !== null">
           {{ p.playerId }}
@@ -76,19 +80,16 @@
         :key="index"
       >
         <button
-
           class="placeBottleSkill"
           :disabled="cannotAffordSkill(p.cost)"
           v-if="p.playerId === null"
-          :style="'background-image: url(/images/buySkillPic/skill_Bottle_' + p.cost + '.png);'"
+          :style="
+            'background-image: url(/images/buySkillPic/skill_Bottle_' +
+            p.cost +
+            '.png);'
+          "
           @click="placeBottle(p, 'skill')"
-        >
-        </button>
-
-          <!-- <img
-            class="skillBottles"
-            :src="'images/buySkillPic/skill_Bottle_' + p.cost +'.png'"
-          /> -->
+        ></button>
 
         <div v-if="p.playerId !== null">
           {{ p.playerId }}
@@ -193,7 +194,6 @@
     </div>
 
     <div class="marketBox">
-
       <!-- Här gör vi market box med köprutor -->
       <div id="buyMarketBox1">
         <img id="marketBottle1" src="/images/marketPic/marketBottle1.png" />
@@ -279,8 +279,8 @@ export default {
       }
     },
     /* Funktionen som hanterar hur många poäng varje spelare har */
-    updatePoints: function() {
-        this.$emit("updatePoints");
+    updatePoints: function () {
+      this.$emit("updatePoints");
     },
     placeBottle: function (p, action) {
       this.$emit("placeBottle", {
@@ -324,15 +324,13 @@ export default {
 
     cannotAffordItem: function (cost) {
       let minCost = 100;
-      console.log("dolle");
       for (let key in this.marketValues) {
         if (cost + this.marketValues[key] < minCost)
           minCost = cost + this.marketValues[key];
       }
-      if(this.player.money >= minCost && this.player.isTurn){
-          return false;
-      }
-      else{
+      if (this.player.money >= minCost && this.player.isTurn) {
+        return false;
+      } else {
         return true;
       }
     },
@@ -363,7 +361,6 @@ export default {
     },
 
     cannotAffordSkill: function (cost) {
-      console.log("här2");
       if (this.player.money >= cost && this.player.isTurn) {
         return false;
       } else {
@@ -508,7 +505,7 @@ export default {
 }
 
 .placeBottleSkill {
- color: blue;
+  color: blue;
   background-image: url(/images/buySkillPic/skill_Bottle1.png);
   width: 70%;
   height: 70%;
@@ -955,5 +952,4 @@ export default {
   display: none;
   width: 90%;
 }
-
 </style>
