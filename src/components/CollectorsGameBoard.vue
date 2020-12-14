@@ -209,13 +209,13 @@
         <img id="testhover" src="/images/marketPic/info.png" />
       </div>
       <div id="MarketArrow1">
-        <img id="imagePingvin" src="/images/marketPic/image_fastival.png" />
+        <img id="imagePingvin" src="/images/marketPic/image_fastaval.png" />
       </div>
       <div id="MarketArrow2">
-        <img id="imageRobot" src="/images/marketPic/image_figure.png" />
+        <img id="imageRobot" src="/images/marketPic/image_figures.png" />
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
       </div>
       <div id="MarketArrow4">
         <img id="imageFilm" src="/images/marketPic/image_movie.png" />
