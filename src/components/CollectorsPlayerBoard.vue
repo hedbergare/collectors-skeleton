@@ -1,6 +1,6 @@
 <template>
   <div id="wrapper" :style="'background-color:' + player.color"><!-- Här läggs det in vilken färg man "är" -->
-    <!-- Översta raden - där det visas hur mycket pengar och income man har -->
+    <!-- Översta raden - där det visas hur mycket pengar, poäng och income man har -->
     <div id="topRow">
       <div id="wallet">
 
@@ -22,7 +22,7 @@
 
         <div id="currentPoints">
           <div>
-          <img src="images/player_board/score_points.png">
+          <img src="images/player_board/score.png">
           </div>
           <p>{{ player.points }}</p>
         </div>
@@ -178,7 +178,7 @@ export default {
 #money img,
 #income img, 
 #currentPoints img {
-  max-width: 80%;
+  max-width: 100%;
   vertical-align: middle;
 }
 

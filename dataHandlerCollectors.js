@@ -143,7 +143,7 @@ Data.prototype.joinGame = function (roomId, playerId) {
         }
       };
       let secretCard = room.players[playerId].hand.pop(0, 1);
-      room.players[playerId].secret.push(secretCard); 
+      room.players[playerId].secret.push(secretCard);
 
       if (Object.keys(room.players).length == 1) {
         room.turn = playerId;
@@ -152,7 +152,7 @@ Data.prototype.joinGame = function (roomId, playerId) {
       return true;
     }
     console.log("Player", playerId, "was declined due to player limit");
-    
+
 
   }
   return false;
@@ -171,19 +171,91 @@ Data.prototype.updatePoints = function (roomId) {
   let room = this.rooms[roomId]
   if (typeof room !== 'undefined') {
     let marketList = this.getMarketValues(roomId);
-    /* Uträkningar för hur många p varje spelare har */
     let newPoints = 0;
-    for (let x in room.players ) {
+    for (let x in room.players) {
       room.players[x].points = 0;
 
+      /* Uträkningar för hur många poäng varje spelare ska ha med avseende på item och dess marketvalue */
       for (let y in room.players[x].items) {
         newPoints = marketList[room.players[x].items[y].item];
         room.players[x].points += newPoints;
       }
+
+      /* Om en spelare äger skill VP-all samt ett item av varje slag ska den få 5 poäng */
+      for (let z in room.players[x].skills) {
+        if (room.players[x].skills[z].skill === 'VP-all') {
+          for (let a in room.players[x].items) {
+            if (room.players[x].items[a].item === 'fastaval') {
+              for (let b in room.players[x].items) {
+                if (room.players[x].items[b].item === 'figures') {
+                  for (let c in room.players[x].items) {
+                    if (room.players[x].items[c].item === 'movie') {
+                      for (let d in room.players[x].items) {
+                        if (room.players[x].items[d].item === 'music') {
+                          for (let e in room.players[x].items) {
+                            if (room.players[x].items[e].item === 'technology') {
+                              room.players[x].points += 5;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+
+      /* Om en spelare äger ett skill VP-nån item ska den få ett extra poäng för varje item av samma slag den äger */
+      for (let w in room.players[x].skills) {
+        /* Extra p för varje itemfastaval om player äger skill VP-fastaval */
+        if (room.players[x].skills[w].skill === 'VP-fastaval') {
+          for (let i in room.players[x].items) {
+            if (room.players[x].items[i].item === 'fastaval') {
+              room.players[x].points += 1;
+            }
+          }
+        }
+        /* Extra p för varje item-figures om player äger skill VP-figures */
+        if (room.players[x].skills[w].skill === 'VP-figures') {
+          for (let i in room.players[x].items) {
+            if (room.players[x].items[i].item === 'figures') {
+              room.players[x].points += 1;
+            }
+          }
+        }
+        /* Extra p för varje item-movie om player äger skill VP-movie */
+        if (room.players[x].skills[w].skill === 'VP-movie') {
+          for (let i in room.players[x].items) {
+            if (room.players[x].items[i].item === 'movie') {
+              room.players[x].points += 1;
+            }
+          }
+        }
+        /* Extra p för varje item-music om player äger skill VP-music */
+        if (room.players[x].skills[w].skill === 'VP-music') {
+          for (let i in room.players[x].items) {
+            if (room.players[x].items[i].item === 'music') {
+              room.players[x].points += 1;
+            }
+          }
+        }
+        /* Extra p för varje item-technology om player äger skill VP-technology */
+        if (room.players[x].skills[w].skill === 'VP-technology') {
+          for (let i in room.players[x].items) {
+            if (room.players[x].items[i].item === 'technology') {
+              room.players[x].points += 1;
+            }
+          }
+        }
+      }
+
     }
   }
 }
-
 /* returns players after a new card is drawn */
 Data.prototype.drawCard = function (roomId, playerId) {
   let room = this.rooms[roomId];
@@ -224,7 +296,7 @@ Data.prototype.buyCard = function (roomId, playerId, card, cost) {
     room.players[playerId].money -= cost;
 
 
-    }
+  }
 }
 
 /* moves card from skillsOnSale to a player's hand */
@@ -326,11 +398,11 @@ Data.prototype.getMarketValues = function (roomId) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
     return room.market.reduce(function (acc, curr) {
-      curr.market == "fastaval" ? acc.fastaval += 1: null
-      curr.market == "movie" ? acc.movie += 1: null
-      curr.market == "technology" ? acc.technology += 1: null
-      curr.market == "figures" ? acc.figures += 1: null
-      curr.market == "music" ? acc.music += 1: null
+      curr.market == "fastaval" ? acc.fastaval += 1 : null
+      curr.market == "movie" ? acc.movie += 1 : null
+      curr.market == "technology" ? acc.technology += 1 : null
+      curr.market == "figures" ? acc.figures += 1 : null
+      curr.market == "music" ? acc.music += 1 : null
 
       return acc
     },
@@ -370,21 +442,17 @@ Data.prototype.fillPools = function (roomId) {
       if (typeof room.skillsOnSale[i].skill !== 'undefined') {
         /* Ta ut det kortet från skills on sale och sparar det som c */
         let c = room.skillsOnSale.splice(i, 1, {});
-        console.log("--tar bort kortet från skills on sale");
         /* Lägg till kortets "market" in i market value */
-        console.log("--lägger till värdet för den valda marketen: " + c[0].market);
         room.market.push(c[0]);
         break;
       }
     }
-    console.log("Detta är auctioncards innan jag rör den" + room.auctionCards);
     /* Hittar vilket kort som ligger längst ner i auctionCards */
     for (let i = room.auctionCards.length - 1; i >= 0; i--) {
       if (typeof room.auctionCards[i].item !== 'undefined') {
         /* Ta ut det kortet från skills on sale och sparar det som c */
         let c = room.auctionCards.splice(i, 1, {});
         /* Lägg till kortets "market" in i market value */
-        console.log("--lägger till värdet för den valda marketen: " + c[0].market);
         room.market.push(c[0]);
         break;
       }

@@ -209,13 +209,13 @@
         <img id="testhover" src="/images/marketPic/info.png" />
       </div>
       <div id="MarketArrow1">
-        <img id="imagePingvin" src="/images/marketPic/image_fastival.png" />
+        <img id="imagePingvin" src="/images/marketPic/image_fastaval.png" />
       </div>
       <div id="MarketArrow2">
-        <img id="imageRobot" src="/images/marketPic/image_figure.png" />
+        <img id="imageRobot" src="/images/marketPic/image_figures.png" />
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
       </div>
       <div id="MarketArrow4">
         <img id="imageFilm" src="/images/marketPic/image_movie.png" />
@@ -324,7 +324,6 @@ export default {
 
     cannotAffordItem: function (cost) {
       let minCost = 100;
-      console.log("dolle");
       for (let key in this.marketValues) {
         if (cost + this.marketValues[key] < minCost)
           minCost = cost + this.marketValues[key];
@@ -363,7 +362,6 @@ export default {
     },
 
     cannotAffordSkill: function (cost) {
-      console.log("här2");
       if (this.player.money >= cost && this.player.isTurn) {
         return false;
       } else {

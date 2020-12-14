@@ -30,8 +30,8 @@
         </button>
       </div>
       <!-- Testknapp för "fill pools" -->
-      <button @click="fillPools()">Fill pools with new cards</button>
-      <button @click="changeTurn()">Byt tur</button>
+      <button @click="fillPools()">Fill pools with new cards</button><br>
+      <button @click="changeTurn()">Byt tur</button><br>
       Skills
       <div class="cardslots">
         <CollectorsCard
@@ -272,14 +272,12 @@ export default {
       }.bind(this)
     );
 
-    /* Denna har något att göra med spelarnas poäng */
     this.$store.state.socket.on(
       "collectorsPointsUpdated",
-/*       (d) => (this.points = d)
- */    function (d) {
+      function (d) {
         this.players = d.players;
- }.bind(this)
-   );
+      }.bind(this)
+    );
 
     this.$store.state.socket.on(
       "collectorsCardDrawn",
@@ -337,7 +335,9 @@ export default {
       this.$store.state.socket.emit("fillPools", {
         roomId: this.$route.params.id,
       });
+      this.updatePoints();
     },
+
     changeTurn: function () {
       this.players[this.playerId].isTurn = false;
       let playerIndex = Object.keys(this.players).indexOf(this.playerId);
@@ -399,7 +399,6 @@ export default {
       });
     },
     buySkill: function (card) {
-      console.log("buySkill", card);
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -408,9 +407,8 @@ export default {
       });
     },
     updatePoints: function () {
-      console.log("updateP i collectors.vue");
       this.$store.state.socket.emit("collectorsUpdatePoints", {
-        roomId: this.$route.params.id
+        roomId: this.$route.params.id,
       });
     },
   },
