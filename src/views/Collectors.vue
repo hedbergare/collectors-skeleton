@@ -292,11 +292,9 @@ export default {
       }.bind(this)
     );
 
-    /* Denna har något att göra med spelarnas poäng */
     this.$store.state.socket.on(
       "collectorsPointsUpdated",
-      /*       (d) => (this.points = d)
-       */ function (d) {
+      function (d) {
         this.players = d.players;
       }.bind(this)
     );
@@ -416,6 +414,7 @@ export default {
       this.$store.state.socket.emit("fillPools", {
         roomId: this.$route.params.id,
       });
+      this.updatePoints();
     },
     changeTurn: function (
       playerIndex = Object.keys(this.players).indexOf(this.playerId)
@@ -493,7 +492,6 @@ export default {
       });
     },
     buySkill: function (card) {
-      console.log("buySkill", card);
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -519,7 +517,6 @@ export default {
       });
     },
     updatePoints: function () {
-      console.log("updateP i collectors.vue");
       this.$store.state.socket.emit("collectorsUpdatePoints", {
         roomId: this.$route.params.id,
       });

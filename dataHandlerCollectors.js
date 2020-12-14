@@ -183,15 +183,88 @@ Data.prototype.updatePoints = function (roomId) {
   let room = this.rooms[roomId]
   if (typeof room !== 'undefined') {
     let marketList = this.getMarketValues(roomId);
-    /* Uträkningar för hur många p varje spelare har */
     let newPoints = 0;
     for (let x in room.players) {
       room.players[x].points = 0;
 
+      /* Uträkningar för hur många poäng varje spelare ska ha med avseende på item och dess marketvalue */
       for (let y in room.players[x].items) {
         newPoints = marketList[room.players[x].items[y].item];
         room.players[x].points += newPoints;
       }
+
+      /* Om en spelare äger skill VP-all samt ett item av varje slag ska den få 5 poäng */
+      for (let z in room.players[x].skills) {
+        if (room.players[x].skills[z].skill === 'VP-all') {
+          for (let a in room.players[x].items) {
+            if (room.players[x].items[a].item === 'fastaval') {
+              for (let b in room.players[x].items) {
+                if (room.players[x].items[b].item === 'figures') {
+                  for (let c in room.players[x].items) {
+                    if (room.players[x].items[c].item === 'movie') {
+                      for (let d in room.players[x].items) {
+                        if (room.players[x].items[d].item === 'music') {
+                          for (let e in room.players[x].items) {
+                            if (room.players[x].items[e].item === 'technology') {
+                              room.players[x].points += 5;
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+
+      /* Om en spelare äger ett skill VP-nån item ska den få ett extra poäng för varje item av samma slag den äger */
+      for (let w in room.players[x].skills) {
+        /* Extra p för varje itemfastaval om player äger skill VP-fastaval */
+        if (room.players[x].skills[w].skill === 'VP-fastaval') {
+          for (let i in room.players[x].items) {
+            if (room.players[x].items[i].item === 'fastaval') {
+              room.players[x].points += 1;
+            }
+          }
+        }
+        /* Extra p för varje item-figures om player äger skill VP-figures */
+        if (room.players[x].skills[w].skill === 'VP-figures') {
+          for (let i in room.players[x].items) {
+            if (room.players[x].items[i].item === 'figures') {
+              room.players[x].points += 1;
+            }
+          }
+        }
+        /* Extra p för varje item-movie om player äger skill VP-movie */
+        if (room.players[x].skills[w].skill === 'VP-movie') {
+          for (let i in room.players[x].items) {
+            if (room.players[x].items[i].item === 'movie') {
+              room.players[x].points += 1;
+            }
+          }
+        }
+        /* Extra p för varje item-music om player äger skill VP-music */
+        if (room.players[x].skills[w].skill === 'VP-music') {
+          for (let i in room.players[x].items) {
+            if (room.players[x].items[i].item === 'music') {
+              room.players[x].points += 1;
+            }
+          }
+        }
+        /* Extra p för varje item-technology om player äger skill VP-technology */
+        if (room.players[x].skills[w].skill === 'VP-technology') {
+          for (let i in room.players[x].items) {
+            if (room.players[x].items[i].item === 'technology') {
+              room.players[x].points += 1;
+            }
+          }
+        }
+      }
+
     }
   }
 }
@@ -496,7 +569,6 @@ Data.prototype.fillPools = function (roomId) {
         break;
       }
     }
-
     /* Hittar vilket kort som ligger längst ner i auctionCards */
     for (let i = room.auctionCards.length - 1; i >= 0; i--) {
       if (typeof room.auctionCards[i].item !== 'undefined') {
