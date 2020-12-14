@@ -166,7 +166,7 @@
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" />
+        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" @click="initiateAuction()"/>
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -209,7 +209,7 @@
         <img id="testhover" src="/images/marketPic/info.png" />
       </div>
       <div id="MarketArrow1">
-        <img id="imagePingvin" src="/images/marketPic/image_fastival.png" />
+        <img id="imagePingvin" src="/images/marketPic/image_fastaval.png" />
       </div>
       <div id="MarketArrow2">
         <img id="imageRobot" src="/images/marketPic/image_figure.png" />
@@ -278,6 +278,10 @@ export default {
         this.updatePoints();
       }
     },
+    /*Skickar iväg att auktionen ska börja */
+    initiateAuction(){
+      this.$emit("initiateAuction");
+    },
     /* Funktionen som hanterar hur många poäng varje spelare har */
     updatePoints: function() {
         this.$emit("updatePoints");
@@ -323,8 +327,7 @@ export default {
     },
 
     cannotAffordItem: function (cost) {
-      let minCost = 100;
-      console.log("dolle");
+      let minCost = 10;
       for (let key in this.marketValues) {
         if (cost + this.marketValues[key] < minCost)
           minCost = cost + this.marketValues[key];
@@ -363,7 +366,6 @@ export default {
     },
 
     cannotAffordSkill: function (cost) {
-      console.log("här2");
       if (this.player.money >= cost && this.player.isTurn) {
         return false;
       } else {

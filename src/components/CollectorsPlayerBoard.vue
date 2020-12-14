@@ -107,6 +107,7 @@
         </div>
       </div>
       {{player.isTurn}}
+      {{player.bottles}}
     </div>
   </div>
 </template>

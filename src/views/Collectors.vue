@@ -2,7 +2,7 @@
   <div>
     <main>
       <CollectorsAuction
-        v-if="false"
+        v-if="players[playerId] && this.auctionInitiated"
         :auctionCards="auctionCards"
         :players="players"
         :cardUpForAuction="cardUpForAuction"
@@ -12,6 +12,7 @@
         @updatePlayers="updatePlayers($event)"
         @updateLeadingBet="updateLeadingBet($event)"
         @setAuctionWinner="setAuctionWinner($event)"
+        @winnerPlaceCard="winnerPlaceCard($event)"
       />
       {{ buyPlacement }} {{ chosenPlacementCost }}
       <CollectorsBuyActions
@@ -115,6 +116,7 @@
           @updatePoints="updatePoints($event)"
           @buySkill="buySkill($event)"
           @placeBottle="placeBottle($event)"
+          @initiateAuction="initiateAuction($event)"
         />
       </div>
       <div id="rightColumn">
@@ -229,6 +231,7 @@ export default {
       cardUpForAuction: {},
       auctionWinner: "",
       leadingBet: 0,
+      auctionInitiated: false,
     };
   },
   computed: {
@@ -320,6 +323,10 @@ export default {
       function (d) {
         console.log("Auction has been started");
         this.cardUpForAuction = d.cardUpForAuction;
+        this.players = d.players;
+        this.auctionCards = d.auctionCards;
+        this.auctionInitiated = true;
+        console.log(this.auctionInitiated + " borde vara true här");
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -364,9 +371,23 @@ export default {
         this.auctionWinner = d.auctionWinner;
       }.bind(this)
     );
+    this.$store.state.socket.on(
+      "auctionDone",
+      function (d) {
+        this.players = d.players;
+        this.cardUpForAuction = d.cardUpForAuction;
+        this.marketValues = d.marketValues;
+        this.auctionWinner = d.auctionWinner;
+        this.leadingBet = d.leadingBet;
+        this.auctionInitiated = false;
+      }.bind(this)
+    );
   },
 
   methods: {
+    initiateAuction: function () {
+      this.auctionInitiated = true;
+    },
     setAuctionWinner: function (p) {
       this.$store.state.socket.emit("setAuctionWinner", {
         roomId: this.$route.params.id,
@@ -396,20 +417,35 @@ export default {
         roomId: this.$route.params.id,
       });
     },
-    changeTurn: function () {
-      this.players[this.playerId].isTurn = false;
-      let playerIndex = Object.keys(this.players).indexOf(this.playerId);
-      let newPlayerIndex;
-      if (playerIndex == Object.keys(this.players).length - 1) {
-        newPlayerIndex = 0;
-      } else {
-        newPlayerIndex = playerIndex + 1;
+    changeTurn: function (
+      playerIndex = Object.keys(this.players).indexOf(this.playerId)
+    ) {
+      Object.values(this.players)[playerIndex].isTurn = false;
+
+      for (let x in this.players) {
+        if (this.players[x].bottles > 0) {
+          let newPlayerIndex;
+          if (playerIndex == Object.keys(this.players).length - 1) {
+            newPlayerIndex = 0;
+          } else {
+            newPlayerIndex = playerIndex + 1;
+          }
+          if (Object.values(this.players)[newPlayerIndex].bottles > 0) {
+            Object.values(this.players)[newPlayerIndex].isTurn = true;
+            this.$store.state.socket.emit("changeTurn", {
+              players: this.players,
+              roomId: this.$route.params.id,
+            });
+            return;
+          } else {
+            this.changeTurn(newPlayerIndex);
+            return;
+          }
+          
+        }
       }
-      Object.values(this.players)[newPlayerIndex].isTurn = true;
-      this.$store.state.socket.emit("changeTurn", {
-        players: this.players,
-        roomId: this.$route.params.id,
-      });
+      /* Här under ska vi göra allt som ska ske när alla spelare har slut på bottles */
+      console.log("Alla har slut på bottles :(");
     },
 
     showCorrectPlayerBoard: function (clickedId) {
@@ -471,6 +507,15 @@ export default {
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,
         cardUpForAuction: this.cardUpForAuction,
+        playerId: this.playerId,
+      });
+    },
+    winnerPlaceCard: function (placement) {
+      console.log("Vinnaren ska lägga kortet i " + placement);
+      this.$store.state.socket.emit("winnerPlaceCard", {
+        roomId: this.$route.params.id,
+        playerId: this.playerId,
+        placement: placement,
       });
     },
     updatePoints: function () {
