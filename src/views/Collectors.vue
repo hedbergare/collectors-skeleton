@@ -455,7 +455,6 @@ export default {
       });
     },
     buyCard: function (card) {
-      /* this.changeTurn(); */
       this.$store.state.socket.emit("collectorsBuyCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -464,7 +463,6 @@ export default {
       });
     },
     buySkill: function (card) {
-      /*  this.changeTurn(); */
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -473,7 +471,6 @@ export default {
       });
     },
     startAuction: function (card) {
-      /*   this.changeTurn(); */
       this.cardUpForAuction = card;
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,
