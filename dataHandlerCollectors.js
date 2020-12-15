@@ -172,7 +172,6 @@ Data.prototype.joinGame = function (roomId, playerId) {
 Data.prototype.getPlayers = function (id) {
   let room = this.rooms[id]
   if (typeof room !== 'undefined') {
-    console.log("Inne i get players med roomid " + id)
     return room.players;
   }
   else return {};
@@ -479,9 +478,9 @@ Data.prototype.startAuction = function (roomId, auctionCard, playerId) {
     }
     room.cardUpForAuction = c[0];
 
-    for(let x in room.players){
-      for(let y in room.players[x].skills){
-        if(room.players[x].skills[y].skill === 'auctionIncome'){
+    for (let x in room.players) {
+      for (let y in room.players[x].skills) {
+        if (room.players[x].skills[y].skill === 'auctionIncome') {
           room.players[x].money += 1;
         }
       }
@@ -591,10 +590,52 @@ Data.prototype.fillPools = function (roomId) {
     room.auctionCards = this.pushElementsToEnd(room.auctionCards);
     /* Fyller på alla tomma platser med nya kort från kortleken */
     this.fillWithCards(room);
+    this.collectBottles(room);
     this.resetPlacement(room);
 
   }
 }
+
+/* Funktion som samlar in spelarnas bottles igen när fill pools sker */
+Data.prototype.collectBottles = function (room) {
+  if (typeof room !== 'undefined') {
+    for (let i in room.buyPlacement) {
+      for (let x in room.players) {
+        if (room.players[x].pId === room.buyPlacement[i].playerId) {
+          room.players[x].bottles += 1;
+
+        }
+      }
+    }
+    for (let i in room.skillPlacement) {
+      for (let x in room.players) {
+        if (room.players[x].pId === room.skillPlacement[i].playerId) {
+          room.players[x].bottles += 1;
+
+        }
+      }
+    }
+    for (let i in room.auctionPlacement) {
+      for (let x in room.players) {
+        if (room.players[x].pId === room.auctionPlacement[i].playerId) {
+          room.players[x].bottles += 1;
+
+        }
+      }
+    }
+    for (let i in room.marketPlacement) {
+      for (let x in room.players) {
+        if (room.players[x].pId === room.marketPlacement[i].playerId) {
+          room.players[x].bottles += 1;
+
+        }
+      }
+    }
+  }
+}
+
+
+
 Data.prototype.resetPlacement = function (room) {
   if (typeof room !== 'undefined') {
     for (let i in room.buyPlacement) {
