@@ -224,7 +224,7 @@
         {{ "x" + marketValues.figures }}
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
         {{ "x" + marketValues.music }}
       </div>
       <div id="MarketArrow4">
