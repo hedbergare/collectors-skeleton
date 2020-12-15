@@ -218,7 +218,8 @@ Data.prototype.updatePoints = function (roomId) {
           }
         }
       }
-      /* Kollar om en spelare äger ett skill som ger den extra poäng eller coins  */
+
+      /* Om en spelare äger ett skill VP-nån item ska den få ett extra poäng för varje item av samma slag den äger */
       for (let w in room.players[x].skills) {
         /* Extra p för varje itemfastaval om player äger skill VP-fastaval */
         if (room.players[x].skills[w].skill === 'VP-fastaval') {
@@ -311,8 +312,6 @@ Data.prototype.buyCard = function (roomId, playerId, card, cost) {
     room.players[playerId].items.push(...c);
     room.players[playerId].money -= cost;
     room.players[playerId].bottles -= 1;
-
-
   }
 }
 
@@ -551,6 +550,7 @@ Data.prototype.updateLeadingBet = function (leadingBet, roomId) {
 
   }
 }
+
 Data.prototype.fillPools = function (roomId) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {

@@ -69,6 +69,7 @@ function sockets(io, socket, data) {
       cardUpForAuction: data.getCardUpForAuction(d.roomId),
       players: data.getPlayers(d.roomId),
       auctionCards: data.getAuctionCards(d.roomId),
+      playerId: d.playerId,
     })
   });
   socket.on('winnerPlaceCard', function (d) {

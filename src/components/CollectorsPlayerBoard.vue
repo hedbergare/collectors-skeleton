@@ -85,7 +85,6 @@
         </div>
       </div>
 
-
       <div id="items">
         <!-- Här skapas bilder för de items man äger -->
         <div id="itemsRefill">
@@ -161,7 +160,7 @@ export default {
 
 /* Hover och style för treasure */
 #chest {
-  border: 2px solid black;
+  width: 7vh;
 }
 
 #chest:hover + .secretPopup {
