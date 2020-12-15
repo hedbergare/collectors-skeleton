@@ -2,79 +2,112 @@
   <!-- Bakgrundsrutan -->
   <div id="infoWrapper">
     <!-- Infoknapp -->
-    <a
-      href="https://docs.google.com/document/d/1R3R4nk1pNI_xqOas4X_5TR7AOW6FE_bXbMcdh1bZfI0/edit?usp=sharing"
-      target="_blank"
-      >Show me game rules!</a
-    >
+    <div class="left">
+      <div class="roundCont">
+        <h1 id="roundBox">Round 1/4</h1>
+      </div>
+      <div>
+        <a
+          href="https://docs.google.com/document/d/1R3R4nk1pNI_xqOas4X_5TR7AOW6FE_bXbMcdh1bZfI0/edit?usp=sharing"
+          class="rulesButton"
+          target="_blank"
+          >Show me game rules!
+        </a>
+      </div>
+      <!-- Boxen för vilken runda det är just nu -->
 
-    <!-- Boxen för vilken runda det är just nu -->
-    <div id="roundBox">
-      <br />
-      Round 1/4
+      <!-- Boxen för Quit the game-knapp -->
+      <div>
+        <a href="http://localhost:8080/#/" class="quitButton">
+          Quit the game!
+        </a>
+      </div>
     </div>
-
     <!-- Boxen för historik för vad de spelarna gör för handlingar -->
     <div id="gameHistory"><br />Game history</div>
-
-    <!-- Boxen för Quit the game-knapp -->
-    <div id="quitButton">
-      <a href="http://localhost:8080/#/"
-        ><img src="/images/QuitPlaying.jpg"
-      /></a>
-    </div>
   </div>
 </template>
 
 <style scoped>
 #infoWrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   text-align: center;
-  background-color: white;
-  max-width: 100%;
   float: right;
   color: black;
-  height: 80%;
-  font-size: x-small;
+  width: 100%;
+  position: relative;
+  height:100%;
 }
-
-a:link,
-a:visited {
-  background-color: white;
-  color: black;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  border: dashed black 2px;
-  font-size: x-large;
-  max-height: 100%;
+.left{
+  display:grid;
+  grid-template-columns:1fr 1fr;
 }
-
-a:hover,
-a:active {
-  background-color: gray;
+.roundCont{
+  grid-column: 1/3;
 }
-
 #roundBox {
-  grid-column: 2;
-  font-size: 2em;
-  border: dashed black 2px;
+  grid-column: 1/4;
+  color:white;
 }
 
 #gameHistory {
-  grid-column: 3;
-  font-size: 1.7em;
-  border: 2px dashed black;
+  background-color: white;
+  border-radius:10px;
+  margin:1%;
 }
 
-#quitButton {
-  grid-column: 4;
+.quitButton {
   max-width: 100%;
   max-height: 100%;
 }
 
-#quitButton img {
-  max-width: 100%;
+.rulesButton {
+  box-shadow: 0px 1px 0px 0px #1c1b18;
+  background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+  background-color: #eae0c2;
+  border-radius: 15px;
+  border: 2px solid #333029;
+  display: inline-block;
+  cursor: pointer;
+  color: white;
+  font-size: 90%;
+  font-weight: bold;
+  padding: 12px 16px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #000000;
+}
+.rulesButton:hover {
+  background: linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
+  background-color: #ccc2a6;
+}
+.rulesButt:active {
+  position: relative;
+  top: 1px;
+}
+
+.quitButton {
+  box-shadow: inset 0px 1px 0px 0px #f29c93;
+  background: linear-gradient(to bottom, #fe1a00 5%, #ce0100 100%);
+  background-color: #fe1a00;
+  border-radius: 15px;
+  border: 2px solid #d83526;
+  display: inline-block;
+  cursor: pointer;
+  color: white;
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 12px 16px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #b23e35;
+}
+.quitButton:hover {
+  background: linear-gradient(to bottom, #ce0100 5%, #fe1a00 100%);
+  background-color: #ce0100;
+}
+.quitButton:active {
+  position: relative;
+  top: 1px;
 }
 </style>

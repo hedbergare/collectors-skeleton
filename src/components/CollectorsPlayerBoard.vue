@@ -40,24 +40,32 @@
     <!-- Mellersta raden, där ens "bottles" ska ligga -->
     <div id="midRow">
       <div class="box">
-        <CollectorsBottle v-if="player.bottles > 0" :color="player.color"/>
-        <img v-else class="x bottle" src="images/player_board/bottle.JPG"/>
-      </div>
-      <div class="box">
-        <CollectorsBottle v-if="player.bottles > 1" :color="player.color"/>
+        <CollectorsBottle v-if="player.bottles > 0" :color="player.color" />
         <img v-else class="x bottle" src="images/player_board/bottle.JPG" />
       </div>
       <div class="box">
-        <CollectorsBottle v-if="player.bottles > 2" :color="player.color"/>
+        <CollectorsBottle v-if="player.bottles > 1" :color="player.color" />
+        <img v-else class="x bottle" src="images/player_board/bottle.JPG" />
+      </div>
+      <div class="box">
+        <CollectorsBottle v-if="player.bottles > 2" :color="player.color" />
         <img v-else class="x addCard" src="images/player_board/add_card.JPG" />
       </div>
       <div class="box">
-        <CollectorsBottle v-if="player.bottles > 3" :color="player.color"/>
-        <img v-else class="x oneDollar" src="images/player_board/1_dollar.JPG" />
+        <CollectorsBottle v-if="player.bottles > 3" :color="player.color" />
+        <img
+          v-else
+          class="x oneDollar"
+          src="images/player_board/1_dollar.JPG"
+        />
       </div>
       <div class="box">
-        <CollectorsBottle v-if="player.bottles > 4" :color="player.color"/>
-        <img v-else class="x twoDollar" src="images/player_board/2_dollar.JPG" />
+        <CollectorsBottle v-if="player.bottles > 4" :color="player.color" />
+        <img
+          v-else
+          class="x twoDollar"
+          src="images/player_board/2_dollar.JPG"
+        />
       </div>
     </div>
 
@@ -100,13 +108,12 @@
           <img src="images/player_board/item_button_clean.png" />
         </div>
       </div>
-      {{player.isTurn}}
-      {{player.bottles}}
     </div>
 
     <!-- Här kommer nedersta raden för kort på hand -->
     <div id="cardRow">
       <div id="cardsImage">
+        <span class="helper"></span>
         <img src="images/player_board/card_hand.png" />
       </div>
       <div id="cardRefill" v-if="playerId == player.pId">
@@ -116,10 +123,10 @@
           :card="card"
           :availableAction="card.available"
         />
+        {{ player.isTurn }}
+        {{ player.bottles }}
       </div>
     </div>
-    <!-- Visar vems tur det är true/false -->
-    {{ player.isTurn }}
   </div>
 </template>
 
@@ -146,7 +153,6 @@ export default {
 </script>
 <style scoped>
 #wrapper {
-  max-width: 1000px;
   display: grid;
   border: 3px solid black;
   position: relative;
@@ -217,7 +223,6 @@ export default {
   grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  min-height: 10vh;
 }
 
 .box {
@@ -228,7 +233,6 @@ export default {
 /* Rutorna i mellersta raden som innehåller bilder/bottles */
 .x {
   width: 60%;
-  max-width: 150px;
   border: 2px solid black;
   margin-top: 10%;
 }
@@ -237,13 +241,13 @@ export default {
   grid-row: 3;
   display: grid;
   grid-template-columns: 2fr 2fr;
+  min-height: 20vh;
 }
 
 #skills {
   display: grid;
   grid-template-columns: 1fr 5fr;
   border: 2px dashed black;
-  height: 30vh;
 }
 
 /* En hjälp-div som gör att bilder centresas vertikalt */
@@ -272,19 +276,18 @@ export default {
   display: grid;
   grid-template-columns: 5fr 1fr;
   border: 2px dashed black;
-  height: 30vh;
+  /* height: 30vh; */
 }
 
 #itemsRefill {
   display: grid;
-  grid-template-rows: auto;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 #skillsRefill {
   display: grid;
-  grid-template-rows: auto;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
 .itemIcons {
@@ -302,7 +305,6 @@ export default {
 
 /* Korten man har på handen */
 #cardRow {
-  border: 2px dashed black;
   display: grid;
   grid-template-columns: 1fr 5fr;
   height: 30vh;
@@ -316,11 +318,10 @@ export default {
   height: 30vh;
 }
 #cardRefill > * {
-  transform: scale(0.4);
+  transform: scale(0.4) translate(-60%, -60%);
 }
 
 #cardsImage img {
   max-width: 100%;
 }
-
 </style>
