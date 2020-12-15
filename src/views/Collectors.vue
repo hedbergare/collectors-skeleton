@@ -111,6 +111,7 @@
           :marketValues="marketValues"
           :buyPlacement="buyPlacement"
           :skillPlacement="skillPlacement"
+          :marketPlacement="marketPlacement"
           @buyCard="buyCard($event)"
           @updatePoints="updatePoints($event)"
           @buySkill="buySkill($event)"
@@ -457,6 +458,7 @@ export default {
       });
     },
     buySkill: function (card) {
+      console.log("köpt skill")
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,

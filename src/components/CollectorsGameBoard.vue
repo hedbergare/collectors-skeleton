@@ -56,7 +56,7 @@
             '.png);'
           "
           v-if="p.playerId === null"
-          @click="placeBottle(p, 'item')"
+          @click="placeBottle(p,'item')"
         ></button>
 
         <div v-if="p.playerId !== null">
@@ -195,33 +195,49 @@
 
     <div class="marketBox">
       <!-- Här gör vi market box med köprutor -->
-      <div id="buyMarketBox1">
-        <img id="marketBottle1" src="/images/marketPic/marketBottle1.png" />
-      </div>
-      <div id="buyMarketBox2">
-        <img id="marketBottle2" src="/images/marketPic/marketBottle2.png" />
-      </div>
-      <div id="buyMarketBox3">
-        <img id="marketBottle3" src="/images/marketPic/marketBottle3.png" />
-      </div>
       <div id="buyMarketBoxInfo">
         <img id="marketInfo" src="/images/marketPic/marketInfo.png" />
         <img id="testhover" src="/images/marketPic/info.png" />
       </div>
+      <div
+        class="bottleMarket"
+        v-for="(p, index) in marketPlacement"
+        :key="index"
+      >
+        <button
+          class="placeBottleMarket"
+          v-if="p.playerId === null"
+          :style="
+            'background-image: url(/images/marketPic/marketBottle_' +
+            p.cost +
+            '.png);'
+          "
+          @click="placeBottle(p, 'market')"
+        ></button>
+
+        <div v-if="p.playerId !== null">
+          {{ p.playerId }}
+        </div>
+      </div>
       <div id="MarketArrow1">
         <img id="imagePingvin" src="/images/marketPic/image_fastaval.png" />
+        {{ "x" + marketValues.fastaval }}
       </div>
       <div id="MarketArrow2">
         <img id="imageRobot" src="/images/marketPic/image_figures.png" />
+        {{ "x" + marketValues.figures }}
       </div>
       <div id="MarketArrow3">
         <img id="imageMusik" src="/images/marketPic/image_Music.png" />
+        {{ "x" + marketValues.music }}
       </div>
       <div id="MarketArrow4">
         <img id="imageFilm" src="/images/marketPic/image_movie.png" />
+        {{ "x" + marketValues.movie }}
       </div>
       <div id="MarketArrow5">
         <img id="imageTeknik" src="/images/marketPic/image_technology.png" />
+        {{ "x" + marketValues.technology }}
       </div>
     </div>
 
@@ -269,8 +285,14 @@ export default {
     marketValues: Object,
     buyPlacement: Array,
     skillPlacement: Array,
+    marketPlacement: Array,
   },
   methods: {
+    highlightAvailableMarket: function () {
+      for (let i = 0; i < this.skillsOnSale.length; i += 1) {
+        this.$set(this.skillsOnSale[4], "available", true);
+      }
+    },
     /* Här är funktionerna till item */
     buyCard: function (card) {
       if (card.available) {
@@ -288,10 +310,13 @@ export default {
         action: action,
         playerId: p.playerId,
       });
+      console.log(action)
       if (action === "item") {
         this.highlightAvailableCards(p.cost);
       } else if (action === "skill") {
         this.highlightAvailableSkills(p.cost);
+      } else if (action === "market") {
+        this.highlightAvailableMarket(p.cost);
       }
     },
 
@@ -338,7 +363,7 @@ export default {
     /* Här är funktionerna till skills */
     buySkill: function (card) {
       if (card.available) {
-        this.$emit("buySkill", card);
+        this.$emit("buySkill", card,);
         this.updatePoints(); /* Även när man köper skills ska poängen uppdateras */
       }
     },
@@ -497,7 +522,6 @@ export default {
 
 .placeBottleItem {
   color: blue;
-  background-image: url(/images/bottelPic/Bottle.png);
   width: 50%;
   height: 100%;
   background-size: contain;
@@ -506,9 +530,15 @@ export default {
 
 .placeBottleSkill {
   color: blue;
-  background-image: url(/images/buySkillPic/skill_Bottle1.png);
   width: 70%;
   height: 70%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.placeBottleMarket {
+  color: blue;
+  width: 40%;
+  height: 80%;
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -887,26 +917,31 @@ export default {
   border: dashed 2px black;
   grid-column: 1;
   grid-row: 2;
+  padding-bottom: 4px;
 }
 #MarketArrow2 {
   border: dashed 2px black;
   grid-column: 2;
   grid-row: 2;
+  padding-bottom: 4px;
 }
 #MarketArrow3 {
   border: dashed 2px black;
   grid-column: 3;
   grid-row: 2;
+  padding-bottom: 4px;
 }
 #MarketArrow4 {
   border: dashed 2px black;
   grid-column: 4;
   grid-row: 2;
+  padding-bottom: 4px;
 }
 #MarketArrow5 {
   border: dashed 2px black;
   grid-column: 5;
   grid-row: 2;
+  padding-bottom: 4px;
 }
 
 /* Bilder till Market Value */
