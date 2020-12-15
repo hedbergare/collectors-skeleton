@@ -14,28 +14,79 @@
         @setAuctionWinner="setAuctionWinner($event)"
         @winnerPlaceCard="winnerPlaceCard($event)"
       />
-      {{ buyPlacement }} {{ chosenPlacementCost }}
-      <CollectorsBuyActions
-        v-if="players[playerId]"
-        :labels="labels"
-        :player="players[playerId]"
-        :itemsOnSale="itemsOnSale"
-        :marketValues="marketValues"
-        :placement="buyPlacement"
-        @buyCard="buyCard($event)"
-        @placeBottle="placeBottle('buy', $event)"
-      />
-
-      <CollectorsBuySkills
-        v-if="players[playerId]"
-        :labels="labels"
-        :player="players[playerId]"
-        :skillsOnSale="skillsOnSale"
-        :placement="skillPlacement"
-        @buySkill="buySkill($event)"
-        @placeBottle="placeBottle('skill', $event)"
-      />
-
+      <div id="browserWrapper">
+        <div id="gameboardColumn">
+          <CollectorsGameBoard
+            v-if="itemsOnSale"
+            :player="players[playerId]"
+            :labels="labels"
+            :itemsOnSale="itemsOnSale"
+            :skillsOnSale="skillsOnSale"
+            :marketValues="marketValues"
+            :buyPlacement="buyPlacement"
+            :skillPlacement="skillPlacement"
+            :auctionPlacement="auctionPlacement"
+            :marketPlacement="marketPlacement"
+            @buyCard="buyCard($event)"
+            @updatePoints="updatePoints($event)"
+            @buySkill="buySkill($event)"
+            @placeBottle="placeBottle($event)"
+            @initiateAuction="initiateAuction($event)"
+          />
+        </div>
+        <div id="rightColumn">
+          <div id="playerboardRow">
+            <div id="playerBoardContainer">
+              <!-- Sin egen flik ska skapas först -->
+              <div v-if="players[playerId]">
+                <div
+                  class="playerBoardTab"
+                  :style="'background-color:' + players[playerId].color"
+                  @click="showCorrectPlayerBoard(playerId)"
+                >
+                  <p>{{ playerId }}</p>
+                </div>
+              </div>
+              <!-- Sedan skapas flikarna för de andra spelarna -->
+              <div v-for="(player, index) in players" :key="index">
+                <div
+                  v-if="player.pId !== playerId"
+                  class="playerBoardTab"
+                  :style="'background-color:' + player.color"
+                  @click="showCorrectPlayerBoard(player.pId)"
+                >
+                  <p>{{ player.pId }}</p>
+                </div>
+              </div>
+            </div>
+            <!-- Sitt eget player board -->
+            <div :id="playerId">
+              <CollectorsPlayerBoard
+                v-if="players[playerId]"
+                :player="players[playerId]"
+                :class="playerId"
+              />
+            </div>
+            <!-- De andras player board -->
+            <div
+              v-for="(p, index) in players"
+              :key="index"
+              :id="p.pId"
+              :style="'display:none'"
+            >
+              <CollectorsPlayerBoard
+                v-if="p !== players[playerId]"
+                :player="p"
+              />
+            </div>
+          </div>
+          <div id="infoboardColumn">
+            <CollectorsInfoBoard />
+          </div>
+        </div>
+      </div>
+    </main>
+    <div>
       <div class="buttons">
         Draw a card here
         <button @click="drawCard">
@@ -45,16 +96,6 @@
       Testknapp för "fill pools"
       <button @click="fillPools()">Fill pools (fas 2) testknapp</button>
       <button @click="changeTurn()">Byt tur testknapp</button>
-      Skills
-      <div class="cardslots">
-        <CollectorsCard
-          v-for="(card, index) in skillsOnSale"
-          :card="card"
-          :availableAction="card.available"
-          :key="index"
-        />
-      </div>
-
       Auction
       <div class="cardslots">
         <CollectorsCard
@@ -64,30 +105,11 @@
         />
       </div>
 
-      Hand
-      <div class="cardslots" v-if="players[playerId]">
-        <CollectorsCard
-          v-for="(card, index) in players[playerId].hand"
-          :card="card"
-          :availableAction="card.available"
-          :key="index"
-          @doAction="buyCard(card)"
-        />
-      </div>
-      Items
-      <div class="cardslots" v-if="players[playerId]">
-        <CollectorsCard
-          v-for="(card, index) in players[playerId].items"
-          :card="card"
-          :key="index"
-        />
-      </div>
-    </main>
-    {{ players }}
-    {{ marketValues }}
-    <button v-if="players[playerId]" @click="players[playerId].money += 1">
-      fake more money
-    </button>
+      {{ players }}
+      <button v-if="players[playerId]" @click="players[playerId].money += 1">
+        fake more money
+      </button>
+    </div>
     <footer>
       <p>
         {{ labels.invite }}
@@ -99,75 +121,6 @@
         />
       </p>
     </footer>
-
-    <div id="browserWrapper">
-      <div id="gameboardColumn">
-        <CollectorsGameBoard
-          v-if="itemsOnSale"
-          :player="players[playerId]"
-          :labels="labels"
-          :itemsOnSale="itemsOnSale"
-          :skillsOnSale="skillsOnSale"
-          :marketValues="marketValues"
-          :buyPlacement="buyPlacement"
-          :skillPlacement="skillPlacement"
-          :auctionPlacement="auctionPlacement"
-          :marketPlacement="marketPlacement"
-          @buyCard="buyCard($event)"
-          @updatePoints="updatePoints($event)"
-          @buySkill="buySkill($event)"
-          @placeBottle="placeBottle($event)"
-          @initiateAuction="initiateAuction($event)"
-        />
-      </div>
-      <div id="rightColumn">
-        <div id="infoboardColumn">
-          <CollectorsInfoBoard />
-        </div>
-        <div id="playerboardRow">
-          <div id="playerBoardContainer">
-            <!-- Sin egen flik ska skapas först -->
-            <div v-if="players[playerId]">
-              <div
-                class="playerBoardTab"
-                :style="'background-color:' + players[playerId].color"
-                @click="showCorrectPlayerBoard(playerId)"
-              >
-                <p>{{ playerId }}</p>
-              </div>
-            </div>
-            <!-- Sedan skapas flikarna för de andra spelarna -->
-            <div v-for="(player, index) in players" :key="index">
-              <div
-                v-if="player.pId !== playerId"
-                class="playerBoardTab"
-                :style="'background-color:' + player.color"
-                @click="showCorrectPlayerBoard(player.pId)"
-              >
-                <p>{{ player.pId }}</p>
-              </div>
-            </div>
-          </div>
-          <!-- Sitt eget player board -->
-          <div :id="playerId">
-            <CollectorsPlayerBoard
-              v-if="players[playerId]"
-              :player="players[playerId]"
-              :class="playerId"
-            />
-          </div>
-          <!-- De andras player board -->
-          <div
-            v-for="(p, index) in players"
-            :key="index"
-            :id="p.pId"
-            :style="'display:none'"
-          >
-            <CollectorsPlayerBoard v-if="p !== players[playerId]" :player="p" />
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -176,10 +129,8 @@
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
 
 import CollectorsCard from "@/components/CollectorsCard.vue";
-import CollectorsBuyActions from "@/components/CollectorsBuyActions.vue";
 import CollectorsGameBoard from "@/components/CollectorsGameBoard.vue";
 import CollectorsPlayerBoard from "@/components/CollectorsPlayerBoard.vue";
-import CollectorsBuySkills from "@/components/CollectorsBuySkills.vue";
 import CollectorsInfoBoard from "@/components/CollectorsInfoBoard.vue";
 import CollectorsAuction from "@/components/CollectorsAuction.vue";
 
@@ -187,8 +138,6 @@ export default {
   name: "Collectors",
   components: {
     CollectorsCard,
-    CollectorsBuyActions,
-    CollectorsBuySkills,
     CollectorsGameBoard,
     CollectorsPlayerBoard,
     CollectorsInfoBoard,
@@ -592,7 +541,7 @@ footer a:visited {
 #browserWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-height: 100vh;
+  /* max-height: 100vh; */
 }
 
 #gameboardColumn {
@@ -600,19 +549,12 @@ footer a:visited {
 }
 
 #infoboardColumn {
-  display: grid;
-  display: table-cell;
-  vertical-align: bottom;
+  width:100%;
 }
 
 #playerboardRow {
   display: grid;
   display: inline-block;
   vertical-align: bottom;
-}
-
-#rightColumn {
-  display: grid;
-  grid-template-rows: 1fr 3fr;
 }
 </style>

@@ -215,7 +215,7 @@
         {{ "x" + marketValues.figures }}
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
         {{ "x" + marketValues.music }}
       </div>
       <div id="MarketArrow4">
@@ -404,15 +404,13 @@ export default {
 /* Main boxes */
 
 .wrapper {
-  margin: auto;
   display: grid;
   color: black;
   width: 100%;
   height: 100vh;
   grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5vh 15vh 21vh 21vh 21vh 17vh;
-  margin-bottom: 60px;
-}
+  }
 .itemBox {
   grid-column: 2 / span 4;
   grid-row: 2;
