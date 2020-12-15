@@ -137,37 +137,68 @@
     <div class="auctionBox">
       <!-- Här gör vi auction box med flaskor -->
       <div id="auction2Boxes1">
-        <div id="auctionBox1">
-          <img
-            id="auctionBottle1"
-            src="/images/auctionPic/auctionBottle1.png"
-          />
+        <div
+          class="auctionBox1"
+          v-for="(p, index) in buyPlacement"
+          :key="index"
+        >
+          <button
+            class="placeBottleAuction1"
+            :disabled="cannotAffordAuction(p.cost)"
+            :style="'background-image: url(/images/auctionPic/auctionBottle1.png);'"
+            v-if="p.playerId === null"
+            @click="placeBottle(p, 'item')"
+          ></button>
         </div>
-        <div id="auctionBox2">
-          <img
-            id="auctionBottle2"
-            src="/images/auctionPic/auctionBottle2.png"
-          />
+
+        <div
+          class="auctionBox2"
+          v-for="(p, index) in buyPlacement"
+          :key="index"
+        >
+          <button
+            class="placeBottleAuction2"
+            :disabled="cannotAffordAuction(p.cost)"
+            :style="'background-image: url(/images/auctionPic/auctionBottle2.png);'"
+            v-if="p.playerId === null"
+            @click="placeBottle(p, 'item')"
+          ></button>
         </div>
       </div>
+
       <div id="auction2Boxes2">
-        <div id="auctionBox3">
-          <img
-            id="auctionBottle3"
-            src="/images/auctionPic/auctionBottle3.png"
-          />
+        <div
+          class="auctionBox3"
+          v-for="(p, index) in buyPlacement"
+          :key="index"
+        >
+          <button
+            class="placeBottleAuction3"
+            :disabled="cannotAffordAuction(p.cost)"
+            :style="'background-image: url(/images/auctionPic/auctionBottle3.png);'"
+            v-if="p.playerId === null"
+            @click="placeBottle(p, 'item')"
+          ></button>
         </div>
-        <div id="auctionBox4">
-          <img
-            id="auctionBottle4"
-            src="/images/auctionPic/auctionBottle3.png"
-          />
+
+        <div
+          class="auctionBox4"
+          v-for="(p, index) in buyPlacement"
+          :key="index"
+        >
+          <button
+            class="placeBottleAuction4"
+            :disabled="cannotAffordAuction(p.cost)"
+            :style="'background-image: url(/images/auctionPic/auctionBottle3.png);'"
+            v-if="p.playerId === null"
+            @click="placeBottle(p, 'item')"
+          ></button>
         </div>
       </div>
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" />
+        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" @click="initiateAuction()"/>
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -187,9 +218,6 @@
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
         <!-- <CollectorsCard :card="auctionCards[3]"/> -->
-      </div>
-      <div id="auctionInfo">
-        <img id="auctionInfo1" src="/images/auctionPic/auction_Info.png" />
       </div>
     </div>
 
@@ -215,7 +243,7 @@
         <img id="imageRobot" src="/images/marketPic/image_figures.png" />
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
       </div>
       <div id="MarketArrow4">
         <img id="imageFilm" src="/images/marketPic/image_movie.png" />
@@ -278,6 +306,10 @@ export default {
         this.updatePoints();
       }
     },
+    /*Skickar iväg att auktionen ska börja */
+    initiateAuction(){
+      this.$emit("initiateAuction");
+    },
     /* Funktionen som hanterar hur många poäng varje spelare har */
     updatePoints: function () {
       this.$emit("updatePoints");
@@ -334,6 +366,19 @@ export default {
       }
     },
 
+    cannotAffordAuction: function (cost) {
+      let minCost = 100;
+      for (let key in this.marketValues) {
+        if (cost + this.marketValues[key] < minCost)
+          minCost = cost + this.marketValues[key];
+      }
+      if (this.player.money >= minCost && this.player.isTurn) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    
     /* Här är funktionerna till skills */
     buySkill: function (card) {
       if (card.available) {
@@ -369,7 +414,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 /* Main boxes */
@@ -422,10 +466,9 @@ export default {
 }
 .auctionBox {
   display: grid;
-  padding: 5px;
   text-align: center;
   grid-template-columns: auto auto auto;
-  grid-template-rows: 22vh 22vh 22vh;
+  grid-template-rows: 20vh 20vh 20vh;
   background-color: rgb(245, 179, 104);
   color: white;
   grid-column: 4 / span 2;
@@ -464,7 +507,7 @@ export default {
   grid-row: 1;
 }
 .itemsOnSaleIcon {
-  max-height: 6vh;
+  max-height: 5vh;
   max-width: 100%;
 }
 .skillsOnSaleIcon {
@@ -478,22 +521,16 @@ export default {
 }
 
 /* Flaskor till Item */
-#bottle1 {
-  max-width: 50%;
-}
-#itemBottle2 {
-  max-width: 50%;
-}
+#bottle1,
+#itemBottle2,
 #itemBottle3 {
   max-width: 50%;
 }
-/* Info bilden */
 #itemInfo {
   max-width: 70%;
 }
 
 /* small boxes in itemBox */
-
 .placeBottleItem {
   color: blue;
   background-image: url(/images/bottelPic/Bottle.png);
@@ -518,11 +555,11 @@ export default {
   grid-row: 2;
   max-width: 100%;
 }
-
 #buyItemBoxInfo img {
   max-width: 100%;
   max-height: 100%;
 }
+
 /* Pilar till Item */
 #itemArrow1 {
   grid-column: 1;
@@ -567,26 +604,11 @@ export default {
   padding: 8px;
 }
 
-#skillButton {
-  max-width: 100%;
-  max-height: 100%;
-}
-#skillBottle1 {
-  max-width: 100%;
-  max-height: 100%;
-}
-#skillBottle2 {
-  max-width: 100%;
-  max-height: 100%;
-}
-#skillBottle3 {
-  max-width: 100%;
-  max-height: 100%;
-}
-#skillBottle4 {
-  max-width: 100%;
-  max-height: 100%;
-}
+#skillButton,
+#skillBottle1,
+#skillBottle2,
+#skillBottle3,
+#skillBottle4,
 #skillBottle5 {
   max-width: 100%;
   max-height: 100%;
@@ -733,62 +755,86 @@ export default {
 }
 
 /* Small boxes in auctionBox */
+.placeBottleAuction1 {
+  color: blue;
+  background-image: url(/images/auctionPic/auctionBottle1.png);
+  width: 50%;
+  height: 70%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.placeBottleAuction2 {
+  color: blue;
+  background-image: url(/images/auctionPic/auctionBottle2.png);
+  width: 50%;
+  height: 70%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.placeBottleAuction3 {
+  color: blue;
+  background-image: url(/images/auctionPic/auctionBottle3.png);
+  width: 50%;
+  height: 70%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.placeBottleAuction4 {
+  color: blue;
+  background-image: url(/images/auctionPic/auctionBottle3.png);
+  width: 50%;
+  height: 70%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 #auction2Boxes1 {
-  grid-template-columns: auto;
   grid-template-rows: 10vh 10vh;
   display: grid;
-  grid-column: 1;
-  grid-row: 1;
-  max-width: 50%;
-  max-height: 100%;
-}
-#auctionBox1 {
   grid-column: 1;
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;
 }
-#auctionBox2 {
+.auctionBox1 {
+  grid-column: 1;
+  grid-row: 1;
+  max-width: 100%;
+  max-height: 100%;
+}
+.auctionBox2 {
   grid-column: 1;
   grid-row: 2;
   max-width: 100%;
   max-height: 100%;
 }
 #auctionBox1 img,
-#auctionBox2 img {
+#auctionBox2 img,
+#auctionBox3 img,
+#auctionBox4 img,
+#startAuction img {
   max-width: 100%;
   max-height: 100%;
 }
 #auction2Boxes2 {
-  grid-template-columns: auto;
   grid-template-rows: 10vh 10vh;
   display: grid;
-  text-align: center;
   grid-column: 1;
   grid-row: 2;
-  max-width: 50%;
+  max-width: 100%;
   max-height: 100%;
 }
-#auctionBox3 {
+.auctionBox3 {
   grid-column: 1;
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;
 }
-#auctionBox4 {
+.auctionBox4 {
   grid-column: 1;
   grid-row: 2;
   max-width: 100%;
   max-height: 100%;
-}
-#auctionBox3 img,
-#auctionBox4 img {
-  max-width: 100%;
-  max-height: 100%;
-}
-#startAuction img {
-  max-height: 50%;
-  max-width: 50%;
 }
 
 /* Pilar i auctionbox */
@@ -803,14 +849,12 @@ export default {
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;
-  position: relative;
 }
 #auctionArrow3 {
   grid-column: 3;
   grid-row: 2;
   max-width: 100%;
   max-height: 100%;
-  position: relative;
 }
 #auctionArrow4 {
   grid-column: 1;
@@ -829,17 +873,6 @@ export default {
   grid-row: 3;
   max-width: 100%;
   max-height: 100%;
-}
-#auctionInfo {
-  grid-column: 2;
-  grid-row: 2;
-  max-width: 100%;
-  max-height: 100%;
-}
-#auctionInfo1 {
-  max-width: 100%;
-  max-height: 100%;
-  text-align: center;
 }
 
 /* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
@@ -909,7 +942,6 @@ export default {
 }
 
 /* Bilder till Market Value */
-
 #imageTeknik,
 #imageFilm,
 #imageMusik,
@@ -925,6 +957,8 @@ export default {
 
 #marketInfo:hover + #testhover {
   display: inline-block;
+  height: 20vh;
+  width: 25vh; 
 }
 #testhover {
   position: absolute;

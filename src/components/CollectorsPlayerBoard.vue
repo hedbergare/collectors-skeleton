@@ -1,9 +1,17 @@
 <template>
-  <div id="wrapper" :style="'background-color:' + player.color"><!-- Här läggs det in vilken färg man "är" -->
-    <!-- Översta raden - där det visas hur mycket pengar, poäng och income man har -->
+  <div id="wrapper" :style="'background-color:' + player.color">
+    <!-- Här läggs det in vilken färg man "är" -->
+    <!-- Översta raden - där det visas hur mycket pengar, poäng och income man har och chest -->
     <div id="topRow">
+      <img id="chest" src="images/player_board/treasure.PNG" />
+      <div class="secretPopup" v-if="playerId == player.pId">
+        <CollectorsCard
+          v-for="(card, index) in player.secret"
+          :key="index"
+          :card="card"
+        />
+      </div>
       <div id="wallet">
-
         <div id="money">
           <div class="helper_wrapper">
             <span class="helper"></span>
@@ -22,13 +30,13 @@
 
         <div id="currentPoints">
           <div>
-          <img src="images/player_board/score.png">
+            <img src="images/player_board/score.png" />
           </div>
           <p>{{ player.points }}</p>
         </div>
-        
       </div>
     </div>
+
     <!-- Mellersta raden, där ens "bottles" ska ligga -->
     <div id="midRow">
       <div class="box">
@@ -47,6 +55,7 @@
         <img class="x twoDollar" src="images/player_board/2_dollar.JPG" />
       </div>
     </div>
+
     <!-- Understa raden -->
     <div id="bottomRow">
       <div id="skills">
@@ -55,9 +64,14 @@
           <img id="skillsButton" src="images/player_board/skills_clear.png" />
           <img id="skillsInfo" src="images/player_board/skills_info.PNG" />
         </div>
+
         <!-- Här skapas bilder för de skills som man äger -->
         <div id="skillsRefill">
-          <div v-for="(card, index) in player.skills" :key="index" style="max-height: 100%">
+          <div
+            v-for="(card, index) in player.skills"
+            :key="index"
+            style="max-height: 100%"
+          >
             <img
               class="skillsIcons"
               :src="'images/skill_logos/' + card.skill + '_skill.png'"
@@ -65,32 +79,12 @@
           </div>
         </div>
       </div>
+      
+      <!-- Hahaha items försvinner när den här diven tas bort?? -->
       <div id="hand">
-        <div id="cards">
-          <div id="cardsImage">
-            <img src="images/player_board/card_hand.png" />
-          </div>
-          <!-- Det som kommer upp när man hoverar - Ingen annan än en själv får se korten på handen -->
-          <div class="handPopup" v-if="playerId == player.pId">
-            <CollectorsCard
-              v-for="(card, index) in player.hand"
-              :key="index"
-              :card="card"
-              :availableAction="card.available"
-            />
-          </div>
-        </div>
-        <div id="secret">
-          <img src="images/player_board/treasure.PNG"/>
-        </div>
-        <div class="secretPopup" v-if="playerId == player.pId">
-            <CollectorsCard
-              v-for="(card, index) in player.secret"
-              :key="index"
-              :card="card"
-            />
-        </div>
+  
       </div>
+
       <div id="items">
         <!-- Här skapas bilder för de items man äger -->
         <div id="itemsRefill">
@@ -107,7 +101,25 @@
         </div>
       </div>
       {{player.isTurn}}
+      {{player.bottles}}
     </div>
+
+    <!-- Här kommer nedersta raden för kort på hand -->
+    <div id="cardRow">
+      <div id="cardsImage">
+        <img src="images/player_board/card_hand.png" />
+      </div>
+      <div id="cardRefill" v-if="playerId == player.pId">
+        <CollectorsCard
+          v-for="(card, index) in player.hand"
+          :key="index"
+          :card="card"
+          :availableAction="card.available"
+        />
+      </div>
+    </div>
+    <!-- Visar vems tur det är true/false -->
+    {{ player.isTurn }}
   </div>
 </template>
 
@@ -127,11 +139,10 @@ export default {
     playerId: function () {
       return this.$store.state.playerId;
     },
-  }
+  },
 };
 </script>
 <style scoped>
-
 #wrapper {
   max-width: 1000px;
   display: grid;
@@ -142,6 +153,24 @@ export default {
 
 #topRow {
   grid-row: 1;
+  height: 6vh;
+}
+
+/* Hover och style för treasure */
+#chest {
+  border: 2px solid black;
+}
+
+#chest:hover + .secretPopup {
+  display: inline-block;
+  position: absolute;
+}
+
+.secretPopup {
+  display: none;
+  position: absolute;
+  transform: scale(0.5);
+  width: 100%;
 }
 
 #wallet {
@@ -170,13 +199,13 @@ export default {
 }
 
 #money p,
-#income p, 
+#income p,
 #currentPoints p {
   margin: 0;
   margin-top: 0.3em;
 }
 #money img,
-#income img, 
+#income img,
 #currentPoints img {
   max-width: 100%;
   vertical-align: middle;
@@ -186,7 +215,7 @@ export default {
   grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  min-height: 110px;
+  min-height: 10vh;
 }
 
 .box {
@@ -205,8 +234,7 @@ export default {
 #bottomRow {
   grid-row: 3;
   display: grid;
-  grid-template-columns: 2fr 1fr 2fr;
-  min-height: 260px;
+  grid-template-columns: 2fr 0fr 2fr;
 }
 
 #skills {
@@ -215,12 +243,14 @@ export default {
   border: 2px dashed black;
   height: 30vh;
 }
+
 /* En hjälp-div som gör att bilder centresas vertikalt */
 .helper {
   display: inline-block;
   height: 100%;
   vertical-align: middle;
 }
+
 #skillsImage img {
   max-width: 100%;
   vertical-align: middle;
@@ -242,16 +272,17 @@ export default {
   border: 2px dashed black;
   height: 30vh;
 }
+
 #itemsRefill {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 #skillsRefill {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .itemIcons {
@@ -266,58 +297,28 @@ export default {
 #itemsImage img {
   max-width: 100%;
 }
-/* Hand-ikonen */
-#cardsImage {
-  text-align: center;
+
+/* Korten man har på handen */
+#cardRow {
+  border: 2px dashed black;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  height: 30vh;
 }
+
+#cardRefill {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, 130px);
+  /*   grid-template-rows: repeat(auto-fill, 130px); */
+  height: 30vh;
+}
+#cardRefill > * {
+  transform: scale(0.4);
+}
+
 #cardsImage img {
   max-width: 100%;
 }
-#hand {
-  display: grid;
-  height: 10vh;
-  grid-template-rows: 5fr 1fr;
-}
-.handPopup > *{
-  position:relative;
-  transform:scale(0.5);
-  top:0;
-  left:0;
-  
-}
-#cardsImage:hover + .handPopup{
-  display:grid;
-  position:absolute;
-  top:0;
-  left:0;
-}
-.handPopup {
-  display:grid;
-  display: none;
-  position:absolute;
-  grid-template-columns: repeat(auto-fill, 130px);
-  grid-template-rows: repeat(auto-fill, 180px);
-  top:0;
-  left:0;
-  width:100%;
-}
 
-/* Secret chest */
-#secret {
-  border: solid black;
-  text-align: center;
-  background-color: #f7d4c4;
-}
-
-#secret:hover +.secretPopup {
-  display: inline-block;
-  position: absolute;
-}
-
-.secretPopup {
-  display: none;
-  position:absolute;
-  transform:scale(0.5);
-  width:100%;
-}
 </style>
