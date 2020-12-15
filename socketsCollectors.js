@@ -63,9 +63,21 @@ function sockets(io, socket, data) {
     })
   });
   socket.on('startAuction', function (d) {
-    data.startAuction(d.roomId, d.cardUpForAuction);
+    data.startAuction(d.roomId, d.cardUpForAuction, d.playerId);
     io.to(d.roomId).emit('auctionStarted', {
       cardUpForAuction: data.getCardUpForAuction(d.roomId),
+      players: data.getPlayers(d.roomId),
+      auctionCards: data.getAuctionCards(d.roomId),
+    })
+  });
+  socket.on('winnerPlaceCard', function (d) {
+    data.winnerPlaceCard(d.roomId, d.playerId, d.placement);
+    io.to(d.roomId).emit('auctionDone', {
+      cardUpForAuction: data.getCardUpForAuction(d.roomId),
+      players: data.getPlayers(d.roomId),
+      marketValues: data.getMarketValues(d.roomId),
+      auctionWinner: data.getAuctionWinner(d.roomId),
+      leadingBet: data.getLeadingBet(d.roomId),
     })
   });
   socket.on('updatePlayers', function (d) {

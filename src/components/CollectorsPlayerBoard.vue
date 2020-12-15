@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Mellersta raden, där ens "bottles" ska ligga -->
     <div id="midRow">
       <div class="box">
@@ -100,6 +100,8 @@
           <img src="images/player_board/item_button_clean.png" />
         </div>
       </div>
+      {{player.isTurn}}
+      {{player.bottles}}
     </div>
 
     <!-- Här kommer nedersta raden för kort på hand -->
