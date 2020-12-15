@@ -445,6 +445,7 @@ export default {
       }
       /* Här under ska vi göra allt som ska ske när alla spelare har slut på bottles */
       console.log("Alla har slut på bottles :(");
+      this.fillPools();
     },
 
     showCorrectPlayerBoard: function (clickedId) {

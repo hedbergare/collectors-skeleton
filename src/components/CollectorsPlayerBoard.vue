@@ -79,11 +79,6 @@
           </div>
         </div>
       </div>
-      
-      <!-- Hahaha items försvinner när den här diven tas bort?? -->
-      <div id="hand">
-  
-      </div>
 
       <div id="items">
         <!-- Här skapas bilder för de items man äger -->
@@ -158,7 +153,7 @@ export default {
 
 /* Hover och style för treasure */
 #chest {
-  border: 2px solid black;
+  width: 7vh;
 }
 
 #chest:hover + .secretPopup {
@@ -234,7 +229,7 @@ export default {
 #bottomRow {
   grid-row: 3;
   display: grid;
-  grid-template-columns: 2fr 0fr 2fr;
+  grid-template-columns: 2fr 2fr;
 }
 
 #skills {
