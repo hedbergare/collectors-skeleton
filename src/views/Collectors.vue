@@ -99,7 +99,6 @@
         />
       </p>
     </footer>
-    <CollectorsBottle />
 
     <div id="browserWrapper">
       <div id="gameboardColumn">
@@ -180,7 +179,6 @@ import CollectorsCard from "@/components/CollectorsCard.vue";
 import CollectorsBuyActions from "@/components/CollectorsBuyActions.vue";
 import CollectorsGameBoard from "@/components/CollectorsGameBoard.vue";
 import CollectorsPlayerBoard from "@/components/CollectorsPlayerBoard.vue";
-import CollectorsBottle from "@/components/CollectorsBottle.vue";
 import CollectorsBuySkills from "@/components/CollectorsBuySkills.vue";
 import CollectorsInfoBoard from "@/components/CollectorsInfoBoard.vue";
 import CollectorsAuction from "@/components/CollectorsAuction.vue";
@@ -193,7 +191,6 @@ export default {
     CollectorsBuySkills,
     CollectorsGameBoard,
     CollectorsPlayerBoard,
-    CollectorsBottle,
     CollectorsInfoBoard,
     CollectorsAuction,
   },

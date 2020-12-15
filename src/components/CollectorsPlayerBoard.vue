@@ -40,19 +40,24 @@
     <!-- Mellersta raden, där ens "bottles" ska ligga -->
     <div id="midRow">
       <div class="box">
-        <img class="x bottle" src="images/player_board/bottle.JPG" />
+        <CollectorsBottle v-if="player.bottles > 0" :color="player.color"/>
+        <img v-else class="x bottle" src="images/player_board/bottle.JPG"/>
       </div>
       <div class="box">
-        <img class="x bottle" src="images/player_board/bottle.JPG" />
+        <CollectorsBottle v-if="player.bottles > 1" :color="player.color"/>
+        <img v-else class="x bottle" src="images/player_board/bottle.JPG" />
       </div>
       <div class="box">
-        <img class="x addCard" src="images/player_board/add_card.JPG" />
+        <CollectorsBottle v-if="player.bottles > 2" :color="player.color"/>
+        <img v-else class="x addCard" src="images/player_board/add_card.JPG" />
       </div>
       <div class="box">
-        <img class="x oneDollar" src="images/player_board/1_dollar.JPG" />
+        <CollectorsBottle v-if="player.bottles > 3" :color="player.color"/>
+        <img v-else class="x oneDollar" src="images/player_board/1_dollar.JPG" />
       </div>
       <div class="box">
-        <img class="x twoDollar" src="images/player_board/2_dollar.JPG" />
+        <CollectorsBottle v-if="player.bottles > 4" :color="player.color"/>
+        <img v-else class="x twoDollar" src="images/player_board/2_dollar.JPG" />
       </div>
     </div>
 
@@ -79,11 +84,7 @@
           </div>
         </div>
       </div>
-      
-      <!-- Hahaha items försvinner när den här diven tas bort?? -->
-      <div id="hand">
-  
-      </div>
+
 
       <div id="items">
         <!-- Här skapas bilder för de items man äger -->
@@ -125,11 +126,13 @@
 
 <script>
 import CollectorsCard from "@/components/CollectorsCard.vue";
+import CollectorsBottle from "@/components/CollectorsBottle.vue";
 
 export default {
   name: "CollectorsPlayerBoard",
   components: {
     CollectorsCard,
+    CollectorsBottle,
   },
   props: {
     /* Tar in player som object, så att vi vet  */
@@ -234,7 +237,7 @@ export default {
 #bottomRow {
   grid-row: 3;
   display: grid;
-  grid-template-columns: 2fr 0fr 2fr;
+  grid-template-columns: 2fr 2fr;
 }
 
 #skills {
