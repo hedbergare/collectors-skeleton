@@ -133,7 +133,7 @@
                 :style="'background-color:' + players[playerId].color"
                 @click="showCorrectPlayerBoard(playerId)"
               >
-                <p>{{ playerId }} </p>
+                <p>{{ playerId }}</p>
               </div>
             </div>
             <!-- Sedan skapas flikarna för de andra spelarna -->
@@ -144,7 +144,7 @@
                 :style="'background-color:' + player.color"
                 @click="showCorrectPlayerBoard(player.pId)"
               >
-                <p>{{ player.pId }} </p>
+                <p>{{ player.pId }}</p>
               </div>
             </div>
           </div>
@@ -442,7 +442,6 @@ export default {
             this.changeTurn(newPlayerIndex);
             return;
           }
-          
         }
       }
       /* Här under ska vi göra allt som ska ske när alla spelare har slut på bottles */
@@ -485,6 +484,7 @@ export default {
       });
     },
     buyCard: function (card) {
+      this.changeTurn();
       this.$store.state.socket.emit("collectorsBuyCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -493,7 +493,7 @@ export default {
       });
     },
     buySkill: function (card) {
-      console.log("köpt skill")
+      this.changeTurn();
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -502,6 +502,7 @@ export default {
       });
     },
     startAuction: function (card) {
+      this.changeTurn();
       this.cardUpForAuction = card;
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,
