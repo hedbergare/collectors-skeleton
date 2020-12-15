@@ -139,62 +139,22 @@
       <div id="auction2Boxes1">
         <div
           class="auctionBox1"
-          v-for="(p, index) in buyPlacement"
+          v-for="(p, index) in auctionPlacement"
           :key="index"
         >
           <button
             class="placeBottleAuction1"
-            :disabled="cannotAffordAuction(p.cost)"
-            :style="'background-image: url(/images/auctionPic/auctionBottle1.png);'"
-            v-if="p.playerId === null"
-            @click="placeBottle(p, 'item')"
-          ></button>
-        </div>
-
-        <div
-          class="auctionBox2"
-          v-for="(p, index) in buyPlacement"
-          :key="index"
-        >
-          <button
-            class="placeBottleAuction2"
-            :disabled="cannotAffordAuction(p.cost)"
-            :style="'background-image: url(/images/auctionPic/auctionBottle2.png);'"
+            :style="
+            'background-image: url(/images/auctionPic/auctionBottle_' +
+            p.cost +
+            '.png);'
+          "
             v-if="p.playerId === null"
             @click="placeBottle(p, 'item')"
           ></button>
         </div>
       </div>
 
-      <div id="auction2Boxes2">
-        <div
-          class="auctionBox3"
-          v-for="(p, index) in buyPlacement"
-          :key="index"
-        >
-          <button
-            class="placeBottleAuction3"
-            :disabled="cannotAffordAuction(p.cost)"
-            :style="'background-image: url(/images/auctionPic/auctionBottle3.png);'"
-            v-if="p.playerId === null"
-            @click="placeBottle(p, 'item')"
-          ></button>
-        </div>
-
-        <div
-          class="auctionBox4"
-          v-for="(p, index) in buyPlacement"
-          :key="index"
-        >
-          <button
-            class="placeBottleAuction4"
-            :disabled="cannotAffordAuction(p.cost)"
-            :style="'background-image: url(/images/auctionPic/auctionBottle3.png);'"
-            v-if="p.playerId === null"
-            @click="placeBottle(p, 'item')"
-          ></button>
-        </div>
-      </div>
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
@@ -252,7 +212,7 @@
         {{ "x" + marketValues.fastaval }}
       </div>
       <div id="MarketArrow2">
-        <img id="imageRobot" src="/images/marketPic/image_figures.png" />
+        <img id="imageRobot" src="/images/marketPic/image_figure.png" />
         {{ "x" + marketValues.figures }}
       </div>
       <div id="MarketArrow3">
@@ -312,6 +272,7 @@ export default {
     itemsOnSale: Array,
     marketValues: Object,
     buyPlacement: Array,
+    auctionPlacement: Array,
     skillPlacement: Array,
     marketPlacement: Array,
   },
@@ -547,11 +508,7 @@ export default {
 }
 
 /* Flaskor till Item */
-#bottle1,
-#itemBottle2,
-#itemBottle3 {
-  max-width: 50%;
-}
+
 #itemInfo {
   max-width: 70%;
 }
@@ -631,19 +588,10 @@ export default {
   max-height: 100%;
 }
 .bottleSkill {
-  color: blue;
   padding: 8px;
 }
 
-#skillButton,
-#skillBottle1,
-#skillBottle2,
-#skillBottle3,
-#skillBottle4,
-#skillBottle5 {
-  max-width: 100%;
-  max-height: 100%;
-}
+
 
 /* Small boxes in SkillBox */
 #buySkillInfo {
@@ -651,42 +599,9 @@ export default {
   grid-row: 1;
   max-width: 100%;
 }
-#buySkillBox1 {
-  grid-column: 2;
-  grid-row: 2;
+#skillButton {
   max-width: 100%;
-}
-
-#buySkillBox2 {
-  grid-column: 2;
-  grid-row: 3;
-  max-width: 100%;
-}
-
-#buySkillBox3 {
-  grid-column: 2;
-  grid-row: 4;
-  max-width: 100%;
-}
-
-#buySkillBox4 {
-  grid-column: 2;
-  grid-row: 5;
-  max-width: 100%;
-}
-
-#buySkillBox5 {
-  grid-column: 2;
-  grid-row: 6;
-  max-width: 100%;
-}
-
-#buySkillBox1 img,
-#buySkillBox2 img,
-#buySkillBox3 img,
-#buySkillBox4 img,
-#buySkillBox5 img {
-  max-width: 100%;
+  max-height: 100%;
 }
 
 /* Pilarna i Skillbox */
@@ -788,31 +703,6 @@ export default {
 /* Small boxes in auctionBox */
 .placeBottleAuction1 {
   color: blue;
-  background-image: url(/images/auctionPic/auctionBottle1.png);
-  width: 50%;
-  height: 70%;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.placeBottleAuction2 {
-  color: blue;
-  background-image: url(/images/auctionPic/auctionBottle2.png);
-  width: 50%;
-  height: 70%;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.placeBottleAuction3 {
-  color: blue;
-  background-image: url(/images/auctionPic/auctionBottle3.png);
-  width: 50%;
-  height: 70%;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.placeBottleAuction4 {
-  color: blue;
-  background-image: url(/images/auctionPic/auctionBottle3.png);
   width: 50%;
   height: 70%;
   background-size: contain;
@@ -820,50 +710,8 @@ export default {
 }
 
 #auction2Boxes1 {
-  grid-template-rows: 10vh 10vh;
+  grid-template-rows: 10vh 10vh 10vh 10vh;
   display: grid;
-  grid-column: 1;
-  grid-row: 1;
-  max-width: 100%;
-  max-height: 100%;
-}
-.auctionBox1 {
-  grid-column: 1;
-  grid-row: 1;
-  max-width: 100%;
-  max-height: 100%;
-}
-.auctionBox2 {
-  grid-column: 1;
-  grid-row: 2;
-  max-width: 100%;
-  max-height: 100%;
-}
-#auctionBox1 img,
-#auctionBox2 img,
-#auctionBox3 img,
-#auctionBox4 img,
-#startAuction img {
-  max-width: 100%;
-  max-height: 100%;
-}
-#auction2Boxes2 {
-  grid-template-rows: 10vh 10vh;
-  display: grid;
-  grid-column: 1;
-  grid-row: 2;
-  max-width: 100%;
-  max-height: 100%;
-}
-.auctionBox3 {
-  grid-column: 1;
-  grid-row: 1;
-  max-width: 100%;
-  max-height: 100%;
-}
-.auctionBox4 {
-  grid-column: 1;
-  grid-row: 2;
   max-width: 100%;
   max-height: 100%;
 }
@@ -930,22 +778,7 @@ export default {
 }
 
 /* Small boxes in MarketBox */
-#buyMarketInfo {
-  grid-column: 1;
-  grid-row: 1;
-}
-#buyMarketBox1 {
-  grid-column: 2;
-  grid-row: 1;
-}
-#buyMarketBox2 {
-  grid-column: 3;
-  grid-row: 1;
-}
-#buyMarketBox3 {
-  grid-column: 4;
-  grid-row: 1;
-}
+
 #MarketArrow1 {
   border: dashed 2px black;
   grid-column: 1;
@@ -983,10 +816,7 @@ export default {
 #imageMusik,
 #imageRobot,
 #imagePingvin,
-#marketInfo,
-#marketBottle3,
-#marketBottle2,
-#marketBottle1 {
+#marketInfo {
   max-width: 100%;
   max-height: 100%;
 }

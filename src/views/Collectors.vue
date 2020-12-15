@@ -112,6 +112,7 @@
           :marketValues="marketValues"
           :buyPlacement="buyPlacement"
           :skillPlacement="skillPlacement"
+          :auctionPlacement="auctionPlacement"
           :marketPlacement="marketPlacement"
           @buyCard="buyCard($event)"
           @updatePoints="updatePoints($event)"
