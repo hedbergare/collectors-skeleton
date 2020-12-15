@@ -430,7 +430,6 @@ export default {
     },
     placeBottle: function (p) {
       this.chosenPlacementCost = p.cost;
-      console.log("ja")
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -445,7 +444,6 @@ export default {
       });
     },
     buyCard: function (card) {
-      /* this.changeTurn(); */
       this.$store.state.socket.emit("collectorsBuyCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -454,7 +452,6 @@ export default {
       });
     },
     buySkill: function (card) {
-      /*  this.changeTurn(); */
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -463,7 +460,6 @@ export default {
       });
     },
     startAuction: function (card) {
-      /*   this.changeTurn(); */
       this.cardUpForAuction = card;
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,

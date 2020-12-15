@@ -143,7 +143,7 @@ Data.prototype.joinGame = function (roomId, playerId) {
             items: [],
             income: [],
             secret: [],
-            color: colors[Object.keys(room.players).length-1], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
+            color: colors[Object.keys(room.players).length - 1], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
             pId: playerId,
             isTurn: turn,
             auctionBet: 0,
@@ -589,7 +589,30 @@ Data.prototype.fillPools = function (roomId) {
     this.fillWithCards(room);
     this.collectBottles(room);
     this.resetPlacement(room);
+    this.getPassiveIncome(roomId);
 
+  }
+}
+
+Data.prototype.getPassiveIncome = function (roomId) {
+  let room = this.rooms[roomId];
+  if (typeof room !== 'undefined') {
+    for (let x in room.players) {
+      let bottles = room.players[x].bottles;
+      if (bottles < 3) {
+        this.drawCard(roomId, room.players[x].pId);
+        room.players[x].money += 3;
+      }
+      else if (bottles === 3) {
+        room.players[x].money += 3;
+      }
+      else if (bottles === 4) {
+        room.players[x].money += 2;
+      }
+      else {
+        console.log("Du fick inga pengar din sopa");
+      }
+    }
   }
 }
 
