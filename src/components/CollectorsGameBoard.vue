@@ -302,7 +302,6 @@ export default {
         action: action,
         playerId: p.playerId,
       });
-      console.log(action)
       if (action === "item") {
         this.highlightAvailableCards(p.cost);
       } else if (action === "skill") {
