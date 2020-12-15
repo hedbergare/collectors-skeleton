@@ -157,7 +157,7 @@
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" />
+        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" @click="initiateAuction()"/>
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -266,6 +266,10 @@ export default {
         this.updatePoints();
       }
     },
+    /*Skickar iväg att auktionen ska börja */
+    initiateAuction(){
+      this.$emit("initiateAuction");
+    },
     /* Funktionen som hanterar hur många poäng varje spelare har */
     updatePoints: function () {
       this.$emit("updatePoints");
@@ -283,7 +287,7 @@ export default {
       }
     },
 
-    highlightAvailableCards: function (cost = 100) {
+    highlightAvailableCards: function (cost) {
       for (let i = 0; i < this.itemsOnSale.length; i += 1) {
         if (
           this.marketValues[this.itemsOnSale[i].item] <=
@@ -302,11 +306,10 @@ export default {
           this.player.money - cost
         ) {
           this.$set(this.player.hand[i], "available", true);
-          this.chosenPlacementCost = cost;
         } else {
           this.$set(this.player.hand[i], "available", false);
-          this.chosenPlacementCost = cost;
         }
+        this.chosenPlacementCost = cost;
       }
     },
 

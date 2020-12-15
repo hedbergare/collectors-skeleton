@@ -53,7 +53,8 @@ function sockets(io, socket, data) {
       skillsOnSale: data.getSkillsOnSale(d.roomId),
       itemsOnSale: data.getItemsOnSale(d.roomId),
       auctionCards: data.getAuctionCards(d.roomId),
-      marketValues: data.getMarketValues(d.roomId)
+      marketValues: data.getMarketValues(d.roomId),
+      placements: data.getPlacements(d.roomId),
     });
   });
   socket.on('changeTurn', function (d) {
@@ -63,9 +64,21 @@ function sockets(io, socket, data) {
     })
   });
   socket.on('startAuction', function (d) {
-    data.startAuction(d.roomId, d.cardUpForAuction);
+    data.startAuction(d.roomId, d.cardUpForAuction, d.playerId);
     io.to(d.roomId).emit('auctionStarted', {
       cardUpForAuction: data.getCardUpForAuction(d.roomId),
+      players: data.getPlayers(d.roomId),
+      auctionCards: data.getAuctionCards(d.roomId),
+    })
+  });
+  socket.on('winnerPlaceCard', function (d) {
+    data.winnerPlaceCard(d.roomId, d.playerId, d.placement);
+    io.to(d.roomId).emit('auctionDone', {
+      cardUpForAuction: data.getCardUpForAuction(d.roomId),
+      players: data.getPlayers(d.roomId),
+      marketValues: data.getMarketValues(d.roomId),
+      auctionWinner: data.getAuctionWinner(d.roomId),
+      leadingBet: data.getLeadingBet(d.roomId),
     })
   });
   socket.on('updatePlayers', function (d) {
@@ -86,22 +99,12 @@ function sockets(io, socket, data) {
       auctionWinner: data.getAuctionWinner(d.roomId),
     })
   });
-    socket.on('fillPools', function(d) {
-      data.fillPools(d.roomId);
-      io.to(d.roomId).emit('collectorsPoolsFilled', {
-        skillsOnSale: data.getSkillsOnSale(d.roomId),
-        itemsOnSale: data.getItemsOnSale(d.roomId),
-        auctionCards: data.getAuctionCards(d.roomId),
-        marketValues: data.getMarketValues(d.roomId)
-      });
-    });
-    
-    socket.on('collectorsUpdatePoints', function(d) {
-      data.updatePoints(d.roomId),
+  socket.on('collectorsUpdatePoints', function (d) {
+    data.updatePoints(d.roomId),
       io.to(d.roomId).emit('collectorsPointsUpdated', {
         players: data.getPlayers(d.roomId)
       })
-    }); 
+  });
 }
 
 module.exports = sockets;
