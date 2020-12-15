@@ -72,7 +72,7 @@
       <!-- Här gör vi skill box med köprutor -->
       <div></div>
       <div id="buySkillInfo">
-        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" />
+        <img id="skillButton" src="/images/buySkillPic/SkillsButton.png" />
       </div>
       <div
         class="bottleSkill"
@@ -215,7 +215,7 @@
         {{ "x" + marketValues.figures }}
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
         {{ "x" + marketValues.music }}
       </div>
       <div id="MarketArrow4">
