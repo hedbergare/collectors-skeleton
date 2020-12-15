@@ -295,7 +295,7 @@ export default {
       }
     },
 
-    highlightAvailableCards: function (cost = 100) {
+    highlightAvailableCards: function (cost) {
       for (let i = 0; i < this.itemsOnSale.length; i += 1) {
         if (
           this.marketValues[this.itemsOnSale[i].item] <=
@@ -314,11 +314,10 @@ export default {
           this.player.money - cost
         ) {
           this.$set(this.player.hand[i], "available", true);
-          this.chosenPlacementCost = cost;
         } else {
           this.$set(this.player.hand[i], "available", false);
-          this.chosenPlacementCost = cost;
         }
+        this.chosenPlacementCost = cost;
       }
     },
 

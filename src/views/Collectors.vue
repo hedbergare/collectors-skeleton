@@ -130,7 +130,7 @@
                 :style="'background-color:' + players[playerId].color"
                 @click="showCorrectPlayerBoard(playerId)"
               >
-                <p>{{ playerId }}</p>
+                <p>{{ playerId }} </p>
               </div>
             </div>
             <!-- Sedan skapas flikarna för de andra spelarna -->
@@ -141,7 +141,7 @@
                 :style="'background-color:' + player.color"
                 @click="showCorrectPlayerBoard(player.pId)"
               >
-                <p>{{ player.pId }}</p>
+                <p>{{ player.pId }} </p>
               </div>
             </div>
           </div>
@@ -342,6 +342,10 @@ export default {
         this.skillsOnSale = d.skillsOnSale;
         this.auctionCards = d.auctionCards;
         this.marketValues = d.marketValues;
+        this.buyPlacement = d.placements.buyPlacement;
+        this.skillPlacement = d.placements.skillPlacement;
+        this.marketPlacement = d.placements.marketPlacement;
+        this.auctionPlacement = d.placements.auctionPlacement;
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -393,7 +397,7 @@ export default {
       this.$store.state.socket.emit("fillPools", {
         roomId: this.$route.params.id,
       });
-      this.updatePoints();
+      this.updatePoints(); /* När poolen fylls på ska dina poäng uppdateras */
     },
 
     changeTurn: function () {
