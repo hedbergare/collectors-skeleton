@@ -1,105 +1,113 @@
 <template>
-  <div class="auctionWrapper">
-    <div
-      id="startAuction"
-      v-if="this.cardUpForAuction.item == undefined && auctionWinner == ''"
-    >
-      <h1>Choose a card to put up for Auction</h1>
-      <div class="titles">
-        <h2>Cards from your hand</h2>
+  <div class="auctionBackground">
+    <div class="auctionWrapper">
+      <div
+        id="startAuction"
+        v-if="this.cardUpForAuction.item == undefined && auctionWinner == ''"
+      >
+        <h1>Choose a card to put up for Auction</h1>
+        <div class="titles">
+          <h2>Cards from your hand</h2>
 
-        <h2>Cards from the Auction area</h2>
-      </div>
-      <div class="chooseCard">
-        <div class="cardsFromHand">
-          <div
-            v-for="(card, index) in players[playerId].hand"
-            :key="index"
-            @click="putCardUpForAuction(card)"
-          >
-            <CollectorsCard :card="card" />
+          <h2>Cards from the Auction area</h2>
+        </div>
+        <div class="chooseCard">
+          <div class="cardsFromHand">
+            <div
+              v-for="(card, index) in players[playerId].hand"
+              :key="index"
+              @click="putCardUpForAuction(card)"
+            >
+              <CollectorsCard :card="card" />
+            </div>
+          </div>
+          <div class="cardsFromAuction">
+            <div
+              v-for="(card, index) in auctionCards"
+              :key="index"
+              @click="putCardUpForAuction(card)"
+            >
+              <CollectorsCard :card="card" />
+            </div>
           </div>
         </div>
-        <div class="cardsFromAuction">
-          <div
-            v-for="(card, index) in auctionCards"
-            :key="index"
-            @click="putCardUpForAuction(card)"
-          >
-            <CollectorsCard :card="card" />
-          </div>
-        </div>
       </div>
-    </div>
-    <div
-      id="auctionStarted"
-      v-if="this.cardUpForAuction.item !== undefined && auctionWinner == ''"
-    >
-      <div id="yourBets">
-        <div
-          v-if="!players[playerId].auctionPass && players[playerId].auctionTurn"
-        >
-          <h1>Place your bets here</h1>
+      <div
+        id="auctionStarted"
+        v-if="this.cardUpForAuction.item !== undefined && auctionWinner == ''"
+      >
+        <div id="yourBets">
+          <div
+            v-if="
+              !players[playerId].auctionPass && players[playerId].auctionTurn
+            "
+          >
+            <h1>Place your bets here</h1>
+            <div>
+              <button @click="placeBet()" :disabled="cannotAfford()">
+                Bet 1 more coin than leading bet
+              </button>
+              <button @click="pass()">Pass</button>
+            </div>
+          </div>
+          <div v-if="players[playerId].auctionPass">
+            <h1>You passed</h1>
+          </div>
+          <div
+            v-if="
+              !players[playerId].auctionPass && !players[playerId].auctionTurn
+            "
+          >
+            <p>Du har inte passat men det är inte din tur</p>
+          </div>
           <div>
-            <button @click="placeBet()" :disabled="cannotAfford()">
-              Bet 1 more coin than leading bet
-            </button>
-            <button @click="pass()">Pass</button>
+            <h1>Current leading bet: {{ this.leadingBet }}</h1>
           </div>
         </div>
-        <div v-if="players[playerId].auctionPass">
-          <h1>You passed</h1>
+        <div id="cardContainer">
+          <h1>The card up for auction</h1>
+          <CollectorsCard id="theCard" :card="cardUpForAuction" />
         </div>
-        <div
-          v-if="
-            !players[playerId].auctionPass && !players[playerId].auctionTurn
-          "
-        >
-          <p>Du har inte passat men det är inte din tur</p>
-        </div>
-        <div>
-          <h1>Current leading bet: {{ this.leadingBet }}</h1>
-        </div>
-      </div>
-      <div id="cardContainer">
-        <h1>The card up for auction</h1>
-        <CollectorsCard id="theCard" :card="cardUpForAuction" />
-      </div>
-      <div id="bettingBoxes">
-        <div v-for="(player, index) in players" :key="index" class="bettingBox">
-          <div v-if="!player.auctionPass">
-            <h2>Player: {{ player.pId }} {{ player.auctionTurn }}</h2>
-            <h3>Bet placed: {{ player.auctionBet }}</h3>
-            <p>Coins left: {{ player.money - player.auctionBet }}</p>
-          </div>
-          <div v-else class="passed">
-            <h2>Player: {{ player.pId }} {{ player.auctionTurn }}</h2>
-            <h2>Passed</h2>
+        <div id="bettingBoxes">
+          <div
+            v-for="(player, index) in players"
+            :key="index"
+            class="bettingBox"
+          >
+            <div v-if="!player.auctionPass">
+              <h2>Player: {{ player.pId }} {{ player.auctionTurn }}</h2>
+              <h3>Bet placed: {{ player.auctionBet }}</h3>
+              <p>Coins left: {{ player.money - player.auctionBet }}</p>
+            </div>
+            <div v-else class="passed">
+              <h2>Player: {{ player.pId }} {{ player.auctionTurn }}</h2>
+              <h2>Passed</h2>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div v-if="auctionWinner !== ''">
-      <h1>Vinnaren är {{ auctionWinner }}</h1>
-      <div v-if="auctionWinner == playerId">
-        <h2>
-          Choose what to use your card as: item, skill, or to raise market
-        </h2>
-        <img
-          class="winnerOptionLogos"
-          :src="'images/item_logos/' + cardUpForAuction.item + '_item.png'"
-          @click="placeCardAsItem()"
-        />
-        <img
-          class="winnerOptionLogos"
-          :src="'images/skill_logos/' + cardUpForAuction.skill + '_skill.png'"
-          @click="placeCardAsSkill()"
-        />
-        <img
-          class="winnerOptionLogos"
-          :src="'images/marketPic/image_' + cardUpForAuction.market + '.png'"
-          @click="placeCardAsMarket()"
-        />
+      <div v-if="auctionWinner !== ''">
+        <h1>Vinnaren är {{ auctionWinner }}</h1>
+        <div v-if="auctionWinner == playerId">
+          <h2>
+            Choose what to use your card as: item, skill, or to raise market
+          </h2>
+          <img
+            class="winnerOptionLogos"
+            :src="'images/item_logos/' + cardUpForAuction.item + '_item.png'"
+            @click="placeCardAsItem()"
+          />
+          <img
+            class="winnerOptionLogos"
+            :src="'images/skill_logos/' + cardUpForAuction.skill + '_skill.png'"
+            @click="placeCardAsSkill()"
+          />
+          <img
+            class="winnerOptionLogos"
+            :src="'images/marketPic/image_' + cardUpForAuction.market + '.png'"
+            @click="placeCardAsMarket()"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -123,27 +131,21 @@ export default {
   methods: {
     placeCardAsItem: function () {
       /* Lägg in kortet i spelarens items */
-
-      /* Återställ alla spelares bets, tur och pass */
-
-      /* Återställ cardUpForAuction */
-
-      /* Ta bort kortet från handen/auctioncards */
-
-      /* Uppdatera spelare och cardUpForAuction */
+      this.$emit("winnerPlaceCard", "items");
     },
     placeCardAsSkill: function () {
+      this.$emit("winnerPlaceCard", "skills");
     },
     placeCardAsMarket: function () {
+      this.$emit("winnerPlaceCard", "market");
     },
     putCardUpForAuction: function (card) {
-      this.$emit("startAuction", card);
       this.placeBet();
-      this.changeTurn(this.playerId);
-      this.updatePlayers();
+      this.changeTurn();
+      this.$emit("startAuction", card);
     },
     cannotAfford: function () {
-      return this.leadingBet > this.players[this.playerId].money;
+      return this.leadingBet >= this.players[this.playerId].money;
     },
     updatePlayers: function () {
       this.$emit("updatePlayers", this.players);
@@ -170,9 +172,20 @@ export default {
       }
     },
     hasWon: function (nextPlayer) {
+      let passChecker = true;
+      for (let x in this.players) {
+        if (
+          this.players[x].pId !== Object.values(this.players)[nextPlayer].pId &&
+          !this.players[x].auctionPass
+        ) {
+          console.log("Spelare" + x + "har inte passat");
+          passChecker = false;
+        }
+      }
       if (
         this.leadingBet == Object.values(this.players)[nextPlayer].auctionBet &&
-        this.leadingBet !== 0
+        this.leadingBet !== 0 &&
+        passChecker
       ) {
         console.log(
           "Den här spelaren har vunnit auktionen! " +
@@ -212,13 +225,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.auctionBackground{
+  width:100%;
+  height:100vh;
+  background-color:rgba(0, 0, 0, 0.8);;
+  position:absolute;
+}
 .auctionWrapper {
   width: 80%;
-  background-color: white;
+  background-color: rgb(247, 195, 137);
   height: 80vh;
   margin: 0 auto;
   margin-top: 10vh;
-  color: black;
+  color: white;
   text-align: center;
   border-radius: 20px;
 }
@@ -241,7 +260,7 @@ export default {
 }
 .cardsFromAuction div,
 .cardsFromHand div {
-  transform: scale(0.7) translate(-30%, -30%);
+  transform: scale(0.7);
   z-index: 0;
 }
 #auctionStarted {
