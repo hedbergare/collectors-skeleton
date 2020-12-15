@@ -262,6 +262,9 @@ export default {
         console.log(d.playerId, "bought a card");
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
+        if (this.playerId === d.playerId) {
+          this.changeTurn();
+        }
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -272,6 +275,9 @@ export default {
         this.players = d.players;
         this.auctionCards = d.auctionCards;
         this.auctionInitiated = true;
+        if (this.playerId === d.playerId) {
+          this.changeTurn();
+        }
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -286,6 +292,9 @@ export default {
         console.log(d.playerId, "bought a skill");
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
+        if (this.playerId === d.playerId) {
+          this.changeTurn();
+        }
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -421,6 +430,7 @@ export default {
     },
     placeBottle: function (p) {
       this.chosenPlacementCost = p.cost;
+      console.log("ja")
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -435,7 +445,7 @@ export default {
       });
     },
     buyCard: function (card) {
-      this.changeTurn();
+      /* this.changeTurn(); */
       this.$store.state.socket.emit("collectorsBuyCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -444,7 +454,7 @@ export default {
       });
     },
     buySkill: function (card) {
-      this.changeTurn();
+      /*  this.changeTurn(); */
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -453,7 +463,7 @@ export default {
       });
     },
     startAuction: function (card) {
-      this.changeTurn();
+      /*   this.changeTurn(); */
       this.cardUpForAuction = card;
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,

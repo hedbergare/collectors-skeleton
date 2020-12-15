@@ -56,7 +56,7 @@
             '.png);'
           "
           v-if="p.playerId === null"
-          @click="placeBottle(p,'item')"
+          @click="placeBottle(p, 'item')"
         ></button>
 
         <div v-if="p.playerId !== null">
@@ -144,20 +144,28 @@
         >
           <button
             class="placeBottleAuction1"
+            :disabled="cannotAffordAuction(p.cost)"
             :style="
-            'background-image: url(/images/auctionPic/auctionBottle_' +
-            p.cost +
-            '.png);'
-          "
+              'background-image: url(/images/auctionPic/auctionBottle_' +
+              p.cost +
+              '.png);'
+            "
             v-if="p.playerId === null"
-            @click="placeBottle(p, 'item')"
+            @click="placeBottle(p,'auction')"
           ></button>
+          <div v-if="p.playerId !== null">
+            {{ p.playerId }}
+          </div>
         </div>
       </div>
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" @click="initiateAuction()"/>
+        <img
+          id="startAuction"
+          src="/images/auctionPic/startAuctionImage.png"
+          @click="initiateAuction()"
+        />
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -194,6 +202,7 @@
         <button
           class="placeBottleMarket"
           v-if="p.playerId === null"
+          :disabled="cannotAffordMarket(p.cost)"
           :style="
             'background-image: url(/images/marketPic/marketBottle_' +
             p.cost +
@@ -277,8 +286,19 @@ export default {
   },
   methods: {
     highlightAvailableMarket: function () {
-      for (let i = 0; i < this.skillsOnSale.length; i += 1) {
-        this.$set(this.skillsOnSale[4], "available", true);
+      for (let i = this.skillsOnSale.length - 1; i >= 0; i--) {
+        if (typeof this.skillsOnSale[i].skill !== "undefined") {
+          /* Ta ut det kortet från skills on sale och sparar det som c */
+          this.$set(this.skillsOnSale[i], "available", true);
+          break;
+        }
+      }
+    },
+    cannotAffordMarket: function () {
+      if (this.player.isTurn) {
+        return false;
+      } else {
+        return true;
       }
     },
     /* Här är funktionerna till item */
@@ -289,7 +309,7 @@ export default {
       }
     },
     /*Skickar iväg att auktionen ska börja */
-    initiateAuction(){
+    initiateAuction() {
       this.$emit("initiateAuction");
     },
     /* Funktionen som hanterar hur många poäng varje spelare har */
@@ -302,14 +322,14 @@ export default {
         action: action,
         playerId: p.playerId,
       });
-      console.log(action)
+      console.log(action);
       if (action === "item") {
         this.highlightAvailableCards(p.cost);
       } else if (action === "skill") {
         this.highlightAvailableSkills(p.cost);
       } else if (action === "market") {
         this.highlightAvailableMarket(p.cost);
-      }
+      } 
     },
 
     highlightAvailableCards: function (cost) {
@@ -351,13 +371,8 @@ export default {
       }
     },
 
-    cannotAffordAuction: function (cost) {
-      let minCost = 100;
-      for (let key in this.marketValues) {
-        if (cost + this.marketValues[key] < minCost)
-          minCost = cost + this.marketValues[key];
-      }
-      if (this.player.money >= minCost && this.player.isTurn) {
+    cannotAffordAuction: function () {
+      if (this.player.isTurn) {
         return false;
       } else {
         return true;
@@ -367,7 +382,7 @@ export default {
     /* Här är funktionerna till skills */
     buySkill: function (card) {
       if (card.available) {
-        this.$emit("buySkill", card,);
+        this.$emit("buySkill", card);
         this.updatePoints(); /* Även när man köper skills ska poängen uppdateras */
       }
     },
@@ -587,8 +602,6 @@ export default {
   padding: 8px;
 }
 
-
-
 /* Small boxes in SkillBox */
 #buySkillInfo {
   grid-column: 2;
@@ -710,6 +723,7 @@ export default {
   display: grid;
   max-width: 100%;
   max-height: 100%;
+  padding: 10px;
 }
 
 /* Pilar i auctionbox */
