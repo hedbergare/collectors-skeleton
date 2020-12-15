@@ -72,7 +72,7 @@
       <!-- Här gör vi skill box med köprutor -->
       <div></div>
       <div id="buySkillInfo">
-        <img id="skillButton" src="/images/buySkillPic/SkillsButton.png" />
+        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" />
       </div>
       <div
         class="bottleSkill"
