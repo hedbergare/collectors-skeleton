@@ -471,6 +471,7 @@ export default {
     },
     placeBottle: function (p) {
       this.chosenPlacementCost = p.cost;
+      console.log("ja")
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
