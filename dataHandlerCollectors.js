@@ -218,9 +218,7 @@ Data.prototype.updatePoints = function (roomId) {
           }
         }
       }
-
-
-      /* Om en spelare äger ett skill VP-nån item ska den få ett extra poäng för varje item av samma slag den äger */
+      /* Kollar om en spelare äger ett skill som ger den extra poäng eller coins  */
       for (let w in room.players[x].skills) {
         /* Extra p för varje itemfastaval om player äger skill VP-fastaval */
         if (room.players[x].skills[w].skill === 'VP-fastaval') {
@@ -262,6 +260,7 @@ Data.prototype.updatePoints = function (roomId) {
             }
           }
         }
+
       }
 
     }
@@ -341,6 +340,10 @@ Data.prototype.buySkill = function (roomId, playerId, card, cost) {
         c = room.players[playerId].hand.splice(i, 1);
         break;
       }
+    }
+    /* Extra bottle om den äger ett speciellt skill */
+    if (c[0].skill === 'bottle') {
+      room.players[playerId].bottles += 1;
     }
     room.players[playerId].skills.push(...c);
     room.players[playerId].money -= cost;
@@ -461,8 +464,6 @@ Data.prototype.startAuction = function (roomId, auctionCard, playerId) {
       if (room.players[playerId].hand[i].x === auctionCard.x &&
         room.players[playerId].hand[i].y === auctionCard.y) {
         c = room.players[playerId].hand.splice(i, 1);
-        console.log("Tog bort kortet " + c[0] + "från spelarens hand på plats " + i);
-        console.log(room.players[playerId].hand);
         break;
       }
     }
@@ -472,7 +473,6 @@ Data.prototype.startAuction = function (roomId, auctionCard, playerId) {
       if (room.auctionCards[i].x === auctionCard.x &&
         room.auctionCards[i].y === auctionCard.y) {
         c = room.auctionCards.splice(i, 1, {});
-        console.log("Tog bort kortet från auctioNCards");
         break;
       }
     }
@@ -517,16 +517,13 @@ Data.prototype.winnerPlaceCard = function (roomId, playerId, placement) {
     else if (placement === 'market') {
       room.market.push(room.cardUpForAuction);
     }
-    console.log("Pengar innan" + room.players[playerId].money);
     room.players[playerId].money -= room.leadingBet;
-    console.log("Pengar efter" + room.players[playerId].money);
     room.cardUpForAuction = {};
     room.auctionWinner = '';
     room.leadingBet = 0;
 
 
     for (let x in room.players) {
-      console.log("resettar spelare " + room.players[x].auctionBet + room.players[x].auctionTurn + room.players[x].auctionPass);
       room.players[x].auctionBet = 0;
       room.players[x].auctionPass = false;
       room.players[x].auctionTurn = false;

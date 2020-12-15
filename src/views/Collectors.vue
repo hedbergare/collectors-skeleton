@@ -324,7 +324,6 @@ export default {
         this.players = d.players;
         this.auctionCards = d.auctionCards;
         this.auctionInitiated = true;
-        console.log(this.auctionInitiated + " borde vara true här");
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -448,7 +447,6 @@ export default {
         }
       }
       /* Här under ska vi göra allt som ska ske när alla spelare har slut på bottles */
-      console.log("Alla har slut på bottles :(");
     },
 
     showCorrectPlayerBoard: function (clickedId) {
@@ -504,7 +502,6 @@ export default {
       });
     },
     startAuction: function (card) {
-      console.log("auction ska börja med " + card);
       this.cardUpForAuction = card;
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,
@@ -513,7 +510,6 @@ export default {
       });
     },
     winnerPlaceCard: function (placement) {
-      console.log("Vinnaren ska lägga kortet i " + placement);
       this.$store.state.socket.emit("winnerPlaceCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
