@@ -65,6 +65,7 @@
                 v-if="players[playerId]"
                 :player="players[playerId]"
                 :class="playerId"
+                @handleAction="handleAction($event)"
               />
             </div>
             <!-- De andras player board -->
@@ -180,6 +181,7 @@ export default {
       auctionWinner: "",
       leadingBet: 0,
       auctionInitiated: false,
+      action: "",
     };
   },
   computed: {
@@ -430,13 +432,21 @@ export default {
     },
     placeBottle: function (p) {
       this.chosenPlacementCost = p.cost;
-      console.log("ja")
+      this.action = p.action;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         action: p.action,
         cost: p.cost,
       });
+    },
+    handleAction: function (card) {
+      if (this.action === "skill") {
+        this.buySkill(card);
+      }
+      if (this.action === "item") {
+        this.buyCard(card);
+      }
     },
     drawCard: function () {
       this.$store.state.socket.emit("collectorsDrawCard", {
@@ -559,7 +569,7 @@ footer a:visited {
 }
 
 #infoboardColumn {
-  width:100%;
+  width: 100%;
 }
 
 #playerboardRow {
