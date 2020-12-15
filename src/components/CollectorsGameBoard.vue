@@ -72,7 +72,7 @@
       <!-- Här gör vi skill box med köprutor -->
       <div></div>
       <div id="buySkillInfo">
-        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" />
+        <img id="skillButton" src="/images/buySkillPic/SkillsButton.png" />
       </div>
       <div
         class="bottleSkill"
@@ -139,57 +139,16 @@
       <div id="auction2Boxes1">
         <div
           class="auctionBox1"
-          v-for="(p, index) in buyPlacement"
+          v-for="(p, index) in auctionPlacement"
           :key="index"
         >
           <button
             class="placeBottleAuction1"
-            :disabled="cannotAffordAuction(p.cost)"
-            :style="'background-image: url(/images/auctionPic/auctionBottle1.png);'"
-            v-if="p.playerId === null"
-            @click="placeBottle(p, 'item')"
-          ></button>
-        </div>
-
-        <div
-          class="auctionBox2"
-          v-for="(p, index) in buyPlacement"
-          :key="index"
-        >
-          <button
-            class="placeBottleAuction2"
-            :disabled="cannotAffordAuction(p.cost)"
-            :style="'background-image: url(/images/auctionPic/auctionBottle2.png);'"
-            v-if="p.playerId === null"
-            @click="placeBottle(p, 'item')"
-          ></button>
-        </div>
-      </div>
-
-      <div id="auction2Boxes2">
-        <div
-          class="auctionBox3"
-          v-for="(p, index) in buyPlacement"
-          :key="index"
-        >
-          <button
-            class="placeBottleAuction3"
-            :disabled="cannotAffordAuction(p.cost)"
-            :style="'background-image: url(/images/auctionPic/auctionBottle3.png);'"
-            v-if="p.playerId === null"
-            @click="placeBottle(p, 'item')"
-          ></button>
-        </div>
-
-        <div
-          class="auctionBox4"
-          v-for="(p, index) in buyPlacement"
-          :key="index"
-        >
-          <button
-            class="placeBottleAuction4"
-            :disabled="cannotAffordAuction(p.cost)"
-            :style="'background-image: url(/images/auctionPic/auctionBottle3.png);'"
+            :style="
+              'background-image: url(/images/auctionPic/auctionBottle_' +
+              p.cost +
+              '.png);'
+            "
             v-if="p.playerId === null"
             @click="placeBottle(p, 'item')"
           ></button>
@@ -296,6 +255,7 @@ export default {
     itemsOnSale: Array,
     marketValues: Object,
     buyPlacement: Array,
+    auctionPlacement: Array,
     skillPlacement: Array,
   },
   methods: {
@@ -375,7 +335,7 @@ export default {
         return true;
       }
     },
-    
+
     /* Här är funktionerna till skills */
     buySkill: function (card) {
       if (card.available) {
@@ -754,31 +714,6 @@ export default {
 /* Small boxes in auctionBox */
 .placeBottleAuction1 {
   color: blue;
-  background-image: url(/images/auctionPic/auctionBottle1.png);
-  width: 50%;
-  height: 70%;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.placeBottleAuction2 {
-  color: blue;
-  background-image: url(/images/auctionPic/auctionBottle2.png);
-  width: 50%;
-  height: 70%;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.placeBottleAuction3 {
-  color: blue;
-  background-image: url(/images/auctionPic/auctionBottle3.png);
-  width: 50%;
-  height: 70%;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-.placeBottleAuction4 {
-  color: blue;
-  background-image: url(/images/auctionPic/auctionBottle3.png);
   width: 50%;
   height: 70%;
   background-size: contain;
@@ -786,50 +721,8 @@ export default {
 }
 
 #auction2Boxes1 {
-  grid-template-rows: 10vh 10vh;
+  grid-template-rows: 10vh 10vh 10vh 10vh;
   display: grid;
-  grid-column: 1;
-  grid-row: 1;
-  max-width: 100%;
-  max-height: 100%;
-}
-.auctionBox1 {
-  grid-column: 1;
-  grid-row: 1;
-  max-width: 100%;
-  max-height: 100%;
-}
-.auctionBox2 {
-  grid-column: 1;
-  grid-row: 2;
-  max-width: 100%;
-  max-height: 100%;
-}
-#auctionBox1 img,
-#auctionBox2 img,
-#auctionBox3 img,
-#auctionBox4 img,
-#startAuction img {
-  max-width: 100%;
-  max-height: 100%;
-}
-#auction2Boxes2 {
-  grid-template-rows: 10vh 10vh;
-  display: grid;
-  grid-column: 1;
-  grid-row: 2;
-  max-width: 100%;
-  max-height: 100%;
-}
-.auctionBox3 {
-  grid-column: 1;
-  grid-row: 1;
-  max-width: 100%;
-  max-height: 100%;
-}
-.auctionBox4 {
-  grid-column: 1;
-  grid-row: 2;
   max-width: 100%;
   max-height: 100%;
 }
@@ -955,7 +848,7 @@ export default {
 #marketInfo:hover + #testhover {
   display: inline-block;
   height: 20vh;
-  width: 25vh; 
+  width: 25vh;
 }
 #testhover {
   position: absolute;
