@@ -44,10 +44,11 @@
           >
             <h1>Place your bets here</h1>
             <div>
-              <button @click="placeBet()" :disabled="cannotAfford()">
+              <button id="betButton" @click="placeBet()" :disabled="cannotAfford()">
                 Bet 1 more coin than leading bet
               </button>
-              <button @click="pass()">Pass</button>
+              <br><br>
+              <button id="passButton" @click="pass()">Pass</button>
             </div>
           </div>
           <div v-if="players[playerId].auctionPass">
@@ -178,7 +179,7 @@ export default {
           this.players[x].pId !== Object.values(this.players)[nextPlayer].pId &&
           !this.players[x].auctionPass
         ) {
-          console.log("Spelare" + x + "har inte passat");
+
           passChecker = false;
         }
       }
@@ -284,5 +285,41 @@ export default {
 }
 .passed {
   opacity: 0.6;
+}
+#betButton {
+	background-color:#44c767;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+  color:white;
+	padding:2.5%;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+#betButton:hover {
+	background-color:#5cbf2a;
+}
+#betButton:active {
+	position:relative;
+	top:1px;
+}
+#passButton {
+	background-color:#c22020;
+	border-radius:20px;
+	border:1px solid #ee2308;
+	display:inline-block;
+	cursor:pointer;
+  color:white;
+	padding:2.5%;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #742626;
+}
+#passButton:hover {
+	background-color:#6d2020;
+}
+#passButton:active {
+	position:relative;
+	top:1px;
 }
 </style>

@@ -72,7 +72,7 @@
       <!-- Här gör vi skill box med köprutor -->
       <div></div>
       <div id="buySkillInfo">
-        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" />
+        <img id="skillButton" src="/images/buySkillPic/SkillsButton.png" />
       </div>
       <div
         class="bottleSkill"
@@ -154,7 +154,6 @@
           ></button>
         </div>
       </div>
-
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
@@ -313,7 +312,7 @@ export default {
       }
     },
 
-    highlightAvailableCards: function (cost = 100) {
+    highlightAvailableCards: function (cost) {
       for (let i = 0; i < this.itemsOnSale.length; i += 1) {
         if (
           this.marketValues[this.itemsOnSale[i].item] <=
@@ -332,11 +331,10 @@ export default {
           this.player.money - cost
         ) {
           this.$set(this.player.hand[i], "available", true);
-          this.chosenPlacementCost = cost;
         } else {
           this.$set(this.player.hand[i], "available", false);
-          this.chosenPlacementCost = cost;
         }
+        this.chosenPlacementCost = cost;
       }
     },
 
@@ -365,7 +363,7 @@ export default {
         return true;
       }
     },
-    
+
     /* Här är funktionerna till skills */
     buySkill: function (card) {
       if (card.available) {
@@ -824,7 +822,7 @@ export default {
 #marketInfo:hover + #testhover {
   display: inline-block;
   height: 20vh;
-  width: 25vh; 
+  width: 25vh;
 }
 #testhover {
   position: absolute;

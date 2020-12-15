@@ -134,7 +134,7 @@
                 :style="'background-color:' + players[playerId].color"
                 @click="showCorrectPlayerBoard(playerId)"
               >
-                <p>{{ playerId }}</p>
+                <p>{{ playerId }} </p>
               </div>
             </div>
             <!-- Sedan skapas flikarna för de andra spelarna -->
@@ -145,7 +145,7 @@
                 :style="'background-color:' + player.color"
                 @click="showCorrectPlayerBoard(player.pId)"
               >
-                <p>{{ player.pId }}</p>
+                <p>{{ player.pId }} </p>
               </div>
             </div>
           </div>
@@ -326,7 +326,6 @@ export default {
         this.players = d.players;
         this.auctionCards = d.auctionCards;
         this.auctionInitiated = true;
-        console.log(this.auctionInitiated + " borde vara true här");
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -351,6 +350,10 @@ export default {
         this.skillsOnSale = d.skillsOnSale;
         this.auctionCards = d.auctionCards;
         this.marketValues = d.marketValues;
+        this.buyPlacement = d.placements.buyPlacement;
+        this.skillPlacement = d.placements.skillPlacement;
+        this.marketPlacement = d.placements.marketPlacement;
+        this.auctionPlacement = d.placements.auctionPlacement;
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -416,7 +419,7 @@ export default {
       this.$store.state.socket.emit("fillPools", {
         roomId: this.$route.params.id,
       });
-      this.updatePoints();
+      this.updatePoints(); /* När poolen fylls på ska dina poäng uppdateras */
     },
     changeTurn: function (
       playerIndex = Object.keys(this.players).indexOf(this.playerId)
@@ -446,7 +449,6 @@ export default {
         }
       }
       /* Här under ska vi göra allt som ska ske när alla spelare har slut på bottles */
-      console.log("Alla har slut på bottles :(");
     },
 
     showCorrectPlayerBoard: function (clickedId) {
@@ -503,7 +505,6 @@ export default {
       });
     },
     startAuction: function (card) {
-      console.log("auction ska börja med " + card);
       this.cardUpForAuction = card;
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,
@@ -512,7 +513,6 @@ export default {
       });
     },
     winnerPlaceCard: function (placement) {
-      console.log("Vinnaren ska lägga kortet i " + placement);
       this.$store.state.socket.emit("winnerPlaceCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
