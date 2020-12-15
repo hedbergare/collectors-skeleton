@@ -122,6 +122,7 @@
           :key="index"
           :card="card"
           :availableAction="card.available"
+          @doAction="handleAction(card)"
         />
         {{ player.isTurn }}
         {{ player.bottles }}
@@ -149,6 +150,11 @@ export default {
       return this.$store.state.playerId;
     },
   },
+  methods: {
+    handleAction: function (card) {
+      this.$emit('handleAction', card);
+    }
+  }
 };
 </script>
 <style scoped>
