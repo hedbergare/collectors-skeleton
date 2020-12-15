@@ -124,7 +124,7 @@ Data.prototype.joinGame = function (roomId, playerId) {
         items: [],
         income: [],
         secret: [],
-        color: colors[Object.keys(room.players).length], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
+        color: [], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
         pId: playerId,
         isTurn: turn,
         auctionBet: 0,
@@ -143,7 +143,7 @@ Data.prototype.joinGame = function (roomId, playerId) {
             items: [],
             income: [],
             secret: [],
-            color: colors[Object.keys(room.players).length], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
+            color: colors[Object.keys(room.players).length-1], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
             pId: playerId,
             isTurn: turn,
             auctionBet: 0,
@@ -342,7 +342,7 @@ Data.prototype.buySkill = function (roomId, playerId, card, cost) {
       }
     }
     /* Extra bottle om den äger ett speciellt skill */
-    if (c[0].skill === 'bottle') {
+    if (typeof c[0].skill !== 'undefined' && c[0].skill === 'bottle') {
       room.players[playerId].bottles += 1;
     }
     room.players[playerId].skills.push(...c);
