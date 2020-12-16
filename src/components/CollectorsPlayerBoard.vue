@@ -124,8 +124,6 @@
           :availableAction="card.available"
           @doAction="handleAction(card)"
         />
-        {{ player.isTurn }}
-        {{ player.bottles }}
       </div>
     </div>
   </div>
@@ -235,7 +233,9 @@ export default {
   width: 100%;
   text-align: center;
 }
-
+.box > *{
+  border-radius:4px;
+}
 /* Rutorna i mellersta raden som innehåller bilder/bottles */
 .x {
   width: 60%;
