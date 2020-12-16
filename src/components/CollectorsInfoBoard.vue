@@ -4,7 +4,7 @@
     <!-- Infoknapp -->
     <div class="left">
       <div class="roundCont">
-        <h1 id="roundBox">Round 1/4</h1>
+        <h1 id="roundBox"> Round {{ roundCounter }} of 4</h1>
       </div>
       <div>
         <a
@@ -35,11 +35,11 @@
 
 <script>
 export default {
-  name: "CollectorsInfoBoard",
+  name: 'CollectorsInfoBoard',
   props: {
-    consoleHistory: Array,
-  },
-};
+  roundCounter: Number,
+  }
+}
 </script>
 
 <style scoped>

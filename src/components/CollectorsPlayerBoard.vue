@@ -25,7 +25,7 @@
             <span class="helper"></span>
             <img src="images/player_board/passive_income.png" />
           </div>
-          <p>5</p>
+          <p>{{player.income}}</p>
         </div>
 
         <div id="currentPoints">
@@ -124,8 +124,6 @@
           :availableAction="card.available"
           @doAction="handleAction(card)"
         />
-        {{ player.isTurn }}
-        {{ player.bottles }}
       </div>
     </div>
   </div>
@@ -235,7 +233,9 @@ export default {
   width: 100%;
   text-align: center;
 }
-
+.box > *{
+  border-radius:4px;
+}
 /* Rutorna i mellersta raden som innehåller bilder/bottles */
 .x {
   width: 60%;
