@@ -453,7 +453,7 @@ Data.prototype.turnChanged = function (players, roomId) {
     room.players = players;
   }
 }
-Data.prototype.startAuction = function (roomId, auctionCard, playerId) {
+Data.prototype.startAuction = function (roomId, auctionCard, playerId, cost) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
     let c;
@@ -485,6 +485,8 @@ Data.prototype.startAuction = function (roomId, auctionCard, playerId) {
       }
     }
     room.players[playerId].bottles -= 1;
+    console.log("Kostnaden för auktionen är: " + cost + " i datahandelr");
+    room.players[playerId].money -= cost;
   }
 }
 Data.prototype.getCardUpForAuction = function (roomId) {
@@ -512,6 +514,9 @@ Data.prototype.winnerPlaceCard = function (roomId, playerId, placement) {
     }
     else if (placement === 'skills') {
       room.players[playerId].skills.push(room.cardUpForAuction);
+      if(room.cardUpForAuction.skill === 'bottle'){
+        room.players[playerId].bottles += 1;
+      }
     }
     else if (placement === 'market') {
       room.market.push(room.cardUpForAuction);

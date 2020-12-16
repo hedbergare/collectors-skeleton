@@ -64,12 +64,13 @@ function sockets(io, socket, data) {
     })
   });
   socket.on('startAuction', function (d) {
-    data.startAuction(d.roomId, d.cardUpForAuction, d.playerId);
+    data.startAuction(d.roomId, d.cardUpForAuction, d.playerId, d.cost);
     io.to(d.roomId).emit('auctionStarted', {
       cardUpForAuction: data.getCardUpForAuction(d.roomId),
       players: data.getPlayers(d.roomId),
       auctionCards: data.getAuctionCards(d.roomId),
       playerId: d.playerId,
+      cost: d.cost,
     })
   });
   socket.on('winnerPlaceCard', function (d) {

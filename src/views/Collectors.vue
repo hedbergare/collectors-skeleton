@@ -431,7 +431,9 @@ export default {
       n.target.select();
     },
     placeBottle: function (p) {
+      console.log("PlaceBottle inparameter cost: " + p.cost);
       this.chosenPlacementCost = p.cost;
+      console.log("chosenPlaceMentCost" + this.chosenPlacementCost);
       this.action = p.action;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
@@ -471,11 +473,13 @@ export default {
       });
     },
     startAuction: function (card) {
+      console.log("this.choseplacementcost i startauction()" + this.chosenPlacementCost);
       this.cardUpForAuction = card;
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,
         cardUpForAuction: this.cardUpForAuction,
         playerId: this.playerId,
+        cost: this.chosenPlacementCost,
       });
     },
     winnerPlaceCard: function (placement) {
