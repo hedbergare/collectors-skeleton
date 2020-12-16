@@ -8,7 +8,7 @@
         class="itemsOnSaleIconCont"
         v-for="(card, index) in itemsOnSale"
         :key="index"
-        @click="buyCard(card)"
+        @click="handleAction(card)"
       >
         <div class="itemsOnSaleIconCont1" v-if="card.item !== undefined">
           <img
@@ -151,7 +151,7 @@
               '.png);'
             "
             v-if="p.playerId === null"
-            @click="placeBottle(p,'auction')"
+            @click="placeBottle(p, 'auction')"
           ></button>
           <div v-if="p.playerId !== null">
             {{ p.playerId }}
@@ -245,7 +245,7 @@
         class="skillsOnSaleIconCont"
         v-for="(card, index) in skillsOnSale"
         :key="index"
-        @click="buySkill(card)"
+        @click="handleAction(card)"
       >
         <div class="skillsOnSaleCont" v-if="card.skill !== undefined">
           <img
@@ -285,29 +285,37 @@ export default {
     marketPlacement: Array,
   },
   methods: {
+    handleAction: function (card) {
+      if (card.available) {
+        this.$emit("handleAction", card);
+        this.updatePoints();
+      }
+    },
+
     highlightAvailableMarket: function () {
       for (let i = this.skillsOnSale.length - 1; i >= 0; i--) {
         if (typeof this.skillsOnSale[i].skill !== "undefined") {
           /* Ta ut det kortet från skills on sale och sparar det som c */
           this.$set(this.skillsOnSale[i], "available", true);
+          console.log("jacke säger att den är av");
           break;
         }
       }
+      for (let i = 0; i < this.player.hand.length; i += 1) {
+        this.$set(this.player.hand[i], "available", true);
+      }
     },
-    cannotAffordMarket: function () {
-      if (this.player.isTurn) {
+
+    cannotAffordMarket: function (cost) {
+      if (this.player.money >= cost && this.player.isTurn) {
         return false;
       } else {
         return true;
       }
     },
+
     /* Här är funktionerna till item */
-    buyCard: function (card) {
-      if (card.available) {
-        this.$emit("buyCard", card);
-        this.updatePoints();
-      }
-    },
+
     /*Skickar iväg att auktionen ska börja */
     initiateAuction() {
       this.$emit("initiateAuction");
@@ -329,7 +337,7 @@ export default {
         this.highlightAvailableSkills(p.cost);
       } else if (action === "market") {
         this.highlightAvailableMarket(p.cost);
-      } 
+      }
     },
 
     highlightAvailableCards: function (cost) {
@@ -425,7 +433,7 @@ export default {
   height: 100vh;
   grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5vh 15vh 21vh 21vh 21vh 17vh;
-  }
+}
 .itemBox {
   grid-column: 2 / span 4;
   grid-row: 2;

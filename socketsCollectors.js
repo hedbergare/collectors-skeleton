@@ -32,6 +32,17 @@ function sockets(io, socket, data) {
     }
     );
   });
+  socket.on('collectorsBuyMarket', function (d) {
+    console.log("hej 3");
+    data.buyMarket(d.roomId, d.playerId, d.card, d.cost)
+    io.to(d.roomId).emit('collectorsMarketBought', {
+      playerId: d.playerId,
+      players: data.getPlayers(d.roomId),
+      skillsOnSale: data.getSkillsOnSale(d.roomId),
+      marketValues: data.getMarketValues(d.roomId),
+    }
+    );
+  });
 
   socket.on('collectorsBuySkills', function (d) {
     data.buySkill(d.roomId, d.playerId, d.card, d.cost)
