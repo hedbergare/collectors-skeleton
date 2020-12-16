@@ -74,7 +74,7 @@
       <div id="skills">
         <div id="skillsImage">
           <span class="helper"></span>
-          <img id="skillsButton" src="images/buySkillPic/SkillsButton.png/" />
+          <img id="skillsButton" src="images/buySkillPic/Skillsbutton.png/" />
           <img id="skillsInfo" src="images/player_board/skills_info.PNG" />
         </div>
 

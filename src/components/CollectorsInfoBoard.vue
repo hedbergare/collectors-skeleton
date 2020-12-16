@@ -4,7 +4,7 @@
     <!-- Infoknapp -->
     <div class="left">
       <div class="roundCont">
-        <h1 id="roundBox"> Round {{ roundCounter }} of 4</h1>
+        <h1 id="roundBox">Round {{ roundCounter }} of 4</h1>
       </div>
       <div>
         <a
@@ -28,18 +28,18 @@
 
     <div class="consoleHistory">
       <h3>Game history</h3>
-      <p v-for="(text,index) in consoleHistory" :key="index">{{text}}</p>
+      <p v-for="(text, index) in consoleHistory" :key="index">{{ text }}</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'CollectorsInfoBoard',
+  name: "CollectorsInfoBoard",
   props: {
-  roundCounter: Number,
-  }
-}
+    roundCounter: Number,
+  },
+};
 </script>
 
 <style scoped>
