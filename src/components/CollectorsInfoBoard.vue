@@ -25,10 +25,12 @@
     </div>
 
     <!-- Boxen för historik för vad de spelarna gör för handlingar -->
-
-    <div class="consoleHistory">
+    <div class="right">
       <h3>Game history</h3>
-      <p v-for="(text, index) in consoleHistory" :key="index">{{ text }}</p>
+      <div id="consoleHistory">
+        <p>Game started!</p>
+        <p v-for="(text, index) in consoleHistory" :key="index">{{ text }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +41,13 @@ export default {
   props: {
     roundCounter: Number,
     consoleHistory: Array,
+  },
+  watch: {
+    consoleHistory: function () {
+      console.log("hejhej");
+      var element = document.getElementById("consoleHistory");
+      element.scrollTop = element.scrollHeight;
+    },
   },
 };
 </script>
@@ -52,11 +61,17 @@ export default {
   color: black;
   width: 100%;
   position: relative;
-  height: 100%;
+  max-height: 100%;
 }
 .left {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+.right{
+  grid-template-rows:1fr 1fr;
+  background-color: white;
+    border-radius: 10px;
+
 }
 .roundCont {
   grid-column: 1/3;
@@ -66,13 +81,12 @@ export default {
   color: white;
 }
 
-.consoleHistory {
-  background-color: white;
-  max-height: 100px;
-  border-radius: 10px;
+#consoleHistory {
+  background-color: rgb(218, 218, 218);
   margin: 1%;
   overflow-y: scroll;
   color: black;
+  max-height:70px;
 }
 
 .quitButton {
