@@ -38,6 +38,7 @@ export default {
   name: "CollectorsInfoBoard",
   props: {
     roundCounter: Number,
+    consoleHistory: Array,
   },
 };
 </script>
