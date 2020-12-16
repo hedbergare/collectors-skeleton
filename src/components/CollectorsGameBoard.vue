@@ -164,7 +164,6 @@
         <img
           id="startAuction"
           src="/images/auctionPic/startAuctionImage.png"
-          @click="initiateAuction()"
         />
       </div>
       <div id="auctionArrow2">
@@ -224,7 +223,7 @@
         {{ "x" + marketValues.figures }}
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
         {{ "x" + marketValues.music }}
       </div>
       <div id="MarketArrow4">
@@ -330,13 +329,15 @@ export default {
         action: action,
         playerId: p.playerId,
       });
-      console.log(action);
+      console.log("Kostnad för auktionen" + p.cost);
       if (action === "item") {
         this.highlightAvailableCards(p.cost);
       } else if (action === "skill") {
         this.highlightAvailableSkills(p.cost);
       } else if (action === "market") {
         this.highlightAvailableMarket(p.cost);
+      } else if(action === "auction"){
+        this.initiateAuction();
       }
     },
 

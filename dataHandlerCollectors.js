@@ -57,6 +57,7 @@ Data.prototype.getUILabels = function (roomId) {
 Data.prototype.createRoom = function (roomId, playerCount, lang = "en") {
   let room = {};
   room.players = {};
+  room.roundCounter = 1;
   room.cardUpForAuction = {};
   room.auctionWinner = '';
   room.leadingBet = 0;
@@ -143,7 +144,7 @@ Data.prototype.joinGame = function (roomId, playerId) {
             items: [],
             income: [],
             secret: [],
-            color: colors[Object.keys(room.players).length-1], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
+            color: colors[Object.keys(room.players).length - 1], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
             pId: playerId,
             isTurn: turn,
             auctionBet: 0,
@@ -478,7 +479,7 @@ Data.prototype.turnChanged = function (players, roomId) {
     room.players = players;
   }
 }
-Data.prototype.startAuction = function (roomId, auctionCard, playerId) {
+Data.prototype.startAuction = function (roomId, auctionCard, playerId, cost) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
     let c;
@@ -510,6 +511,8 @@ Data.prototype.startAuction = function (roomId, auctionCard, playerId) {
       }
     }
     room.players[playerId].bottles -= 1;
+    console.log("Kostnaden för auktionen är: " + cost + " i datahandelr");
+    room.players[playerId].money -= cost;
   }
 }
 Data.prototype.getCardUpForAuction = function (roomId) {
@@ -537,6 +540,9 @@ Data.prototype.winnerPlaceCard = function (roomId, playerId, placement) {
     }
     else if (placement === 'skills') {
       room.players[playerId].skills.push(room.cardUpForAuction);
+      if(room.cardUpForAuction.skill === 'bottle'){
+        room.players[playerId].bottles += 1;
+      }
     }
     else if (placement === 'market') {
       room.market.push(room.cardUpForAuction);
@@ -614,7 +620,50 @@ Data.prototype.fillPools = function (roomId) {
     this.fillWithCards(room);
     this.collectBottles(room);
     this.resetPlacement(room);
+    this.getPassiveIncome(roomId);
+    this.addRoundCounter(roomId);
 
+  }
+}
+
+Data.prototype.getPassiveIncome = function (roomId) {
+  let room = this.rooms[roomId];
+  if (typeof room !== 'undefined') {
+    for (let x in room.players) {
+      let bottles = room.players[x].bottles;
+      if (bottles < 3) {
+        this.drawCard(roomId, room.players[x].pId);
+        room.players[x].money += 3;
+      }
+      else if (bottles === 3) {
+        room.players[x].money += 3;
+      }
+      else if (bottles === 4) {
+        room.players[x].money += 2;
+      }
+      else {
+        console.log("Du fick inga pengar din sopa");
+      }
+    }
+  }
+}
+
+/* Funktion som gör det till nästa runda efter att en runda är slut */
+Data.prototype.addRoundCounter = function (roomId) {
+  let room = this.rooms[roomId];
+  if (typeof room !== 'undefined') {
+    room.roundCounter += 1;
+  }
+}
+
+/* Funktion som returnerar vilken runda det är just nu */
+Data.prototype.getRoundCounter = function (roomId) {
+  let room = this.rooms[roomId];
+  if (typeof room !== 'undefined') {
+    return room.roundCounter;
+  }
+  else {
+  return 0;  
   }
 }
 
@@ -655,9 +704,6 @@ Data.prototype.collectBottles = function (room) {
     }
   }
 }
-
-
-
 Data.prototype.resetPlacement = function (room) {
   if (typeof room !== 'undefined') {
     for (let i in room.buyPlacement) {

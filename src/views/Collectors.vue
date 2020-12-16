@@ -83,7 +83,9 @@
             </div>
           </div>
           <div id="infoboardColumn">
-            <CollectorsInfoBoard />
+            <CollectorsInfoBoard 
+            :roundCounter="roundCounter"
+            />
           </div>
         </div>
       </div>
@@ -183,6 +185,7 @@ export default {
       leadingBet: 0,
       auctionInitiated: false,
       action: "",
+      roundCounter: 1,
     };
   },
   computed: {
@@ -324,6 +327,7 @@ export default {
         this.skillPlacement = d.placements.skillPlacement;
         this.marketPlacement = d.placements.marketPlacement;
         this.auctionPlacement = d.placements.auctionPlacement;
+        this.roundCounter = d.roundCounter;
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -444,7 +448,9 @@ export default {
       n.target.select();
     },
     placeBottle: function (p) {
+      console.log("PlaceBottle inparameter cost: " + p.cost);
       this.chosenPlacementCost = p.cost;
+      console.log("chosenPlaceMentCost" + this.chosenPlacementCost);
       this.action = p.action;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
@@ -484,7 +490,6 @@ export default {
       });
     },
     buyCard: function (card) {
-      /* this.changeTurn(); */
       this.$store.state.socket.emit("collectorsBuyCard", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -493,7 +498,6 @@ export default {
       });
     },
     buySkill: function (card) {
-      /*  this.changeTurn(); */
       this.$store.state.socket.emit("collectorsBuySkills", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -503,12 +507,13 @@ export default {
     },
 
     startAuction: function (card) {
-      /*   this.changeTurn(); */
+      console.log("this.choseplacementcost i startauction()" + this.chosenPlacementCost);
       this.cardUpForAuction = card;
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,
         cardUpForAuction: this.cardUpForAuction,
         playerId: this.playerId,
+        cost: this.chosenPlacementCost,
       });
     },
     winnerPlaceCard: function (placement) {

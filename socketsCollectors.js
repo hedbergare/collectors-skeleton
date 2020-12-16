@@ -66,6 +66,7 @@ function sockets(io, socket, data) {
       auctionCards: data.getAuctionCards(d.roomId),
       marketValues: data.getMarketValues(d.roomId),
       placements: data.getPlacements(d.roomId),
+      roundCounter: data.getRoundCounter(d.roomId),
     });
   });
   socket.on('changeTurn', function (d) {
@@ -75,12 +76,13 @@ function sockets(io, socket, data) {
     })
   });
   socket.on('startAuction', function (d) {
-    data.startAuction(d.roomId, d.cardUpForAuction, d.playerId);
+    data.startAuction(d.roomId, d.cardUpForAuction, d.playerId, d.cost);
     io.to(d.roomId).emit('auctionStarted', {
       cardUpForAuction: data.getCardUpForAuction(d.roomId),
       players: data.getPlayers(d.roomId),
       auctionCards: data.getAuctionCards(d.roomId),
       playerId: d.playerId,
+      cost: d.cost,
     })
   });
   socket.on('winnerPlaceCard', function (d) {

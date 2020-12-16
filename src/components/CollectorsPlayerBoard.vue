@@ -25,7 +25,7 @@
             <span class="helper"></span>
             <img src="images/player_board/passive_income.png" />
           </div>
-          <p>5</p>
+          <p>{{player.income}}</p>
         </div>
 
         <div id="currentPoints">
