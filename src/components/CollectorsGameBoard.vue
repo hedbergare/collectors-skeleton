@@ -223,7 +223,7 @@
         {{ "x" + marketValues.figures }}
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
         {{ "x" + marketValues.music }}
       </div>
       <div id="MarketArrow4">
@@ -516,6 +516,10 @@ export default {
 .itemsOnSaleIcon {
   max-height: 5vh;
   max-width: 100%;
+/*   animation: jiggle 1s ease-in-out;
+  animation-iteration-count:infinite;
+  box-shadow: 0 0 10px yellow; */
+
 }
 .skillsOnSaleIcon {
   max-height: 30vh;
