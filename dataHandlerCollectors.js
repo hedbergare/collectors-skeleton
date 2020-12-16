@@ -372,6 +372,9 @@ Data.prototype.buyMarket = function (roomId, playerId, card) {
       }
     }
     room.market.push(c[0]);
+    room.players[playerId].bottles -= 1;
+    this.updatePoints(roomId);
+
   }
 }
   
@@ -552,12 +555,12 @@ Data.prototype.winnerPlaceCard = function (roomId, playerId, placement) {
     room.auctionWinner = '';
     room.leadingBet = 0;
 
-
     for (let x in room.players) {
       room.players[x].auctionBet = 0;
       room.players[x].auctionPass = false;
       room.players[x].auctionTurn = false;
     }
+    this.updatePoints(roomId);
   }
 
 
@@ -584,7 +587,7 @@ Data.prototype.updateLeadingBet = function (leadingBet, roomId) {
 
 Data.prototype.fillPools = function (roomId) {
   let room = this.rooms[roomId];
-  if (typeof room !== 'undefined' && room.roundCounter < 5) {
+  if (typeof room !== 'undefined' && room.roundCounter < 4) {
     /* Här ska alla kort förflyttas och nya kort dras för fas 2 */
 
     /* Hittar vilket kort som ligger längst ner i skills */
@@ -623,6 +626,8 @@ Data.prototype.fillPools = function (roomId) {
     this.getPassiveIncome(roomId);
     this.addRoundCounter(roomId);
 
+  }else{
+    this.addRoundCounter(roomId);
   }
 }
 
