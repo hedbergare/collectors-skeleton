@@ -23,10 +23,24 @@
         </a>
       </div>
     </div>
+
     <!-- Boxen för historik för vad de spelarna gör för handlingar -->
-    <div id="gameHistory"><br />Game history</div>
+
+    <div class="consoleHistory">
+      <h3>Game history</h3>
+      <p v-for="(text,index) in consoleHistory" :key="index">{{text}}</p>
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "CollectorsInfoBoard",
+  props: {
+    consoleHistory: Array,
+  },
+};
+</script>
 
 <style scoped>
 #infoWrapper {
@@ -37,24 +51,27 @@
   color: black;
   width: 100%;
   position: relative;
-  height:100%;
+  height: 100%;
 }
-.left{
-  display:grid;
-  grid-template-columns:1fr 1fr;
+.left {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
-.roundCont{
+.roundCont {
   grid-column: 1/3;
 }
 #roundBox {
   grid-column: 1/4;
-  color:white;
+  color: white;
 }
 
-#gameHistory {
+.consoleHistory {
   background-color: white;
-  border-radius:10px;
-  margin:1%;
+  max-height: 100px;
+  border-radius: 10px;
+  margin: 1%;
+  overflow-y: scroll;
+  color: black;
 }
 
 .quitButton {
@@ -77,10 +94,12 @@
   text-decoration: none;
   text-shadow: 0px 1px 0px #000000;
 }
+
 .rulesButton:hover {
   background: linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
   background-color: #ccc2a6;
 }
+
 .rulesButt:active {
   position: relative;
   top: 1px;
@@ -102,10 +121,12 @@
   text-decoration: none;
   text-shadow: 0px 1px 0px #b23e35;
 }
+
 .quitButton:hover {
   background: linear-gradient(to bottom, #ce0100 5%, #fe1a00 100%);
   background-color: #ce0100;
 }
+
 .quitButton:active {
   position: relative;
   top: 1px;

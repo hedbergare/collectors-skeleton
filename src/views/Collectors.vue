@@ -82,7 +82,7 @@
             </div>
           </div>
           <div id="infoboardColumn">
-            <CollectorsInfoBoard />
+            <CollectorsInfoBoard :consoleHistory="consoleHistory" />
           </div>
         </div>
       </div>
@@ -182,6 +182,7 @@ export default {
       leadingBet: 0,
       auctionInitiated: false,
       action: "",
+      consoleHistory: [],
     };
   },
   computed: {
@@ -262,6 +263,7 @@ export default {
       "collectorsCardBought",
       function (d) {
         console.log(d.playerId, "bought a card");
+        this.consoleHistory.push(d.playerId + " bought a card");
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
         if (this.playerId === d.playerId) {
@@ -273,6 +275,7 @@ export default {
       "auctionStarted",
       function (d) {
         console.log("Auction has been started");
+        this.consoleHistory.push(d.playerId + " Auction has been started");
         this.cardUpForAuction = d.cardUpForAuction;
         this.players = d.players;
         this.auctionCards = d.auctionCards;
@@ -292,6 +295,7 @@ export default {
       "collectorsSkillBought",
       function (d) {
         console.log(d.playerId, "bought a skill");
+        this.consoleHistory.push(d.playerId + " bought a skill");
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
         if (this.playerId === d.playerId) {
@@ -303,6 +307,7 @@ export default {
       "collectorsPoolsFilled",
       function (d) {
         console.log("Pools have been filled");
+        this.consoleHistory.push("New round has been started");
         this.itemsOnSale = d.itemsOnSale;
         this.skillsOnSale = d.skillsOnSale;
         this.auctionCards = d.auctionCards;
@@ -405,7 +410,8 @@ export default {
         }
       }
       /* Här under ska vi göra allt som ska ske när alla spelare har slut på bottles */
-      console.log("Alla har slut på bottles :(");
+      console.log("Everyone has run out of bottles :(");
+      this.consoleHistory.push("everyone has run out of bottles");
       this.fillPools();
     },
 
