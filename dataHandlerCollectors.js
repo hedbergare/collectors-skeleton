@@ -554,7 +554,7 @@ Data.prototype.updateLeadingBet = function (leadingBet, roomId) {
 
 Data.prototype.fillPools = function (roomId) {
   let room = this.rooms[roomId];
-  if (typeof room !== 'undefined') {
+  if (typeof room !== 'undefined' && room.roundCounter < 5) {
     /* Här ska alla kort förflyttas och nya kort dras för fas 2 */
 
     /* Hittar vilket kort som ligger längst ner i skills */

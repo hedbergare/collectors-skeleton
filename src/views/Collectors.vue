@@ -1,6 +1,13 @@
 <template>
   <div>
     <main>
+      <CollectorsGameOver
+      v-if="roundCounter === 5"
+        :players="players"
+        :marketValues="marketValues"
+      />
+
+      
       <CollectorsAuction
         v-if="players[playerId] && this.auctionInitiated"
         :auctionCards="auctionCards"
@@ -136,6 +143,7 @@ import CollectorsGameBoard from "@/components/CollectorsGameBoard.vue";
 import CollectorsPlayerBoard from "@/components/CollectorsPlayerBoard.vue";
 import CollectorsInfoBoard from "@/components/CollectorsInfoBoard.vue";
 import CollectorsAuction from "@/components/CollectorsAuction.vue";
+import CollectorsGameOver from "@/components/CollectorsGameOver.vue";
 
 export default {
   name: "Collectors",
@@ -145,6 +153,7 @@ export default {
     CollectorsPlayerBoard,
     CollectorsInfoBoard,
     CollectorsAuction,
+    CollectorsGameOver,
   },
   data: function () {
     return {
