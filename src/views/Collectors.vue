@@ -612,20 +612,25 @@ footer a:visited {
 #browserWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* max-height: 100vh; */
+  max-height: 100vh;
 }
 
 #gameboardColumn {
   display: grid;
+  max-height:100%;
 }
 
 #infoboardColumn {
   width: 100%;
+  height:100%;
 }
 
 #playerboardRow {
   display: grid;
   display: inline-block;
   vertical-align: bottom;
+}
+#rightColumn{
+  height:100%;
 }
 </style>
