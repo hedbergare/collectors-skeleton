@@ -57,6 +57,7 @@ Data.prototype.getUILabels = function (roomId) {
 Data.prototype.createRoom = function (roomId, playerCount, lang = "en") {
   let room = {};
   room.players = {};
+  room.roundCounter = 1;
   room.cardUpForAuction = {};
   room.auctionWinner = '';
   room.leadingBet = 0;
@@ -595,6 +596,7 @@ Data.prototype.fillPools = function (roomId) {
     this.collectBottles(room);
     this.resetPlacement(room);
     this.getPassiveIncome(roomId);
+    this.addRoundCounter(roomId);
 
   }
 }
@@ -618,6 +620,25 @@ Data.prototype.getPassiveIncome = function (roomId) {
         console.log("Du fick inga pengar din sopa");
       }
     }
+  }
+}
+
+/* Funktion som gör det till nästa runda efter att en runda är slut */
+Data.prototype.addRoundCounter = function (roomId) {
+  let room = this.rooms[roomId];
+  if (typeof room !== 'undefined') {
+    room.roundCounter += 1;
+  }
+}
+
+/* Funktion som returnerar vilken runda det är just nu */
+Data.prototype.getRoundCounter = function (roomId) {
+  let room = this.rooms[roomId];
+  if (typeof room !== 'undefined') {
+    return room.roundCounter;
+  }
+  else {
+  return 0;  
   }
 }
 
@@ -658,9 +679,6 @@ Data.prototype.collectBottles = function (room) {
     }
   }
 }
-
-
-
 Data.prototype.resetPlacement = function (room) {
   if (typeof room !== 'undefined') {
     for (let i in room.buyPlacement) {

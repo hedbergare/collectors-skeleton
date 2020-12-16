@@ -82,7 +82,9 @@
             </div>
           </div>
           <div id="infoboardColumn">
-            <CollectorsInfoBoard />
+            <CollectorsInfoBoard 
+            :roundCounter="roundCounter"
+            />
           </div>
         </div>
       </div>
@@ -182,6 +184,7 @@ export default {
       leadingBet: 0,
       auctionInitiated: false,
       action: "",
+      roundCounter: 1,
     };
   },
   computed: {
@@ -311,6 +314,7 @@ export default {
         this.skillPlacement = d.placements.skillPlacement;
         this.marketPlacement = d.placements.marketPlacement;
         this.auctionPlacement = d.placements.auctionPlacement;
+        this.roundCounter = d.roundCounter;
       }.bind(this)
     );
     this.$store.state.socket.on(
