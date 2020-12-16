@@ -55,6 +55,7 @@ function sockets(io, socket, data) {
       auctionCards: data.getAuctionCards(d.roomId),
       marketValues: data.getMarketValues(d.roomId),
       placements: data.getPlacements(d.roomId),
+      roundCounter: data.getRoundCounter(d.roomId),
     });
   });
   socket.on('changeTurn', function (d) {
