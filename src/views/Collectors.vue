@@ -40,22 +40,22 @@
               <!-- Sin egen flik ska skapas först -->
               <div v-if="players[playerId]">
                 <div
-                  class="playerBoardTab"
+                  :class="['playerBoardTab', {'activeTab': players[playerId].isTurn}]"
                   :style="'background-color:' + players[playerId].color"
                   @click="showCorrectPlayerBoard(playerId)"
                 >
-                  <p>{{ playerId }}</p>
+                  <p>{{ playerId }} ({{Object.keys(players).indexOf(playerId)+1}})</p>
                 </div>
               </div>
               <!-- Sedan skapas flikarna för de andra spelarna -->
               <div v-for="(player, index) in players" :key="index">
                 <div
                   v-if="player.pId !== playerId"
-                  class="playerBoardTab"
+                  :class="['playerBoardTab', {'activeTab': player.isTurn}]"
                   :style="'background-color:' + player.color"
                   @click="showCorrectPlayerBoard(player.pId)"
                 >
-                  <p>{{ player.pId }}</p>
+                  <p>{{ player.pId }} ({{Object.keys(players).indexOf(player.pId)+1}})</p>
                 </div>
               </div>
             </div>
@@ -82,9 +82,7 @@
             </div>
           </div>
           <div id="infoboardColumn">
-            <CollectorsInfoBoard 
-            :roundCounter="roundCounter"
-            />
+            <CollectorsInfoBoard :roundCounter="roundCounter" />
           </div>
         </div>
       </div>
@@ -477,7 +475,9 @@ export default {
       });
     },
     startAuction: function (card) {
-      console.log("this.choseplacementcost i startauction()" + this.chosenPlacementCost);
+      console.log(
+        "this.choseplacementcost i startauction()" + this.chosenPlacementCost
+      );
       this.cardUpForAuction = card;
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,
@@ -539,7 +539,7 @@ footer a:visited {
 #playerBoardContainer {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  max-width: 40%;
+  max-width: 50%;
 }
 .playerBoardTab {
   border-top-left-radius: 10px;
@@ -548,6 +548,14 @@ footer a:visited {
   color: black;
   text-align: center;
   font-weight: bold;
+  border-top:2px solid transparent;
+  border-left:2px solid transparent;
+  border-right:2px solid transparent;
+}
+.activeTab{
+  border-top:2px solid gold;
+  border-left:2px solid gold;
+  border-right:2px solid gold;
 }
 .playerBoardTab p {
   margin: 0;
