@@ -4,7 +4,7 @@
     <!-- Infoknapp -->
     <div class="left">
       <div class="roundCont">
-        <h1 id="roundBox"> Round {{ roundCounter }} of 4</h1>
+        <h1 id="roundBox">Round {{ roundCounter }} of 4</h1>
       </div>
       <div>
         <a
@@ -23,18 +23,33 @@
         </a>
       </div>
     </div>
+
     <!-- Boxen för historik för vad de spelarna gör för handlingar -->
-    <div id="gameHistory"><br />Game history</div>
+    <div class="right">
+      <h3>Game history</h3>
+      <div id="consoleHistory">
+        <p>Game started!</p>
+        <p v-for="(text, index) in consoleHistory" :key="index">{{ text }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'CollectorsInfoBoard',
+  name: "CollectorsInfoBoard",
   props: {
-  roundCounter: Number,
-  }
-}
+    roundCounter: Number,
+    consoleHistory: Array,
+  },
+  watch: {
+    consoleHistory: function () {
+      console.log("hejhej");
+      var element = document.getElementById("consoleHistory");
+      element.scrollTop = element.scrollHeight;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -46,24 +61,32 @@ export default {
   color: black;
   width: 100%;
   position: relative;
-  height:100%;
+  max-height: 100%;
 }
-.left{
-  display:grid;
-  grid-template-columns:1fr 1fr;
+.left {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
-.roundCont{
+.right{
+  grid-template-rows:1fr 1fr;
+  background-color: white;
+    border-radius: 10px;
+
+}
+.roundCont {
   grid-column: 1/3;
 }
 #roundBox {
   grid-column: 1/4;
-  color:white;
+  color: white;
 }
 
-#gameHistory {
-  background-color: white;
-  border-radius:10px;
-  margin:1%;
+#consoleHistory {
+  background-color: rgb(218, 218, 218);
+  margin: 1%;
+  overflow-y: scroll;
+  color: black;
+  max-height:70px;
 }
 
 .quitButton {
@@ -86,10 +109,12 @@ export default {
   text-decoration: none;
   text-shadow: 0px 1px 0px #000000;
 }
+
 .rulesButton:hover {
   background: linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
   background-color: #ccc2a6;
 }
+
 .rulesButt:active {
   position: relative;
   top: 1px;
@@ -111,10 +136,12 @@ export default {
   text-decoration: none;
   text-shadow: 0px 1px 0px #b23e35;
 }
+
 .quitButton:hover {
   background: linear-gradient(to bottom, #ce0100 5%, #fe1a00 100%);
   background-color: #ce0100;
 }
+
 .quitButton:active {
   position: relative;
   top: 1px;

@@ -231,8 +231,10 @@ export default {
   height:100vh;
   background-color:rgba(0, 0, 0, 0.8);;
   position:absolute;
+  z-index:5;
 }
 .auctionWrapper {
+  z-index:6;
   width: 80%;
   background-color: rgb(247, 195, 137);
   height: 80vh;

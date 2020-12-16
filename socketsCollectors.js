@@ -32,6 +32,17 @@ function sockets(io, socket, data) {
     }
     );
   });
+  socket.on('collectorsBuyMarket', function (d) {
+    console.log("hej 3");
+    data.buyMarket(d.roomId, d.playerId, d.card, d.cost)
+    io.to(d.roomId).emit('collectorsMarketBought', {
+      playerId: d.playerId,
+      players: data.getPlayers(d.roomId),
+      skillsOnSale: data.getSkillsOnSale(d.roomId),
+      marketValues: data.getMarketValues(d.roomId),
+    }
+    );
+  });
 
   socket.on('collectorsBuySkills', function (d) {
     data.buySkill(d.roomId, d.playerId, d.card, d.cost)
@@ -65,12 +76,13 @@ function sockets(io, socket, data) {
     })
   });
   socket.on('startAuction', function (d) {
-    data.startAuction(d.roomId, d.cardUpForAuction, d.playerId);
+    data.startAuction(d.roomId, d.cardUpForAuction, d.playerId, d.cost);
     io.to(d.roomId).emit('auctionStarted', {
       cardUpForAuction: data.getCardUpForAuction(d.roomId),
       players: data.getPlayers(d.roomId),
       auctionCards: data.getAuctionCards(d.roomId),
       playerId: d.playerId,
+      cost: d.cost,
     })
   });
   socket.on('winnerPlaceCard', function (d) {
