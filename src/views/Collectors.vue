@@ -32,6 +32,7 @@
             @buySkill="buySkill($event)"
             @placeBottle="placeBottle($event)"
             @initiateAuction="initiateAuction($event)"
+            @handleAction="handleAction($event)"
           />
         </div>
         <div id="rightColumn">
@@ -271,6 +272,18 @@ export default {
       }.bind(this)
     );
     this.$store.state.socket.on(
+      "collectorsMarketBought",
+      function (d) {
+        console.log(d.playerId, "raised a value");
+        this.players = d.players;
+        this.skillsOnSale = d.skillsOnSale;
+        this.marketValues = d.marketValues;
+        if (this.playerId === d.playerId) {
+          this.changeTurn();
+        }
+      }.bind(this)
+    );
+    this.$store.state.socket.on(
       "auctionStarted",
       function (d) {
         console.log("Auction has been started");
@@ -447,11 +460,27 @@ export default {
     handleAction: function (card) {
       if (this.action === "skill") {
         this.buySkill(card);
+        this.action = "";
       }
       if (this.action === "item") {
         this.buyCard(card);
+        this.action = "";
+      }
+      if (this.action === "market") {
+        console.log("hej");
+        this.buyMarket(card);
+        this.action = "";
       }
     },
+    buyMarket: function (card) {
+      this.$store.state.socket.emit("collectorsBuyMarket", {
+        roomId: this.$route.params.id,
+        playerId: this.playerId,
+        card: card,
+        cost: this.marketValues[card.market] + this.chosenPlacementCost,
+      });
+    },
+
     drawCard: function () {
       this.$store.state.socket.emit("collectorsDrawCard", {
         roomId: this.$route.params.id,
@@ -474,6 +503,7 @@ export default {
         cost: this.marketValues[card.market] + this.chosenPlacementCost,
       });
     },
+
     startAuction: function (card) {
       console.log(
         "this.choseplacementcost i startauction()" + this.chosenPlacementCost
