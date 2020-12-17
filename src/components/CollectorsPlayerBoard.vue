@@ -166,7 +166,6 @@ export default {
 
 #topRow {
   grid-row: 1;
-  height: 10%;
 }
 
 /* Hover och style för treasure */
@@ -216,6 +215,7 @@ export default {
 #currentPoints p {
   margin: 0%;
   margin-top: 0.3em;
+  font-size: 140%;
 }
 #money img,
 #income img,
