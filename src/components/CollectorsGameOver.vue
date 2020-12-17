@@ -28,6 +28,12 @@
         <h1>{{labels.auctionWinnerIs   + findWinner(players, marketValues) }}!</h1>
         <img src="images/trophy.png" />
       </div>
+
+      <div>
+        <a href="http://localhost:8080/#/" class="playAgainButton">
+          Do you want to play again?
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -132,7 +138,6 @@ export default {
           extraPsecret += 1;
         }
       }
-
       return extraPsecret;
     },
   },
@@ -150,11 +155,11 @@ export default {
 }
 
 #wrapper {
-  height: 80vh;
+  height: 90vh;
   width: 80%;
   text-align: center;
   margin: 0 auto;
-  margin-top: 10vh;
+  margin-top: 5vh;
   border-radius: 20px;
   background-color: rgb(12, 133, 86);
   z-index: 12;
@@ -166,6 +171,32 @@ export default {
 }
 
 #winnerRow img {
-  height: 20vh;
+  height: 15vh;
+}
+
+.playAgainButton {
+  box-shadow: 0px 1px 0px 0px #1c1b18;
+  background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+  background-color: #eae0c2;
+  border-radius: 15px;
+  border: 2px solid #333029;
+  display: inline-block;
+  cursor: pointer;
+  color: white;
+  font-size: 90%;
+  font-weight: bold;
+  padding: 12px 16px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #000000;
+}
+
+.playAgainButton:hover {
+  background: linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
+  background-color: #ccc2a6;
+}
+
+.playAgainButton:active {
+  position: relative;
+  top: 1px;
 }
 </style>
