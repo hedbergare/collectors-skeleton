@@ -69,6 +69,7 @@ export default {
   grid-template-columns: 1fr 1fr;
 }
 .right {
+    margin-top: 10%;
   grid-template-rows: 1fr 1fr;
   background-color: white;
   border-radius: 10px;

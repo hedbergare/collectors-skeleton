@@ -25,7 +25,7 @@
             <span class="helper"></span>
             <img src="images/player_board/passive_income.png" />
           </div>
-          <p>{{player.income}}</p>
+          <p>{{ player.income }}</p>
         </div>
 
         <div id="currentPoints">
@@ -150,9 +150,9 @@ export default {
   },
   methods: {
     handleAction: function (card) {
-      this.$emit('handleAction', card);
-    }
-  }
+      this.$emit("handleAction", card);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -160,16 +160,18 @@ export default {
   display: grid;
   border: 3px solid black;
   position: relative;
+  height: 100%;
+  grid-template-rows:auto 1fr 1.25fr auto;
 }
 
 #topRow {
   grid-row: 1;
-  height: 6vh;
+  height: 10%;
 }
 
 /* Hover och style för treasure */
 #chest {
-  width: 7vh;
+  width: 7%;
 }
 
 #chest:hover + .secretPopup {
@@ -189,7 +191,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   float: right;
-  font-size: 150%;
+  font-size: 100%;
 }
 
 #money {
@@ -212,7 +214,7 @@ export default {
 #money p,
 #income p,
 #currentPoints p {
-  margin: 0;
+  margin: 0%;
   margin-top: 0.3em;
 }
 #money img,
@@ -226,14 +228,15 @@ export default {
   grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  height: 10%;
 }
 
 .box {
   width: 100%;
   text-align: center;
 }
-.box > *{
-  border-radius:4px;
+.box > * {
+  border-radius: 4px;
 }
 /* Rutorna i mellersta raden som innehåller bilder/bottles */
 .x {
@@ -242,11 +245,12 @@ export default {
   margin-top: 10%;
 }
 
+/*  */
 #bottomRow {
   grid-row: 3;
   display: grid;
   grid-template-columns: 2fr 2fr;
-  min-height: 20vh;
+  height: 100%;
 }
 
 #skills {
@@ -292,7 +296,6 @@ export default {
 #skillsRefill {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
 }
 
 .itemIcons {
@@ -306,21 +309,21 @@ export default {
 
 #itemsImage img {
   max-width: 100%;
+  vertical-align: middle;
 }
 
 /* Korten man har på handen */
 #cardRow {
   display: grid;
   grid-template-columns: 1fr 5fr;
-  height: 30vh;
+  height: 100%;
 }
 
 #cardRefill {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr;
   grid-template-columns: repeat(auto-fill, 130px);
   /*   grid-template-rows: repeat(auto-fill, 130px); */
-  height: 30vh;
 }
 #cardRefill > * {
   transform: scale(0.4) translate(-60%, -60%);
