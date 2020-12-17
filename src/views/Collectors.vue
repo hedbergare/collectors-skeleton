@@ -92,7 +92,9 @@
           <div id="infoboardColumn">
             <CollectorsInfoBoard 
             :consoleHistory="consoleHistory"
-            :roundCounter="roundCounter" />
+            :roundCounter="roundCounter"
+            :labels="labels" />
+            
           </div>
         </div>
       </div>
@@ -276,7 +278,7 @@ export default {
       "collectorsCardBought",
       function (d) {
         console.log(d.playerId, "bought a card");
-        this.consoleHistory.push(d.playerId + " bought a card");
+        this.consoleHistory.push(d.playerId + this.labels.boughtCard);
         this.players = d.players;
         this.itemsOnSale = d.itemsOnSale;
         if (this.playerId === d.playerId) {
@@ -287,7 +289,7 @@ export default {
     this.$store.state.socket.on(
       "collectorsMarketBought",
       function (d) {
-        console.log(d.playerId, "raised a value");
+        this.consoleHistory.push(d.playerId, this.labels.raisedValue);
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
         this.marketValues = d.marketValues;
@@ -300,7 +302,7 @@ export default {
       "auctionStarted",
       function (d) {
         console.log("Auction has been started");
-        this.consoleHistory.push(d.playerId + " Auction has been started");
+        this.consoleHistory.push(this.labels.auctionStarted);
         this.cardUpForAuction = d.cardUpForAuction;
         this.players = d.players;
         this.auctionCards = d.auctionCards;
@@ -320,7 +322,7 @@ export default {
       "collectorsSkillBought",
       function (d) {
         console.log(d.playerId, "bought a skill");
-        this.consoleHistory.push(d.playerId + " bought a skill");
+        this.consoleHistory.push(d.playerId + this.labels.boughtSkill);
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
         if (this.playerId === d.playerId) {
@@ -332,7 +334,7 @@ export default {
       "collectorsPoolsFilled",
       function (d) {
         console.log("Pools have been filled");
-        this.consoleHistory.push("New round has been started");
+        this.consoleHistory.push(this.labels.newRound);
         this.itemsOnSale = d.itemsOnSale;
         this.skillsOnSale = d.skillsOnSale;
         this.auctionCards = d.auctionCards;
@@ -438,7 +440,7 @@ export default {
       }
       /* Här under ska vi göra allt som ska ske när alla spelare har slut på bottles */
       console.log("Everyone has run out of bottles :(");
-      this.consoleHistory.push("everyone has run out of bottles");
+      this.consoleHistory.push(this.labels.outOfBottles);
       this.fillPools();
     },
 
@@ -611,11 +613,7 @@ footer a:visited {
 .playerBoardTab:hover {
   cursor: pointer;
 }
-@media screen and (max-width: 800px) {
-  main {
-    width: 90vw;
-  }
-}
+
 
 /* PLayerboard layout för browsern */
 #browserWrapper {
@@ -641,5 +639,15 @@ footer a:visited {
 }
 #rightColumn{
   height:100%;
+}
+@media screen and (max-width: 800px) {
+  #browserWrapper{
+    max-height:100%;
+    grid-template-columns: 1fr;
+    grid-template-rows:1fr 1fr;
+  }
+  #playerBoardContainer{
+    max-width:80%;
+  }
 }
 </style>
