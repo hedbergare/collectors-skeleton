@@ -120,6 +120,7 @@
         <img id="imageWork" src="/images/workPic/imageWork.png" />
       </div>
       <div id="buyWorkBox1">Här ska de bytas varje omgång</div>
+      
       <div id="buyWorkBox2">
         <img id="qTile1" src="/images/workPic/qTile1.png" />
       </div>
@@ -427,8 +428,7 @@ export default {
 .wrapper {
   display: grid;
   color: black;
-  width: 100%;
-  height: 100%;
+  height: 100vh;
   grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5% 15% 21% 21% 21% 17%;
 }
@@ -445,7 +445,7 @@ export default {
   grid-column: 2 / span 4;
   grid-row: 2;
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 40% 60%;
   padding: 5%;
   text-align: center;
@@ -455,18 +455,18 @@ export default {
 }
 .cardBoxLeft {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
   max-width: 100%;
   color: white;
   grid-column: 1;
   grid-row: 3 / span 3;
-  grid-auto-rows: max-content;
+
 }
 .skillBox {
   display: grid;
   text-align: center;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr ;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
   padding: 5%;
   box-align: center;
@@ -478,7 +478,7 @@ export default {
 }
 .workBox {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr ;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
   padding: 5%;
   max-width: 100%;
@@ -490,7 +490,7 @@ export default {
 .auctionBox {
   display: grid;
   text-align: center;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr ;
   grid-template-rows: 33% 33% 33%;
   background-color: rgb(245, 179, 104);
   color: white;
@@ -502,7 +502,7 @@ export default {
   display: grid;
   padding: 5%;
   text-align: center;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
   grid-template-rows: 60% 40%;
   background-color: rgb(189, 189, 241);
   color: white;
@@ -672,7 +672,7 @@ export default {
 /* Small boxes in WorkBox */
 #buyWorkInfo {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 1;
   max-width: 100%;
@@ -680,35 +680,35 @@ export default {
 }
 #buyWorkBox1 {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 2;
   max-width: 100%;
 }
 #buyWorkBox2 {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 3;
   max-width: 100%;
 }
 #buyWorkBox3 {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 4;
   max-width: 100%;
 }
 #buyWorkBox4 {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 5;
   max-width: 100%;
 }
 #buyWorkBox5 {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 6;
   max-width: 100%;

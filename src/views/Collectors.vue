@@ -590,7 +590,7 @@ footer a:visited {
 #playerBoardContainer {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  max-width: 50%;
+  max-width: 80%;
 }
 .playerBoardTab {
   border-top-left-radius: 10px;
@@ -621,27 +621,30 @@ footer a:visited {
 #browserWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-height: 100vh;
+  max-height: 100%;
 }
 
 #gameboardColumn {
   display: grid;
-  max-height:100%;
+  height:100%;
 }
 
 #infoboardColumn {
   width: 100%;
-  height:100%;
+  height: 100%;
 }
 
 #playerboardRow {
   display: grid;
   display: inline-block;
   vertical-align: bottom;
+  height: 75%;
 }
 #rightColumn{
   height:100%;
 }
+
+/* Här börjar småfix för skalning och mobilversion */
 @media screen and (max-width: 800px) {
   #browserWrapper{
     max-height:100%;
