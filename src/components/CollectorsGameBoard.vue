@@ -211,7 +211,7 @@
             p.cost +
             '.png);'
           "
-          @click="placeBottle(p, 'market')"
+          @click="placeBottle(p, 'market' + p.numCards)"
         ></button>
 
         <div v-if="p.playerId !== null">
@@ -291,7 +291,19 @@ export default {
     auctionPlacement: Array,
     skillPlacement: Array,
     marketPlacement: Array,
+    highlightCards: Boolean,
   },
+
+  watch: {
+     highlightCards: function (h){
+       if (h) {
+              this.highlightAvailableMarket();
+       }
+     }
+      
+    
+  },
+
   methods: {
     resetInfo: function(){
       this.infoText = "";
@@ -357,7 +369,7 @@ export default {
         this.highlightAvailableCards(p.cost);
       } else if (action === "skill") {
         this.highlightAvailableSkills(p.cost);
-      } else if (action === "market") {
+      } else if (action === "market2" || action === "market1") {
         this.highlightAvailableMarket(p.cost);
       } else if (action === "auction") {
         this.initiateAuction();
@@ -561,7 +573,7 @@ export default {
   display: grid;
   padding: 5px;
   text-align: center;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 50% 50%;
   background-color: rgb(189, 189, 241);
   color: white;
@@ -797,7 +809,7 @@ export default {
   max-width: 100%;
   max-height: 100%;
   padding: 5%;
-  grid-row: 1 /span 2;
+  grid-row: 1 / span 2;
 }
 
 /* Pilar i auctionbox */

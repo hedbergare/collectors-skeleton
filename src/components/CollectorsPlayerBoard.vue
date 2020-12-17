@@ -139,9 +139,13 @@ export default {
     CollectorsCard,
     CollectorsBottle,
   },
+
+
   props: {
     player: Object,
   },
+
+  
   computed: {
     playerId: function () {
       return this.$store.state.playerId;
@@ -149,7 +153,9 @@ export default {
   },
   methods: {
     handleAction: function (card) {
+      if (card.available){
       this.$emit("handleAction", card);
+      }
     },
   },
 };

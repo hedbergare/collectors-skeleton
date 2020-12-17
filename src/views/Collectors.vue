@@ -38,6 +38,7 @@
             :skillPlacement="skillPlacement"
             :auctionPlacement="auctionPlacement"
             :marketPlacement="marketPlacement"
+            :highlightCards="highlightCards"
             @buyCard="buyCard($event)"
             @updatePoints="updatePoints($event)"
             @buySkill="buySkill($event)"
@@ -105,16 +106,16 @@
             </div>
           </div>
           <div id="infoboardColumn">
-
             <CollectorsInfoBoard
               :consoleHistory="consoleHistory"
               :roundCounter="roundCounter"
-              :labels="labels" />
+              :labels="labels"
+            />
           </div>
         </div>
       </div>
     </main>
-    <div style="margin-top:1000px">
+    <div style="margin-top: 1000px">
       <div class="buttons">
         Draw a card here
         <button @click="drawCard">
@@ -195,6 +196,7 @@ export default {
       skillPlacement: [],
       auctionPlacement: [],
       marketPlacement: [],
+      highlightCards: false,
       chosenPlacementCost: null,
       marketValues: {
         fastaval: 0,
@@ -267,17 +269,23 @@ export default {
     this.$store.state.socket.on(
       "collectorsBottlePlaced",
       function (d) {
-        this.buyPlacement = d.buyPlacement;
-        this.skillPlacement = d.skillPlacement;
-        this.marketPlacement = d.marketPlacement;
-        this.auctionPlacement = d.auctionPlacement;
+        this.buyPlacement = d.placements.buyPlacement;
+        this.skillPlacement = d.placements.skillPlacement;
+        this.marketPlacement = d.placements.marketPlacement;
+        this.auctionPlacement = d.placements.auctionPlacement;
+        for (let x in this.players){
+          this.players[x].bottles = d.players[x].bottles
+        }
+
       }.bind(this)
     );
 
     this.$store.state.socket.on(
       "collectorsPointsUpdated",
       function (d) {
-        this.players = d.players;
+       for (let x in this.players){
+          this.players[x].points = d.players[x].points
+        }
       }.bind(this)
     );
 
@@ -309,8 +317,10 @@ export default {
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
         this.marketValues = d.marketValues;
-        this.auctionCards = d.auctionCards;
-        if (this.playerId === d.playerId) {
+        if (this.action === "market1") {
+          this.highlightCards = true
+        }
+        if (this.playerId === d.playerId && this.action === "") {
           this.changeTurn();
         }
       }.bind(this)
@@ -503,9 +513,14 @@ export default {
         this.buyCard(card);
         this.action = "";
       }
-      if (this.action === "market") {
+
+      if (this.action === "market1") {
         this.buyMarket(card);
         this.action = "";
+      }
+      if (this.action === "market2") {
+        this.buyMarket(card);
+        this.action = "market1";
       }
     },
     buyMarket: function (card) {
@@ -632,7 +647,6 @@ footer a:visited {
   cursor: pointer;
 }
 
-
 /* PLayerboard layout för browsern */
 #browserWrapper {
   display: grid;
@@ -642,7 +656,7 @@ footer a:visited {
 
 #gameboardColumn {
   display: grid;
-  height:100%;
+  height: 100%;
 }
 
 #infoboardColumn {
@@ -662,13 +676,13 @@ footer a:visited {
 
 /* Här börjar småfix för skalning och mobilversion */
 @media screen and (max-width: 800px) {
-  #browserWrapper{
-    max-height:100%;
+  #browserWrapper {
+    max-height: 100%;
     grid-template-columns: 1fr;
-    grid-template-rows:1fr 1fr;
+    grid-template-rows: 1fr 1fr;
   }
-  #playerBoardContainer{
-    max-width:80%;
+  #playerBoardContainer {
+    max-width: 80%;
   }
 }
 </style>

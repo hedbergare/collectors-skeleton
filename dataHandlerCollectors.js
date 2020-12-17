@@ -84,9 +84,9 @@ Data.prototype.createRoom = function (roomId, playerCount, lang = "en") {
   { cost: -1, playerId: null },
   { cost: 0, playerId: null },
   { cost: 0, playerId: null }];
-  room.marketPlacement = [{ cost: 0, playerId: null },
-  { cost: 2, playerId: null },
-  { cost: 0.0, playerId: null }];
+  room.marketPlacement = [{ cost: 0, playerId: null,numCards: 2 },
+  { cost: 2, playerId: null,numCards: 2 },
+  { cost: 0.0, playerId: null,numCards: 1 }];
   this.rooms[roomId] = room;
 }
 
@@ -389,7 +389,6 @@ Data.prototype.buyMarket = function (roomId, playerId, card, cost) {
       }
     }
     room.market.push(c[0]);
-    room.players[playerId].bottles -= 1;
     room.players[playerId].money -= cost;
     this.updatePoints(roomId);
 
@@ -398,7 +397,6 @@ Data.prototype.buyMarket = function (roomId, playerId, card, cost) {
 
 
 Data.prototype.placeBottle = function (roomId, playerId, action, cost) {
-  console.log("inne i placebottle data")
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
     let activePlacement = [];
@@ -412,17 +410,20 @@ Data.prototype.placeBottle = function (roomId, playerId, action, cost) {
     else if (action === "auction") {
       activePlacement = room.auctionPlacement;
     }
-    else if (action === "market") {
+    else if (action === "market2" || action === "market2" ) {
       activePlacement = room.marketPlacement;
     }
     for (let i = 0; i < activePlacement.length; i += 1) {
       if (activePlacement[i].cost === cost &&
         activePlacement[i].playerId === null) {
         activePlacement[i].playerId = playerId;
+        room.players[playerId].bottles -= 1;
         break;
       }
+      
     }
   }
+
 }
 /* returns the hand of the player */
 Data.prototype.Cards = function (roomId, playerId) {
