@@ -446,8 +446,8 @@ export default {
   grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 40% 60%;
-  padding: 5%;
+  grid-template-rows: 50% 50%;
+  padding: 5px;
   text-align: center;
   max-width: 100%;
   background-color: rgb(247, 193, 230);
@@ -468,7 +468,7 @@ export default {
   text-align: center;
   grid-template-columns: 1fr 1fr ;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
-  padding: 5%;
+  padding: 5px;
   box-align: center;
   max-width: 100%;
   background-color: rgb(127, 241, 127);
@@ -480,7 +480,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr ;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
-  padding: 5%;
+  padding: 5px;
   max-width: 100%;
   background-color: rgb(243, 243, 125);
   color: white;
@@ -500,10 +500,10 @@ export default {
 }
 .marketBox {
   display: grid;
-  padding: 5%;
+  padding: 5px;
   text-align: center;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
-  grid-template-rows: 60% 40%;
+  grid-template-rows: 50% 50%;
   background-color: rgb(189, 189, 241);
   color: white;
   grid-column: 2 / span 4;
@@ -511,18 +511,15 @@ export default {
   max-width: 100%;
 }
 
-
 .itemsOnSaleIcon {
-  max-height: 40%;
   max-width: 50%;
-/*   animation: jiggle 1s ease-in-out;
-  animation-iteration-count:infinite;
-  box-shadow: 0 0 10px yellow; */
 }
+
 .skillsOnSaleIcon {
   max-height: 40%;
   max-width: 100%;
 }
+
 .itemsOnSaleIconCont1,
 .skillsOnSaleIconCont {
   max-height: 100%;
@@ -559,7 +556,7 @@ export default {
 }
 .placeBottleMarket {
   color: blue;
-  width: 40%;
+  width: 50%;
   height: 80%;
   background-size: contain;
   background-repeat: no-repeat;
@@ -615,7 +612,6 @@ export default {
   max-width: 100%;
   max-height: 100%;
 }
-
 
 /* Small boxes in SkillBox */
 #buySkillInfo {
@@ -727,8 +723,8 @@ export default {
 /* Small boxes in auctionBox */
 .placeBottleAuction1 {
   color: blue;
-  width: 50%;
-  height: 50%;
+  width: 55%;
+  height: 70%;
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -741,7 +737,7 @@ export default {
   display: grid;
   max-width: 100%;
   max-height: 100%;
-  padding: 10%;
+  padding: 5%;
   grid-row: 1 /span 2;
 }
 
@@ -809,34 +805,34 @@ export default {
 /* Small boxes in MarketBox */
 
 #MarketArrow1 {
-  border: dashed 2% black;
+  border: dashed 2px black;
   grid-column: 1;
   grid-row: 2;
-  padding-bottom: 4%;
+  padding-bottom: 4px;
 }
 #MarketArrow2 {
-  border: dashed 2% black;
+  border: dashed 2px black;
   grid-column: 2;
   grid-row: 2;
-  padding-bottom: 4%;
+  padding-bottom: 4px;
 }
 #MarketArrow3 {
-  border: dashed 2% black;
+  border: dashed 2px black;
   grid-column: 3;
   grid-row: 2;
-  padding-bottom: 4%;
+  padding-bottom: 4px;
 }
 #MarketArrow4 {
-  border: dashed 2% black;
+  border: dashed 2px black;
   grid-column: 4;
   grid-row: 2;
-  padding-bottom: 4%;
+  padding-bottom: 4px;
 }
 #MarketArrow5 {
-  border: dashed 2% black;
+  border: dashed 2px black;
   grid-column: 5;
   grid-row: 2;
-  padding-bottom: 4%;
+  padding-bottom: 4px;
 }
 
 /* Bilder till Market Value */
