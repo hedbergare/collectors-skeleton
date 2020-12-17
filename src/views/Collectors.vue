@@ -97,7 +97,7 @@
         </div>
       </div>
     </main>
-    <div>
+    <div style="margin-top:1000px">
       <div class="buttons">
         Draw a card here
         <button @click="drawCard">
