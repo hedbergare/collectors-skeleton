@@ -2,13 +2,12 @@
   <div>
     <main>
       <CollectorsGameOver
-      v-if="roundCounter === 5"
+        v-if="roundCounter === 5"
         :players="players"
         :marketValues="marketValues"
         :labels="labels"
       />
 
-      
       <CollectorsAuction
         v-if="players[playerId] && this.auctionInitiated"
         :auctionCards="auctionCards"
@@ -36,6 +35,7 @@
             :skillPlacement="skillPlacement"
             :auctionPlacement="auctionPlacement"
             :marketPlacement="marketPlacement"
+            :highlightCards="highlightCards"
             @buyCard="buyCard($event)"
             @updatePoints="updatePoints($event)"
             @buySkill="buySkill($event)"
@@ -50,22 +50,33 @@
               <!-- Sin egen flik ska skapas först -->
               <div v-if="players[playerId]">
                 <div
-                  :class="['playerBoardTab', {'activeTab': players[playerId].isTurn}]"
+                  :class="[
+                    'playerBoardTab',
+                    { activeTab: players[playerId].isTurn },
+                  ]"
                   :style="'background-color:' + players[playerId].color"
                   @click="showCorrectPlayerBoard(playerId)"
                 >
-                  <p>{{ playerId }} ({{Object.keys(players).indexOf(playerId)+1}})</p>
+                  <p>
+                    {{ playerId }} ({{
+                      Object.keys(players).indexOf(playerId) + 1
+                    }})
+                  </p>
                 </div>
               </div>
               <!-- Sedan skapas flikarna för de andra spelarna -->
               <div v-for="(player, index) in players" :key="index">
                 <div
                   v-if="player.pId !== playerId"
-                  :class="['playerBoardTab', {'activeTab': player.isTurn}]"
+                  :class="['playerBoardTab', { activeTab: player.isTurn }]"
                   :style="'background-color:' + player.color"
                   @click="showCorrectPlayerBoard(player.pId)"
                 >
-                  <p>{{ player.pId }} ({{Object.keys(players).indexOf(player.pId)+1}})</p>
+                  <p>
+                    {{ player.pId }} ({{
+                      Object.keys(players).indexOf(player.pId) + 1
+                    }})
+                  </p>
                 </div>
               </div>
             </div>
@@ -92,16 +103,16 @@
             </div>
           </div>
           <div id="infoboardColumn">
-            <CollectorsInfoBoard 
-            :consoleHistory="consoleHistory"
-            :roundCounter="roundCounter"
-            :labels="labels" />
-            
+            <CollectorsInfoBoard
+              :consoleHistory="consoleHistory"
+              :roundCounter="roundCounter"
+              :labels="labels"
+            />
           </div>
         </div>
       </div>
     </main>
-    <div style="margin-top:1000px">
+    <div style="margin-top: 1000px">
       <div class="buttons">
         Draw a card here
         <button @click="drawCard">
@@ -181,6 +192,7 @@ export default {
       skillPlacement: [],
       auctionPlacement: [],
       marketPlacement: [],
+      highlightCards: false,
       chosenPlacementCost: null,
       marketValues: {
         fastaval: 0,
@@ -253,17 +265,23 @@ export default {
     this.$store.state.socket.on(
       "collectorsBottlePlaced",
       function (d) {
-        this.buyPlacement = d.buyPlacement;
-        this.skillPlacement = d.skillPlacement;
-        this.marketPlacement = d.marketPlacement;
-        this.auctionPlacement = d.auctionPlacement;
+        this.buyPlacement = d.placements.buyPlacement;
+        this.skillPlacement = d.placements.skillPlacement;
+        this.marketPlacement = d.placements.marketPlacement;
+        this.auctionPlacement = d.placements.auctionPlacement;
+        for (let x in this.players){
+          this.players[x].bottles = d.players[x].bottles
+        }
+
       }.bind(this)
     );
 
     this.$store.state.socket.on(
       "collectorsPointsUpdated",
       function (d) {
-        this.players = d.players;
+       for (let x in this.players){
+          this.players[x].points = d.players[x].points
+        }
       }.bind(this)
     );
 
@@ -295,7 +313,10 @@ export default {
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
         this.marketValues = d.marketValues;
-        if (this.playerId === d.playerId) {
+        if (this.action === "market1") {
+          this.highlightCards = true
+        }
+        if (this.playerId === d.playerId && this.action === "") {
           this.changeTurn();
         }
       }.bind(this)
@@ -488,9 +509,14 @@ export default {
         this.buyCard(card);
         this.action = "";
       }
-      if (this.action === "market") {
+
+      if (this.action === "market1") {
         this.buyMarket(card);
         this.action = "";
+      }
+      if (this.action === "market2") {
+        this.buyMarket(card);
+        this.action = "market1";
       }
     },
     buyMarket: function (card) {
@@ -599,14 +625,14 @@ footer a:visited {
   color: black;
   text-align: center;
   font-weight: bold;
-  border-top:2px solid transparent;
-  border-left:2px solid transparent;
-  border-right:2px solid transparent;
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
 }
-.activeTab{
-  border-top:2px solid gold;
-  border-left:2px solid gold;
-  border-right:2px solid gold;
+.activeTab {
+  border-top: 2px solid gold;
+  border-left: 2px solid gold;
+  border-right: 2px solid gold;
 }
 .playerBoardTab p {
   margin: 0;
@@ -615,7 +641,6 @@ footer a:visited {
 .playerBoardTab:hover {
   cursor: pointer;
 }
-
 
 /* PLayerboard layout för browsern */
 #browserWrapper {
@@ -626,7 +651,7 @@ footer a:visited {
 
 #gameboardColumn {
   display: grid;
-  height:100%;
+  height: 100%;
 }
 
 #infoboardColumn {
@@ -640,19 +665,19 @@ footer a:visited {
   vertical-align: bottom;
   height: 75%;
 }
-#rightColumn{
-  height:100%;
+#rightColumn {
+  height: 100%;
 }
 
 /* Här börjar småfix för skalning och mobilversion */
 @media screen and (max-width: 800px) {
-  #browserWrapper{
-    max-height:100%;
+  #browserWrapper {
+    max-height: 100%;
     grid-template-columns: 1fr;
-    grid-template-rows:1fr 1fr;
+    grid-template-rows: 1fr 1fr;
   }
-  #playerBoardContainer{
-    max-width:80%;
+  #playerBoardContainer {
+    max-width: 80%;
   }
 }
 </style>

@@ -120,7 +120,7 @@
         <img id="imageWork" src="/images/workPic/imageWork.png" />
       </div>
       <div id="buyWorkBox1">Här ska de bytas varje omgång</div>
-      
+
       <div id="buyWorkBox2">
         <img id="qTile1" src="/images/workPic/qTile1.png" />
       </div>
@@ -205,7 +205,7 @@
             p.cost +
             '.png);'
           "
-          @click="placeBottle(p, 'market')"
+          @click="placeBottle(p, 'market' + p.numCards)"
         ></button>
 
         <div v-if="p.playerId !== null">
@@ -280,7 +280,19 @@ export default {
     auctionPlacement: Array,
     skillPlacement: Array,
     marketPlacement: Array,
+    highlightCards: Boolean,
   },
+
+  watch: {
+     highlightCards: function (h){
+       if (h) {
+              this.highlightAvailableMarket();
+       }
+     }
+      
+    
+  },
+
   methods: {
     handleAction: function (card) {
       if (card.available) {
@@ -294,7 +306,6 @@ export default {
         if (typeof this.skillsOnSale[i].skill !== "undefined") {
           /* Ta ut det kortet från skills on sale och sparar det som c */
           this.$set(this.skillsOnSale[i], "available", true);
-          console.log("jacke säger att den är av");
           break;
         }
       }
@@ -332,7 +343,7 @@ export default {
         this.highlightAvailableCards(p.cost);
       } else if (action === "skill") {
         this.highlightAvailableSkills(p.cost);
-      } else if (action === "market") {
+      } else if (action === "market2" || action === "market1") {
         this.highlightAvailableMarket(p.cost);
       } else if (action === "auction") {
         this.initiateAuction();
@@ -461,12 +472,11 @@ export default {
   color: white;
   grid-column: 1;
   grid-row: 3 / span 3;
-
 }
 .skillBox {
   display: grid;
   text-align: center;
-  grid-template-columns: 1fr 1fr ;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
   padding: 5px;
   box-align: center;
@@ -478,7 +488,7 @@ export default {
 }
 .workBox {
   display: grid;
-  grid-template-columns: 1fr ;
+  grid-template-columns: 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
   padding: 5px;
   max-width: 100%;
@@ -490,7 +500,7 @@ export default {
 .auctionBox {
   display: grid;
   text-align: center;
-  grid-template-columns: 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 33% 33% 33%;
   background-color: rgb(245, 179, 104);
   color: white;
@@ -502,7 +512,7 @@ export default {
   display: grid;
   padding: 5px;
   text-align: center;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 50% 50%;
   background-color: rgb(189, 189, 241);
   color: white;
@@ -540,12 +550,12 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.bottleSkill{
-  max-height:100%;
-  max-width:100%;
+.bottleSkill {
+  max-height: 100%;
+  max-width: 100%;
 }
-.bottleItem{
-  max-height:100%;
+.bottleItem {
+  max-height: 100%;
 }
 .placeBottleSkill {
   color: blue;
@@ -728,7 +738,7 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.auctionBox1{
+.auctionBox1 {
   height: 100%;
 }
 
@@ -738,7 +748,7 @@ export default {
   max-width: 100%;
   max-height: 100%;
   padding: 5%;
-  grid-row: 1 /span 2;
+  grid-row: 1 / span 2;
 }
 
 /* Pilar i auctionbox */

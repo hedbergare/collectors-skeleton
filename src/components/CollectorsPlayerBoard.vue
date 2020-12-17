@@ -139,10 +139,14 @@ export default {
     CollectorsCard,
     CollectorsBottle,
   },
+
+
   props: {
     /* Tar in player som object, så att vi vet  */
     player: Object,
   },
+
+  
   computed: {
     playerId: function () {
       return this.$store.state.playerId;
@@ -150,7 +154,9 @@ export default {
   },
   methods: {
     handleAction: function (card) {
+      if (card.available){
       this.$emit("handleAction", card);
+      }
     },
   },
 };

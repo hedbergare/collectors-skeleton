@@ -55,8 +55,16 @@ function sockets(io, socket, data) {
 
   socket.on('collectorsPlaceBottle', function (d) {
     data.placeBottle(d.roomId, d.playerId, d.action, d.cost);
-    io.to(d.roomId).emit('collectorsBottlePlaced', data.getPlacements(d.roomId));
+    io.to(d.roomId).emit('collectorsBottlePlaced', {
+      placements: data.getPlacements(d.roomId),
+      players: data.getPlayers(d.roomId)
+    
+    }
+
+   );
   });
+
+
   socket.on('fillPools', function (d) {
     data.fillPools(d.roomId);
     io.to(d.roomId).emit('collectorsPoolsFilled', {
