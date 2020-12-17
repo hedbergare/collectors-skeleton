@@ -1,5 +1,12 @@
 <template>
   <div class="wrapper">
+    <div class="Absolute-Center" v-if="this.infoText !== ''">
+      <div class="infoPopup">
+        <button @click="resetInfo()" class="close">X</button>
+        <h2>Information om {{this.infoTitle}}</h2>
+        <p>{{this.infoText}}</p>
+      </div>
+    </div>
     <!-- Hela Spelbrädet -->
 
     <!-- Här gör vi card box Top -->
@@ -64,7 +71,7 @@
         </div>
       </div>
       <div id="buyItemBoxInfo">
-        <img id="itemInfo" src="/images/buyItemPic/BuyItemInfo.png" />
+        <img id="itemInfo" src="/images/buyItemPic/BuyItemInfo.png" @click="showInfoPopup('Items','items info och så')"/>
       </div>
     </div>
 
@@ -72,7 +79,7 @@
       <!-- Här gör vi skill box med köprutor -->
       <div></div>
       <div id="buySkillInfo">
-        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" />
+        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" @click="showInfoPopup('Skills','info om skills')"/>
       </div>
       <div
         class="bottleSkill"
@@ -162,7 +169,7 @@
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" />
+        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" @click="showInfoPopup('Auction','lite info om auktionen')"/>
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -188,8 +195,7 @@
     <div class="marketBox">
       <!-- Här gör vi market box med köprutor -->
       <div id="buyMarketBoxInfo">
-        <img id="marketInfo" src="/images/marketPic/marketInfo.png" />
-        <img id="testhover" src="/images/marketPic/info.png" />
+        <img id="marketInfo" src="/images/marketPic/marketInfo.png" @click="showInfoPopup('Market','skojig info om marketvalues och så')"/>
       </div>
       <div
         class="bottleMarket"
@@ -268,7 +274,12 @@ export default {
   components: {
     CollectorsCard,
   },
-
+  data: function () {
+    return {
+      infoText: "",
+      infoTitle: ""
+    };
+  },
   props: {
     labels: Object,
     player: Object,
@@ -294,11 +305,19 @@ export default {
   },
 
   methods: {
+    resetInfo: function(){
+      this.infoText = "";
+    },
     handleAction: function (card) {
       if (card.available) {
         this.$emit("handleAction", card);
         this.updatePoints();
       }
+    },
+    showInfoPopup: function(title,text){
+      console.log("showinfopopup");
+      this.infoText = text;
+      this.infoTitle = title;
     },
 
     highlightAvailableMarket: function () {
@@ -435,9 +454,44 @@ export default {
 
 <style scoped>
 /* Main boxes */
-
+.Absolute-Center {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 100%;
+  z-index: 10;
+}
+.infoPopup {
+  box-shadow: 0px 1px 0px 0px #1c1b18;
+  background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+  background-color: #eae0c2;
+  border-radius: 15px;
+  border: 2px solid #333029;
+  color: #505739;
+  font-weight: bold;
+  text-shadow: 0px 1px 0px #ffffff;
+  padding: 5%;
+  position: relative;
+}
+.close{
+  position: absolute;
+    background: rgb(75, 0, 0);
+    color: #d1c8ad;
+    top: -2px;
+    right: -2px;
+    font-size:160%;
+    /* padding:10px; */
+    border-radius:10px;
+    border:2px solid black;
+    cursor:pointer;
+}
 .wrapper {
   display: grid;
+  position: relative;
   color: black;
   height: 100vh;
   grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
@@ -856,16 +910,6 @@ export default {
   max-height: 100%;
 }
 
-#marketInfo:hover + #testhover {
-  display: inline-block;
-  height: 60%;
-  width: 40%;
-}
-#testhover {
-  position: absolute;
-  display: none;
-  width: 90%;
-}
 .itemsOnSaleIcon:hover + #itemsOnSalePic {
   display: inline-block;
   height: 43%;
