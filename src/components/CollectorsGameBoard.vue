@@ -161,10 +161,7 @@
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img
-          id="startAuction"
-          src="/images/auctionPic/startAuctionImage.png"
-        />
+        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" />
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -223,7 +220,7 @@
         {{ "x" + marketValues.figures }}
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
         {{ "x" + marketValues.music }}
       </div>
       <div id="MarketArrow4">
@@ -285,23 +282,32 @@ export default {
   },
   methods: {
     handleAction: function (card) {
+      console.log("i handle action game board")
       if (card.available) {
+        console.log("i handle action game board")
         this.$emit("handleAction", card);
         this.updatePoints();
       }
     },
 
     highlightAvailableMarket: function () {
+      /* Gör kortet längst ner i skillsonsale till avalible */
       for (let i = this.skillsOnSale.length - 1; i >= 0; i--) {
         if (typeof this.skillsOnSale[i].skill !== "undefined") {
-          /* Ta ut det kortet från skills on sale och sparar det som c */
           this.$set(this.skillsOnSale[i], "available", true);
-          console.log("jacke säger att den är av");
           break;
         }
       }
+      /* Gör korten på handen avalible */
       for (let i = 0; i < this.player.hand.length; i += 1) {
         this.$set(this.player.hand[i], "available", true);
+      }
+      /* Gör kortet längst ner i auction availble */
+      for (let i = this.auctionCards.length - 1; i >= 0; i--) {
+        if (typeof this.auctionCards[i].skill !== "undefined") {
+          this.$set(this.auctionCards[i], "available", true);
+          break;
+        }
       }
     },
 
@@ -312,9 +318,7 @@ export default {
         return true;
       }
     },
-
-    /* Här är funktionerna till item */
-
+    
     /*Skickar iväg att auktionen ska börja */
     initiateAuction() {
       this.$emit("initiateAuction");
@@ -329,14 +333,13 @@ export default {
         action: action,
         playerId: p.playerId,
       });
-      console.log("Kostnad för auktionen" + p.cost);
       if (action === "item") {
         this.highlightAvailableCards(p.cost);
       } else if (action === "skill") {
         this.highlightAvailableSkills(p.cost);
       } else if (action === "market") {
         this.highlightAvailableMarket(p.cost);
-      } else if(action === "auction"){
+      } else if (action === "auction") {
         this.initiateAuction();
       }
     },
@@ -516,12 +519,11 @@ export default {
 
 
 .itemsOnSaleIcon {
-  max-height: 40%;
-  max-width: 50%;
-/*   animation: jiggle 1s ease-in-out;
+  max-height: 5vh;
+  max-width: 100%;
+  /*   animation: jiggle 1s ease-in-out;
   animation-iteration-count:infinite;
   box-shadow: 0 0 10px yellow; */
-
 }
 .skillsOnSaleIcon {
   max-height: 40%;

@@ -25,7 +25,7 @@
             <span class="helper"></span>
             <img src="images/player_board/passive_income.png" />
           </div>
-          <p>{{player.income}}</p>
+          <p>{{player.passiveIncome}}</p>
         </div>
 
         <div id="currentPoints">
@@ -140,7 +140,6 @@ export default {
     CollectorsBottle,
   },
   props: {
-    /* Tar in player som object, så att vi vet  */
     player: Object,
   },
   computed: {

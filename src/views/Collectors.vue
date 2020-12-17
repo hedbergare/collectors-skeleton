@@ -1,14 +1,15 @@
 <template>
   <div>
     <main>
+      <!-- Aktiveras då spelet är slut -->
       <CollectorsGameOver
-      v-if="roundCounter === 5"
+        v-if="roundCounter === 5"
         :players="players"
         :marketValues="marketValues"
         :labels="labels"
       />
 
-      
+      <!-- Aktiveras när någon vill starta en auktion -->
       <CollectorsAuction
         v-if="players[playerId] && this.auctionInitiated"
         :auctionCards="auctionCards"
@@ -23,14 +24,15 @@
         @setAuctionWinner="setAuctionWinner($event)"
         @winnerPlaceCard="winnerPlaceCard($event)"
       />
+      
       <div id="browserWrapper">
         <div id="gameboardColumn">
           <CollectorsGameBoard
-            v-if="itemsOnSale"
             :player="players[playerId]"
             :labels="labels"
             :itemsOnSale="itemsOnSale"
             :skillsOnSale="skillsOnSale"
+            :auctionCards="auctionCards"
             :marketValues="marketValues"
             :buyPlacement="buyPlacement"
             :skillPlacement="skillPlacement"
@@ -50,22 +52,33 @@
               <!-- Sin egen flik ska skapas först -->
               <div v-if="players[playerId]">
                 <div
-                  :class="['playerBoardTab', {'activeTab': players[playerId].isTurn}]"
+                  :class="[
+                    'playerBoardTab',
+                    { activeTab: players[playerId].isTurn },
+                  ]"
                   :style="'background-color:' + players[playerId].color"
                   @click="showCorrectPlayerBoard(playerId)"
                 >
-                  <p>{{ playerId }} ({{Object.keys(players).indexOf(playerId)+1}})</p>
+                  <p>
+                    {{ playerId }} ({{
+                      Object.keys(players).indexOf(playerId) + 1
+                    }})
+                  </p>
                 </div>
               </div>
               <!-- Sedan skapas flikarna för de andra spelarna -->
               <div v-for="(player, index) in players" :key="index">
                 <div
                   v-if="player.pId !== playerId"
-                  :class="['playerBoardTab', {'activeTab': player.isTurn}]"
+                  :class="['playerBoardTab', { activeTab: player.isTurn }]"
                   :style="'background-color:' + player.color"
                   @click="showCorrectPlayerBoard(player.pId)"
                 >
-                  <p>{{ player.pId }} ({{Object.keys(players).indexOf(player.pId)+1}})</p>
+                  <p>
+                    {{ player.pId }} ({{
+                      Object.keys(players).indexOf(player.pId) + 1
+                    }})
+                  </p>
                 </div>
               </div>
             </div>
@@ -92,11 +105,11 @@
             </div>
           </div>
           <div id="infoboardColumn">
-            <CollectorsInfoBoard 
-            :consoleHistory="consoleHistory"
-            :roundCounter="roundCounter"
-            :labels="labels" />
-            
+
+            <CollectorsInfoBoard
+              :consoleHistory="consoleHistory"
+              :roundCounter="roundCounter"
+              :labels="labels" />
           </div>
         </div>
       </div>
@@ -109,19 +122,20 @@
         </button>
       </div>
       Testknapp för "fill pools"
-      <button @click="fillPools()">Fill pools (fas 2) testknapp</button>
-      <button @click="changeTurn()">Byt tur testknapp</button>
-      Auction
+      <button @click="fillPools()">Fill pools (fas 2) testknapp</button> <br />
+      <button @click="changeTurn()">Byt tur testknapp</button> <br />
+      Auction cards
       <div class="cardslots">
         <CollectorsCard
           v-for="(card, index) in auctionCards"
           :card="card"
           :key="index"
-        />
+          :availableAction="card.available"/>
       </div>
 
       {{ players }}
       <button v-if="players[playerId]" @click="players[playerId].money += 1">
+        <br />
         fake more money
       </button>
     </div>
@@ -295,6 +309,7 @@ export default {
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
         this.marketValues = d.marketValues;
+        this.auctionCards = d.auctionCards;
         if (this.playerId === d.playerId) {
           this.changeTurn();
         }
@@ -468,9 +483,8 @@ export default {
       n.target.select();
     },
     placeBottle: function (p) {
-      console.log("PlaceBottle inparameter cost: " + p.cost);
+      console.log("inne i placebottle")
       this.chosenPlacementCost = p.cost;
-      console.log("chosenPlaceMentCost" + this.chosenPlacementCost);
       this.action = p.action;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
         roomId: this.$route.params.id,
@@ -480,6 +494,7 @@ export default {
       });
     },
     handleAction: function (card) {
+      console.log("i handleaction collectors.vue")
       if (this.action === "skill") {
         this.buySkill(card);
         this.action = "";
@@ -494,6 +509,7 @@ export default {
       }
     },
     buyMarket: function (card) {
+      console.log("i buymarket collectors.vue")
       this.$store.state.socket.emit("collectorsBuyMarket", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -599,14 +615,14 @@ footer a:visited {
   color: black;
   text-align: center;
   font-weight: bold;
-  border-top:2px solid transparent;
-  border-left:2px solid transparent;
-  border-right:2px solid transparent;
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
 }
-.activeTab{
-  border-top:2px solid gold;
-  border-left:2px solid gold;
-  border-right:2px solid gold;
+.activeTab {
+  border-top: 2px solid gold;
+  border-left: 2px solid gold;
+  border-right: 2px solid gold;
 }
 .playerBoardTab p {
   margin: 0;
@@ -626,12 +642,12 @@ footer a:visited {
 
 #gameboardColumn {
   display: grid;
-  max-height:100%;
+  max-height: 100%;
 }
 
 #infoboardColumn {
   width: 100%;
-  height:100%;
+  height: 100%;
 }
 
 #playerboardRow {
@@ -639,8 +655,8 @@ footer a:visited {
   display: inline-block;
   vertical-align: bottom;
 }
-#rightColumn{
-  height:100%;
+#rightColumn {
+  height: 100%;
 }
 @media screen and (max-width: 800px) {
   #browserWrapper{
