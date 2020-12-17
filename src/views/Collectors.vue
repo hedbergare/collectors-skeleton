@@ -621,12 +621,12 @@ footer a:visited {
 #browserWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-height: 100vh;
+  max-height: 100%;
 }
 
 #gameboardColumn {
   display: grid;
-  max-height:100%;
+  height:100%;
 }
 
 #infoboardColumn {
