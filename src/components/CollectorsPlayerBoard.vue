@@ -160,7 +160,6 @@ export default {
   display: grid;
   border: 3px solid black;
   position: relative;
-  min-height: 350px;
 }
 
 #topRow {

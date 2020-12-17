@@ -25,7 +25,8 @@ export default {
     this.$store.commit('SET_ROOM_ID');
   },
   methods: {
-    setupCollectors: function (playerCount, lang="en") {
+    setupCollectors: function (playerCount, lang) {
+      console.log("Språk i home" + lang);
       this.$store.commit('SETUP_GAME', {roomId: this.$store.state.roomId, 
         playerCount: playerCount,
         lang: lang });
