@@ -431,28 +431,47 @@ export default {
   display: grid;
   color: black;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 5vh 15vh 21vh 21vh 21vh 17vh;
+  grid-template-rows: 5% 15% 21% 21% 21% 17%;
+}
+.cardBoxTop {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 100%;
+  max-width: 100%;
+  color: white;
+  grid-column: 2 / span 7;
+  grid-row: 1;
 }
 .itemBox {
   grid-column: 2 / span 4;
   grid-row: 2;
   display: grid;
   grid-template-columns: auto auto auto auto auto;
-  grid-template-rows: 5vh 7.5vh;
-  padding: 5px;
+  grid-template-rows: 40% 60%;
+  padding: 5%;
   text-align: center;
   max-width: 100%;
   background-color: rgb(247, 193, 230);
   color: white;
 }
+.cardBoxLeft {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 15% 17% 17% 17% 17% 17%;
+  max-width: 100%;
+  color: white;
+  grid-column: 1;
+  grid-row: 3 / span 3;
+  grid-auto-rows: max-content;
+}
 .skillBox {
   display: grid;
   text-align: center;
   grid-template-columns: auto auto;
-  grid-template-rows: 7vh 11vh 11vh 11vh 11vh 11vh;
-  padding: 5px;
+  grid-template-rows: 15% 17% 17% 17% 17% 17%;
+  padding: 5%;
   box-align: center;
   max-width: 100%;
   background-color: rgb(127, 241, 127);
@@ -463,8 +482,8 @@ export default {
 .workBox {
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: 8vh 9vh 11vh 11vh 11vh 11vh;
-  padding: 5px;
+  grid-template-rows: 15% 17% 17% 17% 17% 17%;
+  padding: 5%;
   max-width: 100%;
   background-color: rgb(243, 243, 125);
   color: white;
@@ -475,7 +494,7 @@ export default {
   display: grid;
   text-align: center;
   grid-template-columns: auto auto auto;
-  grid-template-rows: 20vh 20vh 20vh;
+  grid-template-rows: 33% 33% 33%;
   background-color: rgb(245, 179, 104);
   color: white;
   grid-column: 4 / span 2;
@@ -484,45 +503,28 @@ export default {
 }
 .marketBox {
   display: grid;
-  padding: 11px;
+  padding: 5%;
   text-align: center;
   grid-template-columns: auto auto auto auto auto;
-  grid-template-rows: 7vh 6vh;
+  grid-template-rows: 60% 40%;
   background-color: rgb(189, 189, 241);
   color: white;
   grid-column: 2 / span 4;
   grid-row: 6;
   max-width: 100%;
 }
-.cardBoxLeft {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: 10vh 10vh 10vh 10vh 10vh 10vh;
-  max-width: 100%;
-  color: white;
-  grid-column: 1;
-  grid-row: 3 / span 3;
-  grid-auto-rows: max-content;
-}
-.cardBoxTop {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 5vh;
-  max-width: 100%;
-  color: white;
-  grid-column: 2 / span 7;
-  grid-row: 1;
-}
+
+
 .itemsOnSaleIcon {
-  max-height: 5vh;
-  max-width: 100%;
+  max-height: 40%;
+  max-width: 50%;
 /*   animation: jiggle 1s ease-in-out;
   animation-iteration-count:infinite;
   box-shadow: 0 0 10px yellow; */
 
 }
 .skillsOnSaleIcon {
-  max-height: 30vh;
+  max-height: 40%;
   max-width: 100%;
 }
 .itemsOnSaleIconCont1,
@@ -545,7 +547,13 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
 }
-
+.bottleSkill{
+  max-height:100%;
+  max-width:100%;
+}
+.bottleItem{
+  max-height:100%;
+}
 .placeBottleSkill {
   color: blue;
   width: 70%;
@@ -611,9 +619,7 @@ export default {
   max-width: 100%;
   max-height: 100%;
 }
-.bottleSkill {
-  padding: 8px;
-}
+
 
 /* Small boxes in SkillBox */
 #buySkillInfo {
@@ -670,7 +676,7 @@ export default {
 /* Small boxes in WorkBox */
 #buyWorkInfo {
   text-align: center;
-  border: dashed 1px;
+  border: dashed 1%;
   color: black;
   grid-row: 1;
   max-width: 100%;
@@ -678,35 +684,35 @@ export default {
 }
 #buyWorkBox1 {
   text-align: center;
-  border: dashed 1px;
+  border: dashed 1%;
   color: black;
   grid-row: 2;
   max-width: 100%;
 }
 #buyWorkBox2 {
   text-align: center;
-  border: dashed 1px;
+  border: dashed 1%;
   color: black;
   grid-row: 3;
   max-width: 100%;
 }
 #buyWorkBox3 {
   text-align: center;
-  border: dashed 1px;
+  border: dashed 1%;
   color: black;
   grid-row: 4;
   max-width: 100%;
 }
 #buyWorkBox4 {
   text-align: center;
-  border: dashed 1px;
+  border: dashed 1%;
   color: black;
   grid-row: 5;
   max-width: 100%;
 }
 #buyWorkBox5 {
   text-align: center;
-  border: dashed 1px;
+  border: dashed 1%;
   color: black;
   grid-row: 6;
   max-width: 100%;
@@ -726,17 +732,21 @@ export default {
 .placeBottleAuction1 {
   color: blue;
   width: 50%;
-  height: 70%;
+  height: 50%;
   background-size: contain;
   background-repeat: no-repeat;
 }
+.auctionBox1{
+  height: 100%;
+}
 
 #auction2Boxes1 {
-  grid-template-rows: 10vh 10vh 10vh 10vh;
+  grid-template-rows: 25% 25% 25% 25%;
   display: grid;
   max-width: 100%;
   max-height: 100%;
-  padding: 10px;
+  padding: 10%;
+  grid-row: 1 /span 2;
 }
 
 /* Pilar i auctionbox */
@@ -803,34 +813,34 @@ export default {
 /* Small boxes in MarketBox */
 
 #MarketArrow1 {
-  border: dashed 2px black;
+  border: dashed 2% black;
   grid-column: 1;
   grid-row: 2;
-  padding-bottom: 4px;
+  padding-bottom: 4%;
 }
 #MarketArrow2 {
-  border: dashed 2px black;
+  border: dashed 2% black;
   grid-column: 2;
   grid-row: 2;
-  padding-bottom: 4px;
+  padding-bottom: 4%;
 }
 #MarketArrow3 {
-  border: dashed 2px black;
+  border: dashed 2% black;
   grid-column: 3;
   grid-row: 2;
-  padding-bottom: 4px;
+  padding-bottom: 4%;
 }
 #MarketArrow4 {
-  border: dashed 2px black;
+  border: dashed 2% black;
   grid-column: 4;
   grid-row: 2;
-  padding-bottom: 4px;
+  padding-bottom: 4%;
 }
 #MarketArrow5 {
-  border: dashed 2px black;
+  border: dashed 2% black;
   grid-column: 5;
   grid-row: 2;
-  padding-bottom: 4px;
+  padding-bottom: 4%;
 }
 
 /* Bilder till Market Value */
@@ -846,8 +856,8 @@ export default {
 
 #marketInfo:hover + #testhover {
   display: inline-block;
-  height: 20vh;
-  width: 25vh;
+  height: 60%;
+  width: 40%;
 }
 #testhover {
   position: absolute;
@@ -856,8 +866,8 @@ export default {
 }
 .itemsOnSaleIcon:hover + #itemsOnSalePic {
   display: inline-block;
-  height: 43vh;
-  width: 30vh;
+  height: 43%;
+  width: 30%;
 }
 #itemsOnSalePic {
   position: absolute;
@@ -866,8 +876,8 @@ export default {
 }
 .skillsOnSaleIcon:hover + #skillsOnSalePic {
   display: inline-block;
-  height: 43vh;
-  width: 30vh;
+  height: 43%;
+  width: 17%;
 }
 #skillsOnSalePic {
   position: absolute;
