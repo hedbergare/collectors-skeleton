@@ -5,11 +5,11 @@
         id="startAuction"
         v-if="this.cardUpForAuction.item == undefined && auctionWinner == ''"
       >
-        <h1>Choose a card to put up for Auction</h1>
+        <h1>{{ labels.chooseAuctionCard }}</h1>
         <div class="titles">
-          <h2>Cards from your hand</h2>
+          <h2>{{ labels.cardsFromHand }}</h2>
 
-          <h2>Cards from the Auction area</h2>
+          <h2>{{ labels.cardsFromAuction }}</h2>
         </div>
         <div class="chooseCard">
           <div class="cardsFromHand">
@@ -42,31 +42,35 @@
               !players[playerId].auctionPass && players[playerId].auctionTurn
             "
           >
-            <h1>Place your bets here</h1>
+            <h1>{{ labels.placeBetsHere }}</h1>
             <div>
-              <button id="betButton" @click="placeBet()" :disabled="cannotAfford()">
-                Bet 1 more coin than leading bet
+              <button
+                id="betButton"
+                @click="placeBet()"
+                :disabled="cannotAfford()"
+              >
+                {{ labels.betButton }}
               </button>
-              <br><br>
+              <br /><br />
               <button id="passButton" @click="pass()">Pass</button>
             </div>
           </div>
           <div v-if="players[playerId].auctionPass">
-            <h1>You passed</h1>
+            <h1>{{ labels.youPassed }}</h1>
           </div>
           <div
             v-if="
               !players[playerId].auctionPass && !players[playerId].auctionTurn
             "
           >
-            <p>Du har inte passat men det är inte din tur</p>
+            <p>{{ labels.noTurn }}</p>
           </div>
           <div>
-            <h1>Current leading bet: {{ this.leadingBet }}</h1>
+            <h1>{{ labels.leadingBet + this.leadingBet }}</h1>
           </div>
         </div>
         <div id="cardContainer">
-          <h1>The card up for auction</h1>
+          <h1>{{ labels.theAuctionCard }}</h1>
           <CollectorsCard id="theCard" :card="cardUpForAuction" />
         </div>
         <div id="bettingBoxes">
@@ -76,22 +80,22 @@
             class="bettingBox"
           >
             <div v-if="!player.auctionPass">
-              <h2>Player: {{ player.pId }} {{ player.auctionTurn }}</h2>
-              <h3>Bet placed: {{ player.auctionBet }}</h3>
-              <p>Coins left: {{ player.money - player.auctionBet }}</p>
+              <h2>{{ labels.player + player.pId }} {{ player.auctionTurn }}</h2>
+              <h3>{{ labels.betPlaced + player.auctionBet }}</h3>
+              <p>{{ labels.coinsLeft}} {{ (player.money - player.auctionBet) }}</p>
             </div>
             <div v-else class="passed">
-              <h2>Player: {{ player.pId }} {{ player.auctionTurn }}</h2>
-              <h2>Passed</h2>
+              <h2>{{ labels.player + player.pId }} {{ player.auctionTurn }}</h2>
+              <h2>{{ labels.passed }}</h2>
             </div>
           </div>
         </div>
       </div>
       <div v-if="auctionWinner !== ''">
-        <h1>Vinnaren är {{ auctionWinner }}</h1>
+        <h1>{{ labels.auctionWinnerIs + auctionWinner }}</h1>
         <div v-if="auctionWinner == playerId">
           <h2>
-            Choose what to use your card as: item, skill, or to raise market
+            {{ labels.auctionWinnerChoose }}
           </h2>
           <img
             class="winnerOptionLogos"
@@ -113,7 +117,6 @@
     </div>
   </div>
 </template>
-  
 <script>
 import CollectorsCard from "@/components/CollectorsCard.vue";
 
@@ -128,6 +131,7 @@ export default {
     cardUpForAuction: Object,
     leadingBet: Number,
     auctionWinner: String,
+    labels: Object,
   },
   methods: {
     placeCardAsItem: function () {
@@ -179,7 +183,6 @@ export default {
           this.players[x].pId !== Object.values(this.players)[nextPlayer].pId &&
           !this.players[x].auctionPass
         ) {
-
           passChecker = false;
         }
       }
@@ -226,15 +229,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.auctionBackground{
-  width:100%;
-  height:100vh;
-  background-color:rgba(0, 0, 0, 0.8);;
-  position:absolute;
-  z-index:5;
+.auctionBackground {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  z-index: 5;
 }
 .auctionWrapper {
-  z-index:6;
+  z-index: 6;
   width: 80%;
   background-color: rgb(247, 195, 137);
   height: 80vh;
@@ -289,39 +292,39 @@ export default {
   opacity: 0.6;
 }
 #betButton {
-	background-color:#44c767;
-	border-radius:28px;
-	border:1px solid #18ab29;
-	display:inline-block;
-	cursor:pointer;
-  color:white;
-	padding:2.5%;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #2f6627;
+  background-color: #44c767;
+  border-radius: 28px;
+  border: 1px solid #18ab29;
+  display: inline-block;
+  cursor: pointer;
+  color: white;
+  padding: 2.5%;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
 }
 #betButton:hover {
-	background-color:#5cbf2a;
+  background-color: #5cbf2a;
 }
 #betButton:active {
-	position:relative;
-	top:1px;
+  position: relative;
+  top: 1px;
 }
 #passButton {
-	background-color:#c22020;
-	border-radius:20px;
-	border:1px solid #ee2308;
-	display:inline-block;
-	cursor:pointer;
-  color:white;
-	padding:2.5%;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #742626;
+  background-color: #c22020;
+  border-radius: 20px;
+  border: 1px solid #ee2308;
+  display: inline-block;
+  cursor: pointer;
+  color: white;
+  padding: 2.5%;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #742626;
 }
 #passButton:hover {
-	background-color:#6d2020;
+  background-color: #6d2020;
 }
 #passButton:active {
-	position:relative;
-	top:1px;
+  position: relative;
+  top: 1px;
 }
 </style>

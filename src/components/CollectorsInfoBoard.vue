@@ -4,14 +4,15 @@
     <!-- Infoknapp -->
     <div class="left">
       <div class="roundCont">
-        <h1 id="roundBox">Round {{ roundCounter }} of 4</h1>
+        <h1 id="roundBox"> {{labels.round + roundCounter + labels.roundNumber}}</h1>
       </div>
       <div>
         <a
           href="https://docs.google.com/document/d/1R3R4nk1pNI_xqOas4X_5TR7AOW6FE_bXbMcdh1bZfI0/edit?usp=sharing"
           class="rulesButton"
           target="_blank"
-          >Show me game rules!
+        >
+          {{ labels.showRules }}
         </a>
       </div>
       <!-- Boxen för vilken runda det är just nu -->
@@ -19,16 +20,16 @@
       <!-- Boxen för Quit the game-knapp -->
       <div>
         <a href="http://localhost:8080/#/" class="quitButton">
-          Quit the game!
+          {{ labels.quit }}
         </a>
       </div>
     </div>
 
     <!-- Boxen för historik för vad de spelarna gör för handlingar -->
     <div class="right">
-      <h3>Game history</h3>
+      <h3>{{labels.gameHistory}}</h3>
       <div id="consoleHistory">
-        <p>Game started!</p>
+        <p>{{labels.gameStarted}}</p>
         <p v-for="(text, index) in consoleHistory" :key="index">{{ text }}</p>
       </div>
     </div>
@@ -41,6 +42,7 @@ export default {
   props: {
     roundCounter: Number,
     consoleHistory: Array,
+    labels: Object,
   },
   watch: {
     consoleHistory: function () {
@@ -66,11 +68,10 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-.right{
-  grid-template-rows:1fr 1fr;
+.right {
+  grid-template-rows: 1fr 1fr;
   background-color: white;
-    border-radius: 10px;
-
+  border-radius: 10px;
 }
 .roundCont {
   grid-column: 1/3;
@@ -85,7 +86,7 @@ export default {
   margin: 1%;
   overflow-y: scroll;
   color: black;
-  max-height:70px;
+  max-height: 70px;
 }
 
 .quitButton {
