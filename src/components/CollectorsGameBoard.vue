@@ -1,5 +1,12 @@
 <template>
   <div class="wrapper">
+    <div class="Absolute-Center" v-if="this.infoText !== ''">
+      <div class="infoPopup">
+        <button @click="resetInfo()" class="close">X</button>
+        <h2>Information om {{this.infoTitle}}</h2>
+        <p>{{this.infoText}}</p>
+      </div>
+    </div>
     <!-- Hela Spelbrädet -->
 
     <!-- Här gör vi card box Top -->
@@ -64,7 +71,7 @@
         </div>
       </div>
       <div id="buyItemBoxInfo">
-        <img id="itemInfo" src="/images/buyItemPic/BuyItemInfo.png" />
+        <img id="itemInfo" src="/images/buyItemPic/BuyItemInfo.png" @click="showInfoPopup('Items','items info och så')"/>
       </div>
     </div>
 
@@ -72,7 +79,7 @@
       <!-- Här gör vi skill box med köprutor -->
       <div></div>
       <div id="buySkillInfo">
-        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" />
+        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" @click="showInfoPopup('Skills','info om skills')"/>
       </div>
       <div
         class="bottleSkill"
@@ -120,7 +127,7 @@
         <img id="imageWork" src="/images/workPic/imageWork.png" />
       </div>
       <div id="buyWorkBox1">Här ska de bytas varje omgång</div>
-      
+
       <div id="buyWorkBox2">
         <img id="qTile1" src="/images/workPic/qTile1.png" />
       </div>
@@ -162,7 +169,7 @@
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" />
+        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" @click="showInfoPopup('Auction','lite info om auktionen')"/>
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -188,8 +195,7 @@
     <div class="marketBox">
       <!-- Här gör vi market box med köprutor -->
       <div id="buyMarketBoxInfo">
-        <img id="marketInfo" src="/images/marketPic/marketInfo.png" />
-        <img id="testhover" src="/images/marketPic/info.png" />
+        <img id="marketInfo" src="/images/marketPic/marketInfo.png" @click="showInfoPopup('Market','skojig info om marketvalues och så')"/>
       </div>
       <div
         class="bottleMarket"
@@ -268,7 +274,12 @@ export default {
   components: {
     CollectorsCard,
   },
-
+  data: function () {
+    return {
+      infoText: "",
+      infoTitle: ""
+    };
+  },
   props: {
     labels: Object,
     player: Object,
@@ -282,11 +293,19 @@ export default {
     marketPlacement: Array,
   },
   methods: {
+    resetInfo: function(){
+      this.infoText = "";
+    },
     handleAction: function (card) {
       if (card.available) {
         this.$emit("handleAction", card);
         this.updatePoints();
       }
+    },
+    showInfoPopup: function(title,text){
+      console.log("showinfopopup");
+      this.infoText = text;
+      this.infoTitle = title;
     },
 
     highlightAvailableMarket: function () {
@@ -424,9 +443,48 @@ export default {
 
 <style scoped>
 /* Main boxes */
+.Absolute-Center {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 100%;
+  z-index: 10;
+}
+.infoPopup {
+  box-shadow: 0px 1px 0px 0px #1c1b18;
+  background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+  background-color: #eae0c2;
+  border-radius: 15px;
+  border: 2px solid #333029;
+  color: #505739;
+  font-weight: bold;
+  text-shadow: 0px 1px 0px #ffffff;
+  padding: 5%;
+  position: relative;
+}
+.close{
+  position: absolute;
+    background: rgb(75, 0, 0);
+    color: #d1c8ad;
+    top: -2px;
+    right: -2px;
+    font-size:160%;
+    /* padding:10px; */
+    border-radius:10px;
+    border:2px solid black;
+    cursor:pointer;
+}
+.close:hover{
+  
 
+}
 .wrapper {
   display: grid;
+  position: relative;
   color: black;
   height: 100vh;
   grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
@@ -461,12 +519,11 @@ export default {
   color: white;
   grid-column: 1;
   grid-row: 3 / span 3;
-
 }
 .skillBox {
   display: grid;
   text-align: center;
-  grid-template-columns: 1fr 1fr ;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
   padding: 5%;
   box-align: center;
@@ -478,7 +535,7 @@ export default {
 }
 .workBox {
   display: grid;
-  grid-template-columns: 1fr ;
+  grid-template-columns: 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
   padding: 5%;
   max-width: 100%;
@@ -490,7 +547,7 @@ export default {
 .auctionBox {
   display: grid;
   text-align: center;
-  grid-template-columns: 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 33% 33% 33%;
   background-color: rgb(245, 179, 104);
   color: white;
@@ -502,7 +559,7 @@ export default {
   display: grid;
   padding: 5%;
   text-align: center;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 60% 40%;
   background-color: rgb(189, 189, 241);
   color: white;
@@ -511,11 +568,11 @@ export default {
   max-width: 100%;
 }
 
-
 .itemsOnSaleIcon {
   max-height: 40%;
   max-width: 50%;
-/*   animation: jiggle 1s ease-in-out;
+  z-index:5;
+  /*   animation: jiggle 1s ease-in-out;
   animation-iteration-count:infinite;
   box-shadow: 0 0 10px yellow; */
 }
@@ -543,12 +600,12 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.bottleSkill{
-  max-height:100%;
-  max-width:100%;
+.bottleSkill {
+  max-height: 100%;
+  max-width: 100%;
 }
-.bottleItem{
-  max-height:100%;
+.bottleItem {
+  max-height: 100%;
 }
 .placeBottleSkill {
   color: blue;
@@ -615,7 +672,6 @@ export default {
   max-width: 100%;
   max-height: 100%;
 }
-
 
 /* Small boxes in SkillBox */
 #buySkillInfo {
@@ -732,7 +788,7 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.auctionBox1{
+.auctionBox1 {
   height: 100%;
 }
 
@@ -742,7 +798,7 @@ export default {
   max-width: 100%;
   max-height: 100%;
   padding: 10%;
-  grid-row: 1 /span 2;
+  grid-row: 1 / span 2;
 }
 
 /* Pilar i auctionbox */
@@ -850,16 +906,6 @@ export default {
   max-height: 100%;
 }
 
-#marketInfo:hover + #testhover {
-  display: inline-block;
-  height: 60%;
-  width: 40%;
-}
-#testhover {
-  position: absolute;
-  display: none;
-  width: 90%;
-}
 .itemsOnSaleIcon:hover + #itemsOnSalePic {
   display: inline-block;
   height: 43%;
