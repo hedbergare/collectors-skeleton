@@ -2,22 +2,22 @@
   <div id="background">
     <div id="wrapper">
       <div id="headlineRow">
-        <h1>{{labels.gameOver}}</h1>
+        <h1>The Game is Over<br />and the Final Results are in!</h1>
       </div>
       <div id="playerRow">
         <div v-for="(player, index) in players" :key="index">
           <h1>{{ player.pId }}</h1>
-          <b>{{labels.collectedPoints}} </b>{{ player.points }} <br />
-          <b>{{labels.extraPointsMoney}}</b> {{ calcMoneyPoints(player) }} <br />
-          <b>{{labels.hiddenItem}} </b> {{ player.secret[0].item }} <br />
-          <b>{{labels.extraPointsSecret}}</b>
+          <b>Collected points: </b>{{ player.points }} <br />
+          <b>Extra points from money:</b> {{ calcMoneyPoints(player) }} <br />
+          <b>Hidden item: </b> {{ player.secret[0].item }} <br />
+          <b>Extra points from secret card:</b>
           {{ calcSecretPoints(player, marketValues) }} <br />
           <h3>
-
-            {{labels.totalPoints +
-              (player.points +
+            Total points:
+            {{
+              player.points +
               calcMoneyPoints(player) +
-              calcSecretPoints(player, marketValues))
+              calcSecretPoints(player, marketValues)
             }}
           </h3>
           <br />
@@ -25,7 +25,7 @@
       </div>
 
       <div id="winnerRow">
-        <h1>{{labels.auctionWinnerIs   + findWinner(players, marketValues) }}!</h1>
+        <h1>And the Winner is {{ findWinner(players, marketValues) }}!</h1>
         <img src="images/trophy.png" />
       </div>
 
@@ -44,7 +44,6 @@ export default {
   props: {
     players: Object,
     marketValues: Object,
-    labels: Object
   },
   methods: {
     findWinner: function (players, marketValues) {
@@ -175,28 +174,28 @@ export default {
 }
 
 .playAgainButton {
-  box-shadow: 0px 1px 0px 0px #1c1b18;
-  background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
-  background-color: #eae0c2;
-  border-radius: 15px;
-  border: 2px solid #333029;
-  display: inline-block;
-  cursor: pointer;
-  color: white;
-  font-size: 90%;
-  font-weight: bold;
-  padding: 12px 16px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #000000;
+	box-shadow: 0px 1px 0px 0px #3dc21b;
+	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+	background-color:#44c767;
+	border-radius:15px;
+	border:2px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	font-weight:bold;
+	padding:12px 16px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
 }
-
 .playAgainButton:hover {
-  background: linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
-  background-color: #ccc2a6;
+	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+	background-color:#5cbf2a;
+}
+.playAgainButton:active {
+	position:relative;
+	top:1px;
 }
 
-.playAgainButton:active {
-  position: relative;
-  top: 1px;
-}
 </style>

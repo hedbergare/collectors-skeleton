@@ -245,7 +245,6 @@ export default {
   margin-top: 10%;
 }
 
-/*  */
 #bottomRow {
   grid-row: 3;
   display: grid;
@@ -285,7 +284,6 @@ export default {
   display: grid;
   grid-template-columns: 5fr 1fr;
   border: 2px dashed black;
-  /* height: 30vh; */
 }
 
 #itemsRefill {
