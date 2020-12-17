@@ -25,7 +25,7 @@
             <span class="helper"></span>
             <img src="images/player_board/passive_income.png" />
           </div>
-          <p>{{ player.income }}</p>
+          <p>{{player.passiveIncome}}</p>
         </div>
 
         <div id="currentPoints">
@@ -139,10 +139,13 @@ export default {
     CollectorsCard,
     CollectorsBottle,
   },
+
+
   props: {
-    /* Tar in player som object, så att vi vet  */
     player: Object,
   },
+
+  
   computed: {
     playerId: function () {
       return this.$store.state.playerId;
@@ -150,7 +153,9 @@ export default {
   },
   methods: {
     handleAction: function (card) {
+      if (card.available){
       this.$emit("handleAction", card);
+      }
     },
   },
 };

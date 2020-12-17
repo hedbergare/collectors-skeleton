@@ -33,12 +33,14 @@ function sockets(io, socket, data) {
     );
   });
   socket.on('collectorsBuyMarket', function (d) {
+    console.log("i collectorsbuymarket i socket")
     data.buyMarket(d.roomId, d.playerId, d.card, d.cost)
     io.to(d.roomId).emit('collectorsMarketBought', {
       playerId: d.playerId,
       players: data.getPlayers(d.roomId),
       skillsOnSale: data.getSkillsOnSale(d.roomId),
       marketValues: data.getMarketValues(d.roomId),
+      auctionCards: data.getAuctionCards(d.roomId),
     }
     );
   });
@@ -48,15 +50,25 @@ function sockets(io, socket, data) {
     io.to(d.roomId).emit('collectorsSkillBought', {
       playerId: d.playerId,
       players: data.getPlayers(d.roomId),
-      skillsOnSale: data.getSkillsOnSale(d.roomId)
+      skillsOnSale: data.getSkillsOnSale(d.roomId), 
+      
     }
     );
   });
 
   socket.on('collectorsPlaceBottle', function (d) {
+    console.log("inne i sockets placebottle")
     data.placeBottle(d.roomId, d.playerId, d.action, d.cost);
-    io.to(d.roomId).emit('collectorsBottlePlaced', data.getPlacements(d.roomId));
+    io.to(d.roomId).emit('collectorsBottlePlaced', {
+      placements: data.getPlacements(d.roomId),
+      players: data.getPlayers(d.roomId)
+    
+    }
+
+   );
   });
+
+
   socket.on('fillPools', function (d) {
     data.fillPools(d.roomId);
     io.to(d.roomId).emit('collectorsPoolsFilled', {
