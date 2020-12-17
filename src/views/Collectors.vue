@@ -5,6 +5,7 @@
       v-if="roundCounter === 5"
         :players="players"
         :marketValues="marketValues"
+        :labels="labels"
       />
 
       
@@ -15,6 +16,7 @@
         :cardUpForAuction="cardUpForAuction"
         :leadingBet="leadingBet"
         :auctionWinner="auctionWinner"
+        :labels="labels"
         @startAuction="startAuction($event)"
         @updatePlayers="updatePlayers($event)"
         @updateLeadingBet="updateLeadingBet($event)"
@@ -99,7 +101,7 @@
         </div>
       </div>
     </main>
-    <div>
+    <div style="margin-top:1000px">
       <div class="buttons">
         Draw a card here
         <button @click="drawCard">

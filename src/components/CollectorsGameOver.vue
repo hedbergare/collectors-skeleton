@@ -2,22 +2,22 @@
   <div id="background">
     <div id="wrapper">
       <div id="headlineRow">
-        <h1>The Game is Over<br />and the Final Results are in!</h1>
+        <h1>{{labels.gameOver}}</h1>
       </div>
       <div id="playerRow">
         <div v-for="(player, index) in players" :key="index">
           <h1>{{ player.pId }}</h1>
-          <b>Collected points: </b>{{ player.points }} <br />
-          <b>Extra points from money:</b> {{ calcMoneyPoints(player) }} <br />
-          <b>Hidden item: </b> {{ player.secret[0].item }} <br />
-          <b>Extra points from secret card:</b>
+          <b>{{labels.collectedPoints}} </b>{{ player.points }} <br />
+          <b>{{labels.extraPointsMoney}}</b> {{ calcMoneyPoints(player) }} <br />
+          <b>{{labels.hiddenItem}} </b> {{ player.secret[0].item }} <br />
+          <b>{{labels.extraPointsSecret}}</b>
           {{ calcSecretPoints(player, marketValues) }} <br />
           <h3>
-            Total points:
-            {{
-              player.points +
+           
+            {{labels.totalPoints +
+              (player.points +
               calcMoneyPoints(player) +
-              calcSecretPoints(player, marketValues)
+              calcSecretPoints(player, marketValues))
             }}
           </h3>
           <br />
@@ -25,7 +25,7 @@
       </div>
 
       <div id="winnerRow">
-        <h1>And the Winner is {{ findWinner(players, marketValues) }}!</h1>
+        <h1>{{labels.auctionWinnerIs   + findWinner(players, marketValues) }}!</h1>
         <img src="images/trophy.png" />
       </div>
 
@@ -44,6 +44,7 @@ export default {
   props: {
     players: Object,
     marketValues: Object,
+    labels: Object
   },
   methods: {
     findWinner: function (players, marketValues) {
