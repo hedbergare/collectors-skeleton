@@ -114,7 +114,6 @@ export default {
           extraPsecret += 1;
         }
       }
-
       return extraPsecret;
     },
   },
