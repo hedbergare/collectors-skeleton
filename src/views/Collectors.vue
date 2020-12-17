@@ -1,6 +1,13 @@
 <template>
   <div>
     <main>
+      <CollectorsGameOver
+      v-if="roundCounter === 5"
+        :players="players"
+        :marketValues="marketValues"
+      />
+
+      
       <CollectorsAuction
         v-if="players[playerId] && this.auctionInitiated"
         :auctionCards="auctionCards"
@@ -137,6 +144,7 @@ import CollectorsGameBoard from "@/components/CollectorsGameBoard.vue";
 import CollectorsPlayerBoard from "@/components/CollectorsPlayerBoard.vue";
 import CollectorsInfoBoard from "@/components/CollectorsInfoBoard.vue";
 import CollectorsAuction from "@/components/CollectorsAuction.vue";
+import CollectorsGameOver from "@/components/CollectorsGameOver.vue";
 
 export default {
   name: "Collectors",
@@ -146,6 +154,7 @@ export default {
     CollectorsPlayerBoard,
     CollectorsInfoBoard,
     CollectorsAuction,
+    CollectorsGameOver,
   },
   data: function () {
     return {
@@ -333,6 +342,7 @@ export default {
         this.marketPlacement = d.placements.marketPlacement;
         this.auctionPlacement = d.placements.auctionPlacement;
         this.roundCounter = d.roundCounter;
+        this.players = d.players;
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -475,7 +485,6 @@ export default {
         this.action = "";
       }
       if (this.action === "market") {
-        console.log("hej");
         this.buyMarket(card);
         this.action = "";
       }
@@ -485,7 +494,7 @@ export default {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
-        cost: this.marketValues[card.market] + this.chosenPlacementCost,
+        cost: this.chosenPlacementCost,
       });
     },
 
@@ -500,7 +509,7 @@ export default {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
-        cost: this.marketValues[card.market] + this.chosenPlacementCost,
+        cost: this.marketValues[card.item] + this.chosenPlacementCost,
       });
     },
     buySkill: function (card) {
@@ -508,7 +517,7 @@ export default {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
-        cost: this.marketValues[card.market] + this.chosenPlacementCost,
+        cost: this.chosenPlacementCost,
       });
     },
 

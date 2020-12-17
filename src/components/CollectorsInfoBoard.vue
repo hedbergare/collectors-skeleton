@@ -44,7 +44,6 @@ export default {
   },
   watch: {
     consoleHistory: function () {
-      console.log("hejhej");
       var element = document.getElementById("consoleHistory");
       element.scrollTop = element.scrollHeight;
     },
