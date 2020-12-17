@@ -342,6 +342,7 @@ export default {
         this.marketPlacement = d.placements.marketPlacement;
         this.auctionPlacement = d.placements.auctionPlacement;
         this.roundCounter = d.roundCounter;
+        this.players = d.players;
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -484,7 +485,6 @@ export default {
         this.action = "";
       }
       if (this.action === "market") {
-        console.log("hej");
         this.buyMarket(card);
         this.action = "";
       }
@@ -494,7 +494,7 @@ export default {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
-        cost: this.marketValues[card.market] + this.chosenPlacementCost,
+        cost: this.chosenPlacementCost,
       });
     },
 
@@ -509,7 +509,7 @@ export default {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
-        cost: this.marketValues[card.market] + this.chosenPlacementCost,
+        cost: this.marketValues[card.item] + this.chosenPlacementCost,
       });
     },
     buySkill: function (card) {
@@ -517,7 +517,7 @@ export default {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
-        cost: this.marketValues[card.market] + this.chosenPlacementCost,
+        cost: this.chosenPlacementCost,
       });
     },
 

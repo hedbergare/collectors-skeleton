@@ -12,12 +12,14 @@
           <b>Hidden item: </b> {{ player.secret[0].item }} <br />
           <b>Extra points from secret card:</b>
           {{ calcSecretPoints(player, marketValues) }} <br />
-          <h3>Total points:
-          {{
-            player.points +
-            calcMoneyPoints(player) +
-            calcSecretPoints(player, marketValues)
-          }} </h3>
+          <h3>
+            Total points:
+            {{
+              player.points +
+              calcMoneyPoints(player) +
+              calcSecretPoints(player, marketValues)
+            }}
+          </h3>
           <br />
         </div>
       </div>
@@ -47,8 +49,18 @@ export default {
         allPlayerPoints[x] = totalPoints;
       }
       console.log(allPlayerPoints);
+      let winnerId;
+      let winnerPoints = 0;
+      let secondWinnerId = "";
       for (let z in allPlayerPoints) {
-        for (let y in allPlayerPoints) {
+        if (allPlayerPoints[z] > winnerPoints) {
+          winnerPoints = allPlayerPoints[z];
+          winnerId = z;
+          secondWinnerId = "";
+        } else if (allPlayerPoints[z] === winnerPoints && z !== winnerId) {
+          secondWinnerId = z;
+        }
+        /* for (let y in allPlayerPoints) {
           if (allPlayerPoints[z] < allPlayerPoints[y]) {
             console.log("spelare" + y + "vann");
             return y;
@@ -59,7 +71,12 @@ export default {
             console.log("spelare" + z + "vann");
             return z;
           }
-        }
+        } */
+      }
+      if (secondWinnerId === "") {
+        return winnerId;
+      } else {
+        return winnerId + "&" + secondWinnerId;
       }
     },
     calcMoneyPoints: function (player) {
@@ -76,7 +93,7 @@ export default {
 
       if (secretItem === "fastaval") {
         extraPsecret = marketValues["fastaval"];
-      } else if (secretItem === "figure") {
+      } else if (secretItem === "figures") {
         extraPsecret = marketValues["figures"];
       } else if (secretItem === "movie") {
         extraPsecret = marketValues["movie"];

@@ -33,7 +33,6 @@ function sockets(io, socket, data) {
     );
   });
   socket.on('collectorsBuyMarket', function (d) {
-    console.log("hej 3");
     data.buyMarket(d.roomId, d.playerId, d.card, d.cost)
     io.to(d.roomId).emit('collectorsMarketBought', {
       playerId: d.playerId,
@@ -67,6 +66,7 @@ function sockets(io, socket, data) {
       marketValues: data.getMarketValues(d.roomId),
       placements: data.getPlacements(d.roomId),
       roundCounter: data.getRoundCounter(d.roomId),
+      players: data.getPlayers(d.roomId),
     });
   });
   socket.on('changeTurn', function (d) {
