@@ -580,7 +580,7 @@ footer a:visited {
   z-index: 0;
 }
 .cardslots div:hover {
-  transform: scale(1) translate(-25%, 0);
+  transform: scale(0.5) translate(-25%, 0);
   z-index: 1;
 }
 #playerBoardContainer {

@@ -161,10 +161,7 @@
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img
-          id="startAuction"
-          src="/images/auctionPic/startAuctionImage.png"
-        />
+        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" />
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -336,7 +333,7 @@ export default {
         this.highlightAvailableSkills(p.cost);
       } else if (action === "market") {
         this.highlightAvailableMarket(p.cost);
-      } else if(action === "auction"){
+      } else if (action === "auction") {
         this.initiateAuction();
       }
     },
@@ -516,10 +513,9 @@ export default {
 .itemsOnSaleIcon {
   max-height: 5vh;
   max-width: 100%;
-/*   animation: jiggle 1s ease-in-out;
+  /*   animation: jiggle 1s ease-in-out;
   animation-iteration-count:infinite;
   box-shadow: 0 0 10px yellow; */
-
 }
 .skillsOnSaleIcon {
   max-height: 30vh;
@@ -872,6 +868,6 @@ export default {
 #skillsOnSalePic {
   position: absolute;
   display: none;
-  width: 90%;
+  width: 50%;
 }
 </style>
