@@ -21,6 +21,20 @@
 	"cardsFromAuction": "Cards from the auction area:",
 	"placeBetsHere": "Place your bets here:",
 	"betButton": "Bet 1 more coin than leading bet",
-	"passed": "You passed",
-	"noTurn": "It is not your turn... be patient!"
+	"youPassed": "You passed",
+	"noTurn": "It is not your turn... be patient!",
+	"leadingBet": "Current leading bet: ",
+	"theAuctionCard": "The card up for auction",
+	"player": "Player: ",
+	"betPlaced": "Bet placed: ",
+	"coinsLeft": "Coins left: ",
+	"passed": "Passed",
+	"auctionWinnerIs": "The winner is ",
+	"auctionWinnerChoose": "Choose what to use your card as: item, skill, or to raise market",
+	"gameOver": "The Game is Over and the final results are in!",
+	"collectedPoints": "Collected points: ",
+	"extraPointsMoney": "Extra points from money: ",
+	"hiddenItem": "Hidden item: ",
+	"extraPointsSecret": "Extra points from secret card: ",
+	"totalPoints": "Total points: "
 }
