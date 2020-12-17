@@ -1,5 +1,12 @@
 <template>
   <div class="wrapper">
+    <div class="Absolute-Center" v-if="this.infoText !== ''">
+      <div class="infoPopup">
+        <button @click="resetInfo()" class="close">X</button>
+        <h2>Information om {{this.infoTitle}}</h2>
+        <p>{{this.infoText}}</p>
+      </div>
+    </div>
     <!-- Hela Spelbrädet -->
 
     <!-- Här gör vi card box Top -->
@@ -64,7 +71,7 @@
         </div>
       </div>
       <div id="buyItemBoxInfo">
-        <img id="itemInfo" src="/images/buyItemPic/BuyItemInfo.png" />
+        <img id="itemInfo" src="/images/buyItemPic/BuyItemInfo.png" @click="showInfoPopup('Items','items info och så')"/>
       </div>
     </div>
 
@@ -72,7 +79,7 @@
       <!-- Här gör vi skill box med köprutor -->
       <div></div>
       <div id="buySkillInfo">
-        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" />
+        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" @click="showInfoPopup('Skills','info om skills')"/>
       </div>
       <div
         class="bottleSkill"
@@ -120,6 +127,7 @@
         <img id="imageWork" src="/images/workPic/imageWork.png" />
       </div>
       <div id="buyWorkBox1">Här ska de bytas varje omgång</div>
+
       <div id="buyWorkBox2">
         <img id="qTile1" src="/images/workPic/qTile1.png" />
       </div>
@@ -161,7 +169,7 @@
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" />
+        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" @click="showInfoPopup('Auction','lite info om auktionen')"/>
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -187,8 +195,7 @@
     <div class="marketBox">
       <!-- Här gör vi market box med köprutor -->
       <div id="buyMarketBoxInfo">
-        <img id="marketInfo" src="/images/marketPic/marketInfo.png" />
-        <img id="testhover" src="/images/marketPic/info.png" />
+        <img id="marketInfo" src="/images/marketPic/marketInfo.png" @click="showInfoPopup('Market','skojig info om marketvalues och så')"/>
       </div>
       <div
         class="bottleMarket"
@@ -267,7 +274,12 @@ export default {
   components: {
     CollectorsCard,
   },
-
+  data: function () {
+    return {
+      infoText: "",
+      infoTitle: ""
+    };
+  },
   props: {
     labels: Object,
     player: Object,
@@ -281,6 +293,9 @@ export default {
     marketPlacement: Array,
   },
   methods: {
+    resetInfo: function(){
+      this.infoText = "";
+    },
     handleAction: function (card) {
       console.log("i handle action game board")
       if (card.available) {
@@ -288,6 +303,11 @@ export default {
         this.$emit("handleAction", card);
         this.updatePoints();
       }
+    },
+    showInfoPopup: function(title,text){
+      console.log("showinfopopup");
+      this.infoText = text;
+      this.infoTitle = title;
     },
 
     highlightAvailableMarket: function () {
@@ -429,12 +449,46 @@ export default {
 
 <style scoped>
 /* Main boxes */
-
+.Absolute-Center {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 100%;
+  z-index: 10;
+}
+.infoPopup {
+  box-shadow: 0px 1px 0px 0px #1c1b18;
+  background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+  background-color: #eae0c2;
+  border-radius: 15px;
+  border: 2px solid #333029;
+  color: #505739;
+  font-weight: bold;
+  text-shadow: 0px 1px 0px #ffffff;
+  padding: 5%;
+  position: relative;
+}
+.close{
+  position: absolute;
+    background: rgb(75, 0, 0);
+    color: #d1c8ad;
+    top: -2px;
+    right: -2px;
+    font-size:160%;
+    /* padding:10px; */
+    border-radius:10px;
+    border:2px solid black;
+    cursor:pointer;
+}
 .wrapper {
   display: grid;
+  position: relative;
   color: black;
-  width: 100%;
-  height: 100%;
+  height: 100vh;
   grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5% 15% 21% 21% 21% 17%;
 }
@@ -451,9 +505,9 @@ export default {
   grid-column: 2 / span 4;
   grid-row: 2;
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  grid-template-rows: 40% 60%;
-  padding: 5%;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 50% 50%;
+  padding: 5px;
   text-align: center;
   max-width: 100%;
   background-color: rgb(247, 193, 230);
@@ -461,20 +515,19 @@ export default {
 }
 .cardBoxLeft {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
   max-width: 100%;
   color: white;
   grid-column: 1;
   grid-row: 3 / span 3;
-  grid-auto-rows: max-content;
 }
 .skillBox {
   display: grid;
   text-align: center;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
-  padding: 5%;
+  padding: 5px;
   box-align: center;
   max-width: 100%;
   background-color: rgb(127, 241, 127);
@@ -484,9 +537,9 @@ export default {
 }
 .workBox {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
-  padding: 5%;
+  padding: 5px;
   max-width: 100%;
   background-color: rgb(243, 243, 125);
   color: white;
@@ -496,7 +549,7 @@ export default {
 .auctionBox {
   display: grid;
   text-align: center;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 33% 33% 33%;
   background-color: rgb(245, 179, 104);
   color: white;
@@ -506,10 +559,10 @@ export default {
 }
 .marketBox {
   display: grid;
-  padding: 5%;
+  padding: 5px;
   text-align: center;
-  grid-template-columns: auto auto auto auto auto;
-  grid-template-rows: 60% 40%;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-rows: 50% 50%;
   background-color: rgb(189, 189, 241);
   color: white;
   grid-column: 2 / span 4;
@@ -517,18 +570,15 @@ export default {
   max-width: 100%;
 }
 
-
 .itemsOnSaleIcon {
-  max-height: 5vh;
-  max-width: 100%;
-  /*   animation: jiggle 1s ease-in-out;
-  animation-iteration-count:infinite;
-  box-shadow: 0 0 10px yellow; */
+  max-width: 50%;
 }
+
 .skillsOnSaleIcon {
   max-height: 40%;
   max-width: 100%;
 }
+
 .itemsOnSaleIconCont1,
 .skillsOnSaleIconCont {
   max-height: 100%;
@@ -549,12 +599,12 @@ export default {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.bottleSkill{
-  max-height:100%;
-  max-width:100%;
+.bottleSkill {
+  max-height: 100%;
+  max-width: 100%;
 }
-.bottleItem{
-  max-height:100%;
+.bottleItem {
+  max-height: 100%;
 }
 .placeBottleSkill {
   color: blue;
@@ -565,7 +615,7 @@ export default {
 }
 .placeBottleMarket {
   color: blue;
-  width: 40%;
+  width: 50%;
   height: 80%;
   background-size: contain;
   background-repeat: no-repeat;
@@ -622,7 +672,6 @@ export default {
   max-height: 100%;
 }
 
-
 /* Small boxes in SkillBox */
 #buySkillInfo {
   grid-column: 2;
@@ -678,7 +727,7 @@ export default {
 /* Small boxes in WorkBox */
 #buyWorkInfo {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 1;
   max-width: 100%;
@@ -686,35 +735,35 @@ export default {
 }
 #buyWorkBox1 {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 2;
   max-width: 100%;
 }
 #buyWorkBox2 {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 3;
   max-width: 100%;
 }
 #buyWorkBox3 {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 4;
   max-width: 100%;
 }
 #buyWorkBox4 {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 5;
   max-width: 100%;
 }
 #buyWorkBox5 {
   text-align: center;
-  border: dashed 1%;
+  border: dashed 1px;
   color: black;
   grid-row: 6;
   max-width: 100%;
@@ -733,12 +782,12 @@ export default {
 /* Small boxes in auctionBox */
 .placeBottleAuction1 {
   color: blue;
-  width: 50%;
-  height: 50%;
+  width: 55%;
+  height: 70%;
   background-size: contain;
   background-repeat: no-repeat;
 }
-.auctionBox1{
+.auctionBox1 {
   height: 100%;
 }
 
@@ -747,7 +796,7 @@ export default {
   display: grid;
   max-width: 100%;
   max-height: 100%;
-  padding: 10%;
+  padding: 5%;
   grid-row: 1 /span 2;
 }
 
@@ -815,34 +864,34 @@ export default {
 /* Small boxes in MarketBox */
 
 #MarketArrow1 {
-  border: dashed 2% black;
+  border: dashed 2px black;
   grid-column: 1;
   grid-row: 2;
-  padding-bottom: 4%;
+  padding-bottom: 4px;
 }
 #MarketArrow2 {
-  border: dashed 2% black;
+  border: dashed 2px black;
   grid-column: 2;
   grid-row: 2;
-  padding-bottom: 4%;
+  padding-bottom: 4px;
 }
 #MarketArrow3 {
-  border: dashed 2% black;
+  border: dashed 2px black;
   grid-column: 3;
   grid-row: 2;
-  padding-bottom: 4%;
+  padding-bottom: 4px;
 }
 #MarketArrow4 {
-  border: dashed 2% black;
+  border: dashed 2px black;
   grid-column: 4;
   grid-row: 2;
-  padding-bottom: 4%;
+  padding-bottom: 4px;
 }
 #MarketArrow5 {
-  border: dashed 2% black;
+  border: dashed 2px black;
   grid-column: 5;
   grid-row: 2;
-  padding-bottom: 4%;
+  padding-bottom: 4px;
 }
 
 /* Bilder till Market Value */
@@ -856,16 +905,6 @@ export default {
   max-height: 100%;
 }
 
-#marketInfo:hover + #testhover {
-  display: inline-block;
-  height: 60%;
-  width: 40%;
-}
-#testhover {
-  position: absolute;
-  display: none;
-  width: 90%;
-}
 .itemsOnSaleIcon:hover + #itemsOnSalePic {
   display: inline-block;
   height: 43%;
@@ -884,6 +923,6 @@ export default {
 #skillsOnSalePic {
   position: absolute;
   display: none;
-  width: 90%;
+  width: 50%;
 }
 </style>

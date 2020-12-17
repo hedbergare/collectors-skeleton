@@ -600,13 +600,13 @@ footer a:visited {
   z-index: 0;
 }
 .cardslots div:hover {
-  transform: scale(1) translate(-25%, 0);
+  transform: scale(0.5) translate(-25%, 0);
   z-index: 1;
 }
 #playerBoardContainer {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  max-width: 50%;
+  max-width: 80%;
 }
 .playerBoardTab {
   border-top-left-radius: 10px;
@@ -637,12 +637,12 @@ footer a:visited {
 #browserWrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-height: 100vh;
+  max-height: 100%;
 }
 
 #gameboardColumn {
   display: grid;
-  max-height: 100%;
+  height:100%;
 }
 
 #infoboardColumn {
@@ -654,10 +654,13 @@ footer a:visited {
   display: grid;
   display: inline-block;
   vertical-align: bottom;
+  height: 75%;
 }
 #rightColumn {
   height: 100%;
 }
+
+/* Här börjar småfix för skalning och mobilversion */
 @media screen and (max-width: 800px) {
   #browserWrapper{
     max-height:100%;
