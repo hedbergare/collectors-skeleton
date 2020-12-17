@@ -21,16 +21,17 @@ export default new Vuex.Store({
     roomId: "",
     playerCount: 0,
     playerId: "",
-    lang: "en"
+    lang: ""
   },
   mutations: {
     SETUP_GAME(state, d) {
+      console.log("Lang i setup_game index.js" + d.lang);
       state.playerCount = d.playerCount;
       state.socket.emit('setupCollectors', 
         {
           playerCount: d.playerCount, 
           roomId: state.roomId,
-          lang: state.lang });
+          lang: d.lang });
     },
     SET_PLAYER_COUNT(state, d) {
       state.playerCount = d;

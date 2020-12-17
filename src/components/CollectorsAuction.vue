@@ -5,11 +5,11 @@
         id="startAuction"
         v-if="this.cardUpForAuction.item == undefined && auctionWinner == ''"
       >
-        <h1>Choose a card to put up for Auction</h1>
+        <h1>{{labels.chooseAuctionCard}}</h1>
         <div class="titles">
-          <h2>Cards from your hand</h2>
+          <h2>{{labels.cardsFromHand}}</h2>
 
-          <h2>Cards from the Auction area</h2>
+          <h2>{{labels.cardsFromAuction}}</h2>
         </div>
         <div class="chooseCard">
           <div class="cardsFromHand">
@@ -42,24 +42,24 @@
               !players[playerId].auctionPass && players[playerId].auctionTurn
             "
           >
-            <h1>Place your bets here</h1>
+            <h1>{{labels.placeBetsHere}}</h1>
             <div>
               <button id="betButton" @click="placeBet()" :disabled="cannotAfford()">
-                Bet 1 more coin than leading bet
+                {{labels.betButton}}
               </button>
               <br><br>
               <button id="passButton" @click="pass()">Pass</button>
             </div>
           </div>
           <div v-if="players[playerId].auctionPass">
-            <h1>You passed</h1>
+            <h1>{{labels.passed}}</h1>
           </div>
           <div
             v-if="
               !players[playerId].auctionPass && !players[playerId].auctionTurn
             "
           >
-            <p>Du har inte passat men det är inte din tur</p>
+            <p>{{labels.noTurn}}</p>
           </div>
           <div>
             <h1>Current leading bet: {{ this.leadingBet }}</h1>
