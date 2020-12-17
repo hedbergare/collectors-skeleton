@@ -13,7 +13,7 @@
           <b>{{labels.extraPointsSecret}}</b>
           {{ calcSecretPoints(player, marketValues) }} <br />
           <h3>
-           
+
             {{labels.totalPoints +
               (player.points +
               calcMoneyPoints(player) +
