@@ -36,5 +36,14 @@
 	"extraPointsMoney": "Extra points from money: ",
 	"hiddenItem": "Hidden item: ",
 	"extraPointsSecret": "Extra points from secret card: ",
-	"totalPoints": "Total points: "
+	"totalPoints": "Total points: ",
+	"itemsInfoTitle": "Information about 'Items'",
+	"itemsInfo": "This is the area where you can buy items. There are 5 different types of items, and they are all as many points as their respective market value, plus any relevant skills you own.'</br>' Their cost is decided by where you place your bottle & the market value of the item.",
+	"skillsInfoTitle": "Information about 'Skills'",
+	"skillsInfo": "This is the area where you can buy skills. You can see what the different skills does by hovering on the Skills icon on your player board. At the end of each round, the last skill on the board will move down and raise the value of it's specified market on the bottom of the card.",
+	"auctionInfoTitle": "Information about 'Auction'",
+	"auctionInfo": "This is the area where you can start an auction. If you place a bottle on an available slot, you can choose to put a card from your hand or from this area to put up for auction. Wheny you start an auction, you automatically place a 1 coin bet as a start. Whoever places the largest bet at the end, that person gets to choose what to use the card for: as an item, skill or to raise market value.",
+	"marketInfoTitle": "Information about market values",
+	"marketInfo": "This is the area where you can raise market values. Market values are what decides how much your items are worth. The bottle placements with two symbols in the top-right corner allows you to pick two cards for raising values. You are allowed to choose cards from your hand and the last available card in the skills & auction areas."
+
 }

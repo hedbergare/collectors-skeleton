@@ -3,8 +3,8 @@
     <div class="Absolute-Center" v-if="this.infoText !== ''">
       <div class="infoPopup">
         <button @click="resetInfo()" class="close">X</button>
-        <h2>Information om {{this.infoTitle}}</h2>
-        <p>{{this.infoText}}</p>
+        <h2>{{ this.infoTitle }}</h2>
+        <p>{{ this.infoText }}</p>
       </div>
     </div>
     <!-- Hela Spelbrädet -->
@@ -71,7 +71,12 @@
         </div>
       </div>
       <div id="buyItemBoxInfo">
-        <img id="itemInfo" src="/images/buyItemPic/BuyItemInfo.png" @click="showInfoPopup('Items','items info och så')"/>
+        <img
+          id="itemInfo"
+          src="/images/buyItemPic/BuyItemInfo.png"
+          style="cursor: pointer"
+          @click="showInfoPopup(labels.itemsInfoTitle, labels.itemsInfo)"
+        />
       </div>
     </div>
 
@@ -79,7 +84,12 @@
       <!-- Här gör vi skill box med köprutor -->
       <div></div>
       <div id="buySkillInfo">
-        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" @click="showInfoPopup('Skills','info om skills')"/>
+        <img
+          id="skillButton"
+          src="/images/buySkillPic/Skillsbutton.png"
+          style="cursor: pointer"
+          @click="showInfoPopup(labels.skillsInfoTitle, labels.skillsInfo)"
+        />
       </div>
       <div
         class="bottleSkill"
@@ -169,7 +179,12 @@
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" @click="showInfoPopup('Auction','lite info om auktionen')"/>
+        <img
+          id="startAuction"
+          style="cursor: pointer"
+          src="/images/auctionPic/startAuctionImage.png"
+          @click="showInfoPopup(labels.auctionInfoTitle, labels.auctionInfo)"
+        />
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -195,7 +210,12 @@
     <div class="marketBox">
       <!-- Här gör vi market box med köprutor -->
       <div id="buyMarketBoxInfo">
-        <img id="marketInfo" src="/images/marketPic/marketInfo.png" @click="showInfoPopup('Market','skojig info om marketvalues och så')"/>
+        <img
+          id="marketInfo"
+          style="cursor: pointer"
+          src="/images/marketPic/marketInfo.png"
+          @click="showInfoPopup(labels.marketInfoTitle, labels.marketInfo)"
+        />
       </div>
       <div
         class="bottleMarket"
@@ -277,7 +297,7 @@ export default {
   data: function () {
     return {
       infoText: "",
-      infoTitle: ""
+      infoTitle: "",
     };
   },
   props: {
@@ -295,29 +315,26 @@ export default {
   },
 
   watch: {
-     highlightCards: function (h){
-       if (h) {
-              this.highlightAvailableMarket();
-       }
-     }
-      
-    
+    highlightCards: function (h) {
+      if (h) {
+        this.highlightAvailableMarket();
+      }
+    },
   },
 
   methods: {
-    resetInfo: function(){
+    resetInfo: function () {
       this.infoText = "";
     },
     handleAction: function (card) {
-      console.log("i handle action game board")
+      console.log("i handle action game board");
       if (card.available) {
-        console.log("i handle action game board")
+        console.log("i handle action game board");
         this.$emit("handleAction", card);
         this.updatePoints();
       }
     },
-    showInfoPopup: function(title,text){
-      console.log("showinfopopup");
+    showInfoPopup: function (title, text) {
       this.infoText = text;
       this.infoTitle = title;
     },
@@ -350,7 +367,7 @@ export default {
         return true;
       }
     },
-    
+
     /*Skickar iväg att auktionen ska börja */
     initiateAuction() {
       this.$emit("initiateAuction");
@@ -483,18 +500,22 @@ export default {
   text-shadow: 0px 1px 0px #ffffff;
   padding: 5%;
   position: relative;
+  max-width:50%;
 }
-.close{
+.infoPopup p{
+  font-size:80%;
+}
+.close {
   position: absolute;
-    background: rgb(75, 0, 0);
-    color: #d1c8ad;
-    top: -2px;
-    right: -2px;
-    font-size:160%;
-    /* padding:10px; */
-    border-radius:10px;
-    border:2px solid black;
-    cursor:pointer;
+  background: rgb(75, 0, 0);
+  color: #d1c8ad;
+  top: -2px;
+  right: -2px;
+  font-size: 160%;
+  /* padding:10px; */
+  border-radius: 10px;
+  border: 2px solid black;
+  cursor: pointer;
 }
 .wrapper {
   display: grid;
