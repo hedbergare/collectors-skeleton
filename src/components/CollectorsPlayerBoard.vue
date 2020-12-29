@@ -337,4 +337,9 @@ export default {
 #cardsImage img {
   max-width: 100%;
 }
+@media screen and (max-width: 800px) {
+  #wallet{
+    font-size:3vw;
+  }
+}
 </style>

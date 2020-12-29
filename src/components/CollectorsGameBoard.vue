@@ -49,7 +49,7 @@
       <div id="itemArrow5">
         <img id="itemArrow1.5" src="/images/buyItemPic/ItemArrowRed.png" />
       </div>
-      <div></div>
+      <!-- <div></div> -->
 
       <!-- Här gör vi Item box med köprutor -->
 
@@ -82,7 +82,7 @@
 
     <div class="skillBox">
       <!-- Här gör vi skill box med köprutor -->
-      <div></div>
+      <!-- <div></div> -->
       <div id="buySkillInfo">
         <img
           id="skillButton"
@@ -136,7 +136,7 @@
       <div id="buyWorkInfo">
         <img id="imageWork" src="/images/workPic/imageWork.png" />
       </div>
-      <div id="buyWorkBox1">Här ska de bytas varje omgång</div>
+      <div id="buyWorkBox1"></div>
 
       <div id="buyWorkBox2">
         <img id="qTile1" src="/images/workPic/qTile1.png" />
@@ -631,6 +631,7 @@ export default {
   height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
+  border-radius:5px;
 }
 .bottleSkill {
   max-height: 100%;
@@ -645,6 +646,7 @@ export default {
   height: 70%;
   background-size: contain;
   background-repeat: no-repeat;
+  border-radius:5px;
 }
 .placeBottleMarket {
   color: blue;
@@ -652,12 +654,13 @@ export default {
   height: 80%;
   background-size: contain;
   background-repeat: no-repeat;
+  border-radius:5px;
 }
 
 #buyItemBoxInfo {
   color: black;
   grid-column: 6;
-  grid-row: 2;
+  grid-row: 1/3;
   max-width: 100%;
 }
 #buyItemBoxInfo img {
@@ -707,7 +710,7 @@ export default {
 
 /* Small boxes in SkillBox */
 #buySkillInfo {
-  grid-column: 2;
+  grid-column: 1/3;
   grid-row: 1;
   max-width: 100%;
 }
@@ -819,23 +822,26 @@ export default {
   height: 70%;
   background-size: contain;
   background-repeat: no-repeat;
+  border-radius:5px;
 }
 .auctionBox1 {
   height: 100%;
 }
 
 #auction2Boxes1 {
-  grid-template-rows: 25% 25% 25% 25%;
+  grid-column: 1/3;
+  grid-row: 2;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns:1fr 1fr;
   display: grid;
   max-width: 100%;
   max-height: 100%;
   padding: 5%;
-  grid-row: 1 / span 2;
 }
 
 /* Pilar i auctionbox */
 #auctionArrow1 {
-  grid-column: 2;
+  grid-column: 1/3;
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;

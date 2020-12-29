@@ -272,10 +272,14 @@ export default {
 #auctionStarted {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 3fr 1fr;
+  grid-template-rows: auto auto;
+  position:relative;
+  height:100%;
 }
 #theCard {
   margin: 0 auto;
+  transform: scale(0.5) translate(-50%, -50%);
+  position:absolute;
 }
 #yourBets {
   text-align: center;
@@ -284,6 +288,8 @@ export default {
   grid-column: 1/3;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  position:float;
+  bottom:0;
 }
 .bettingBox {
   border: 2px solid black;
@@ -326,5 +332,22 @@ export default {
 #passButton:active {
   position: relative;
   top: 1px;
+}
+@media screen and (max-width: 800px) {
+  h1{
+    font-size:2.5vw;
+  }
+  h2{
+    font-size:2vw;
+  }
+  h3{
+    font-size:1.7vw;
+  }
+  h4{
+    font-size:1.5vw;
+  }
+  p{
+    font-size:1.5vw;
+  }
 }
 </style>

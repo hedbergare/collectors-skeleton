@@ -679,10 +679,13 @@ footer a:visited {
   #browserWrapper {
     max-height: 100%;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: auto auto;
   }
-  #playerBoardContainer {
-    max-width: 80%;
+    #playerBoardContainer {
+    max-width: 100%;
+  }
+  .playerBoardTab p {
+    font-size:0.7em;
   }
 }
 </style>
