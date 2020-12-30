@@ -624,20 +624,16 @@ footer a:visited {
   max-width: 80%;
 }
 .playerBoardTab {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius:10px;
   background-color: white;
-  color: black;
+  color: white;
   text-align: center;
   font-weight: bold;
-  border-top: 2px solid transparent;
-  border-left: 2px solid transparent;
-  border-right: 2px solid transparent;
+  border: 2px solid transparent;
+  margin:3px;
 }
 .activeTab {
-  border-top: 2px solid gold;
-  border-left: 2px solid gold;
-  border-right: 2px solid gold;
+  border: 2px solid gold;
 }
 .playerBoardTab p {
   margin: 0;
@@ -668,7 +664,6 @@ footer a:visited {
   display: grid;
   display: inline-block;
   vertical-align: bottom;
-  height: 75%;
 }
 #rightColumn {
   height: 100%;
@@ -679,10 +674,13 @@ footer a:visited {
   #browserWrapper {
     max-height: 100%;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: auto auto;
   }
-  #playerBoardContainer {
-    max-width: 80%;
+    #playerBoardContainer {
+    max-width: 100%;
+  }
+  .playerBoardTab p {
+    font-size:0.7em;
   }
 }
 </style>

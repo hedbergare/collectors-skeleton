@@ -3,8 +3,8 @@
     <div class="Absolute-Center" v-if="this.infoText !== ''">
       <div class="infoPopup">
         <button @click="resetInfo()" class="close">X</button>
-        <h2>Information om {{this.infoTitle}}</h2>
-        <p>{{this.infoText}}</p>
+        <h2>{{ this.infoTitle }}</h2>
+        <p>{{ this.infoText }}</p>
       </div>
     </div>
     <!-- Hela Spelbrädet -->
@@ -49,7 +49,7 @@
       <div id="itemArrow5">
         <img id="itemArrow1.5" src="/images/buyItemPic/ItemArrowRed.png" />
       </div>
-      <div></div>
+      <!-- <div></div> -->
 
       <!-- Här gör vi Item box med köprutor -->
 
@@ -71,15 +71,25 @@
         </div>
       </div>
       <div id="buyItemBoxInfo">
-        <img id="itemInfo" src="/images/buyItemPic/BuyItemInfo.png" @click="showInfoPopup('Items','items info och så')"/>
+        <img
+          id="itemInfo"
+          src="/images/buyItemPic/BuyItemInfo.png"
+          style="cursor: pointer"
+          @click="showInfoPopup(labels.itemsInfoTitle, labels.itemsInfo)"
+        />
       </div>
     </div>
 
     <div class="skillBox">
       <!-- Här gör vi skill box med köprutor -->
-      <div></div>
+      <!-- <div></div> -->
       <div id="buySkillInfo">
-        <img id="skillButton" src="/images/buySkillPic/Skillsbutton.png" @click="showInfoPopup('Skills','info om skills')"/>
+        <img
+          id="skillButton"
+          src="/images/buySkillPic/Skillsbutton.png"
+          style="cursor: pointer"
+          @click="showInfoPopup(labels.skillsInfoTitle, labels.skillsInfo)"
+        />
       </div>
       <div
         class="bottleSkill"
@@ -126,7 +136,7 @@
       <div id="buyWorkInfo">
         <img id="imageWork" src="/images/workPic/imageWork.png" />
       </div>
-      <div id="buyWorkBox1">Här ska de bytas varje omgång</div>
+      <div id="buyWorkBox1"></div>
 
       <div id="buyWorkBox2">
         <img id="qTile1" src="/images/workPic/qTile1.png" />
@@ -169,7 +179,12 @@
 
       <!-- Här gör vi auction box med köprutor -->
       <div id="auctionArrow1">
-        <img id="startAuction" src="/images/auctionPic/startAuctionImage.png" @click="showInfoPopup('Auction','lite info om auktionen')"/>
+        <img
+          id="startAuction"
+          style="cursor: pointer"
+          src="/images/auctionPic/startAuctionImage.png"
+          @click="showInfoPopup(labels.auctionInfoTitle, labels.auctionInfo)"
+        />
       </div>
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
@@ -195,7 +210,12 @@
     <div class="marketBox">
       <!-- Här gör vi market box med köprutor -->
       <div id="buyMarketBoxInfo">
-        <img id="marketInfo" src="/images/marketPic/marketInfo.png" @click="showInfoPopup('Market','skojig info om marketvalues och så')"/>
+        <img
+          id="marketInfo"
+          style="cursor: pointer"
+          src="/images/marketPic/marketInfo.png"
+          @click="showInfoPopup(labels.marketInfoTitle, labels.marketInfo)"
+        />
       </div>
       <div
         class="bottleMarket"
@@ -277,7 +297,7 @@ export default {
   data: function () {
     return {
       infoText: "",
-      infoTitle: ""
+      infoTitle: "",
     };
   },
   props: {
@@ -295,29 +315,26 @@ export default {
   },
 
   watch: {
-     highlightCards: function (h){
-       if (h) {
-              this.highlightAvailableMarket();
-       }
-     }
-      
-    
+    highlightCards: function (h) {
+      if (h) {
+        this.highlightAvailableMarket();
+      }
+    },
   },
 
   methods: {
-    resetInfo: function(){
+    resetInfo: function () {
       this.infoText = "";
     },
     handleAction: function (card) {
-      console.log("i handle action game board")
+      console.log("i handle action game board");
       if (card.available) {
-        console.log("i handle action game board")
+        console.log("i handle action game board");
         this.$emit("handleAction", card);
         this.updatePoints();
       }
     },
-    showInfoPopup: function(title,text){
-      console.log("showinfopopup");
+    showInfoPopup: function (title, text) {
       this.infoText = text;
       this.infoTitle = title;
     },
@@ -350,7 +367,7 @@ export default {
         return true;
       }
     },
-    
+
     /*Skickar iväg att auktionen ska börja */
     initiateAuction() {
       this.$emit("initiateAuction");
@@ -483,18 +500,22 @@ export default {
   text-shadow: 0px 1px 0px #ffffff;
   padding: 5%;
   position: relative;
+  max-width:50%;
 }
-.close{
+.infoPopup p{
+  font-size:80%;
+}
+.close {
   position: absolute;
-    background: rgb(75, 0, 0);
-    color: #d1c8ad;
-    top: -2px;
-    right: -2px;
-    font-size:160%;
-    /* padding:10px; */
-    border-radius:10px;
-    border:2px solid black;
-    cursor:pointer;
+  background: rgb(75, 0, 0);
+  color: #d1c8ad;
+  top: -2px;
+  right: -2px;
+  font-size: 160%;
+  /* padding:10px; */
+  border-radius: 10px;
+  border: 2px solid black;
+  cursor: pointer;
 }
 .wrapper {
   display: grid;
@@ -524,6 +545,8 @@ export default {
   max-width: 100%;
   background-color: rgb(247, 193, 230);
   color: white;
+  margin: 5px;
+  border-radius:5px;
 }
 .cardBoxLeft {
   display: grid;
@@ -546,17 +569,20 @@ export default {
   color: white;
   grid-column: 2;
   grid-row: 3 / span 3;
+  margin: 2px;
+  border-radius:5px;
 }
 .workBox {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
-  padding: 5px;
+  margin: 2px;
   max-width: 100%;
   background-color: rgb(243, 243, 125);
   color: white;
   grid-column: 3;
   grid-row: 3 / span 3;
+  border-radius:5px;
 }
 .auctionBox {
   display: grid;
@@ -568,6 +594,8 @@ export default {
   grid-column: 4 / span 2;
   grid-row: 3 / span 3;
   max-width: 100%;
+  margin: 2px;
+  border-radius:5px;
 }
 .marketBox {
   display: grid;
@@ -580,6 +608,8 @@ export default {
   grid-column: 2 / span 4;
   grid-row: 6;
   max-width: 100%;
+  margin: 2px;
+  border-radius:5px;
 }
 
 .itemsOnSaleIcon {
@@ -610,6 +640,7 @@ export default {
   height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
+  border-radius:5px;
 }
 .bottleSkill {
   max-height: 100%;
@@ -624,6 +655,7 @@ export default {
   height: 70%;
   background-size: contain;
   background-repeat: no-repeat;
+  border-radius:5px;
 }
 .placeBottleMarket {
   color: blue;
@@ -631,12 +663,13 @@ export default {
   height: 80%;
   background-size: contain;
   background-repeat: no-repeat;
+  border-radius:5px;
 }
 
 #buyItemBoxInfo {
   color: black;
   grid-column: 6;
-  grid-row: 2;
+  grid-row: 1/3;
   max-width: 100%;
 }
 #buyItemBoxInfo img {
@@ -686,7 +719,7 @@ export default {
 
 /* Small boxes in SkillBox */
 #buySkillInfo {
-  grid-column: 2;
+  grid-column: 1/3;
   grid-row: 1;
   max-width: 100%;
 }
@@ -739,7 +772,7 @@ export default {
 /* Small boxes in WorkBox */
 #buyWorkInfo {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 1;
   max-width: 100%;
@@ -747,35 +780,35 @@ export default {
 }
 #buyWorkBox1 {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 2;
   max-width: 100%;
 }
 #buyWorkBox2 {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 3;
   max-width: 100%;
 }
 #buyWorkBox3 {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 4;
   max-width: 100%;
 }
 #buyWorkBox4 {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 5;
   max-width: 100%;
 }
 #buyWorkBox5 {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 6;
   max-width: 100%;
@@ -798,23 +831,26 @@ export default {
   height: 70%;
   background-size: contain;
   background-repeat: no-repeat;
+  border-radius:5px;
 }
 .auctionBox1 {
   height: 100%;
 }
 
 #auction2Boxes1 {
-  grid-template-rows: 25% 25% 25% 25%;
+  grid-column: 1/3;
+  grid-row: 2;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns:1fr 1fr;
   display: grid;
   max-width: 100%;
   max-height: 100%;
   padding: 5%;
-  grid-row: 1 / span 2;
 }
 
 /* Pilar i auctionbox */
 #auctionArrow1 {
-  grid-column: 2;
+  grid-column: 1/3;
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;
@@ -862,7 +898,6 @@ export default {
   margin-left: -75px;  */
   position: absolute;
 }
-
 #auctionArrow1 img,
 #auctionArrow2 img,
 #auctionArrow3 img,
@@ -871,6 +906,11 @@ export default {
 #auctionArrow6 img {
   max-width: 100%;
   max-height: 100%;
+}
+
+#auctionCards{
+  width:70%;
+  padding-top:20%;
 }
 
 /* Small boxes in MarketBox */
