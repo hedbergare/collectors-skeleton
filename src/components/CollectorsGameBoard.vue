@@ -66,9 +66,13 @@
           @click="placeBottle(p, 'item')"
         ></button>
 
-        <div v-if="p.playerId !== null">
-          {{ p.playerId }}
-        </div>
+        <button
+          v-if="p.playerId !== null"
+          disabled="true"
+          class="placeBottleAuction1"
+        >
+          <CollectorsBottle :color="players[p.playerId].color" />
+        </button>
       </div>
       <div id="buyItemBoxInfo">
         <img
@@ -108,9 +112,13 @@
           @click="placeBottle(p, 'skill')"
         ></button>
 
-        <div v-if="p.playerId !== null">
-          {{ p.playerId }}
-        </div>
+        <button
+          v-if="p.playerId !== null"
+          disabled="true"
+          class="placeBottleAuction1"
+        >
+          <CollectorsBottle :color="players[p.playerId].color" />
+        </button>
       </div>
 
       <!-- här gör vi pilarna till skillBox -->
@@ -171,9 +179,13 @@
             v-if="p.playerId === null"
             @click="placeBottle(p, 'auction')"
           ></button>
-          <div v-if="p.playerId !== null">
-            {{ p.playerId }}
-          </div>
+          <button
+            v-if="p.playerId !== null"
+            disabled="true"
+            class="placeBottleAuction1"
+          >
+            <CollectorsBottle :color="players[p.playerId].color" />
+          </button>
         </div>
       </div>
 
@@ -233,10 +245,13 @@
           "
           @click="placeBottle(p, 'market' + p.numCards)"
         ></button>
-
-        <div v-if="p.playerId !== null">
-          {{ p.playerId }}
-        </div>
+        <button
+          v-if="p.playerId !== null"
+          disabled="true"
+          class="placeBottleAuction1"
+        >
+          <CollectorsBottle :color="players[p.playerId].color" />
+        </button>
       </div>
       <div id="MarketArrow1">
         <img id="imagePingvin" src="/images/marketPic/image_fastaval.png" />
@@ -288,11 +303,13 @@
 
 <script>
 import CollectorsCard from "@/components/CollectorsCard.vue";
+import CollectorsBottle from "@/components/CollectorsBottle.vue";
 
 export default {
   name: "CollectorsGameBoard",
   components: {
     CollectorsCard,
+    CollectorsBottle,
   },
   data: function () {
     return {
@@ -312,6 +329,7 @@ export default {
     skillPlacement: Array,
     marketPlacement: Array,
     highlightCards: Boolean,
+    players: Object,
   },
 
   watch: {
@@ -844,12 +862,16 @@ export default {
 #auction2Boxes1 {
   grid-column: 1/3;
   grid-row: 2;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 50% 50%;
   grid-template-columns: 1fr 1fr;
   display: grid;
   max-width: 100%;
   max-height: 100%;
   padding: 5%;
+}
+.placeBottleAuction1 > * {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 /* Pilar i auctionbox */

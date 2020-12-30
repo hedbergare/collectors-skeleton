@@ -39,6 +39,7 @@
             :auctionPlacement="auctionPlacement"
             :marketPlacement="marketPlacement"
             :highlightCards="highlightCards"
+            :players="players"
             @buyCard="buyCard($event)"
             @updatePoints="updatePoints($event)"
             @buySkill="buySkill($event)"

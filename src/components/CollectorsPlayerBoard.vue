@@ -5,15 +5,27 @@
     <div id="topRow" :style="'background-color:' + player.color">
       <div id="midRow">
         <div class="box">
-          <CollectorsBottle v-if="player.bottles > 0" :color="player.color" />
+          <CollectorsBottle
+            class="x"
+            v-if="player.bottles > 0"
+            :color="player.color"
+          />
           <img v-else class="x bottle" src="images/player_board/bottle.JPG" />
         </div>
         <div class="box">
-          <CollectorsBottle v-if="player.bottles > 1" :color="player.color" />
+          <CollectorsBottle
+            class="x"
+            v-if="player.bottles > 1"
+            :color="player.color"
+          />
           <img v-else class="x bottle" src="images/player_board/bottle.JPG" />
         </div>
         <div class="box">
-          <CollectorsBottle v-if="player.bottles > 2" :color="player.color" />
+          <CollectorsBottle
+            class="x"
+            v-if="player.bottles > 2"
+            :color="player.color"
+          />
           <img
             v-else
             class="x addCard"
@@ -21,7 +33,11 @@
           />
         </div>
         <div class="box">
-          <CollectorsBottle v-if="player.bottles > 3" :color="player.color" />
+          <CollectorsBottle
+            class="x"
+            v-if="player.bottles > 3"
+            :color="player.color"
+          />
           <img
             v-else
             class="x oneDollar"
@@ -29,7 +45,11 @@
           />
         </div>
         <div class="box">
-          <CollectorsBottle v-if="player.bottles > 4" :color="player.color" />
+          <CollectorsBottle
+            class="x"
+            v-if="player.bottles > 4"
+            :color="player.color"
+          />
           <img
             v-else
             class="x twoDollar"
@@ -188,11 +208,11 @@ export default {
   grid-row: 1;
   grid-template-columns: 7fr 1fr;
   grid-template-rows: 1fr;
-  border-radius:5px;
+  border-radius: 5px;
   margin-top: 3px;
   padding: 1%;
   border: 4px solid #f8f1ae;
-  margin:5px;
+  margin: 5px;
 }
 
 /* Hover och style för treasure */
@@ -237,7 +257,6 @@ export default {
 #currentPoints p {
   margin: 0%;
   margin-top: 0.3em;
-
 }
 #money img,
 #income img,
