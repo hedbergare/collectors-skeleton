@@ -188,14 +188,11 @@ export default {
   grid-row: 1;
   grid-template-columns: 7fr 1fr;
   grid-template-rows: 1fr;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-radius:5px;
   margin-top: 3px;
   padding: 1%;
   border: 4px solid #f8f1ae;
-  margin-top: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin:5px;
 }
 
 /* Hover och style för treasure */
@@ -361,6 +358,7 @@ export default {
 #cardsImage img {
   max-width: 100%;
 }
+/* Här skriver vi css för mobilversion */
 @media screen and (max-width: 800px) {
   #wallet {
     font-size: 3vw;
