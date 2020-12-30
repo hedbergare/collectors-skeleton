@@ -106,7 +106,7 @@ Data.prototype.joinGame = function (roomId, playerId) {
     }
     else if (Object.keys(room.players).length < room.playerCount) {
       //Här har jag lagt till färger till varje spelare i en lista
-      let colors = ["rgb(125, 38, 125, 0.4)", "rgb(19, 186, 170, 0.4)", "rgb(193, 151, 105, 0.4)", "rgb(69, 72, 73, 0.4)"];
+      let colors = ["rgb(125, 38, 125, 0.3)", "rgb(19, 186, 170, 0.3)", "rgb(193, 151, 105, 0.3)", "rgb(69, 72, 73, 0.3)"];
       console.log("Player", playerId, "joined for the first time");
       let turn;
       if (Object.keys(room.players).length == 0) {
@@ -143,7 +143,7 @@ Data.prototype.joinGame = function (roomId, playerId) {
             points: 0,
             skills: [],
             items: [],
-            income: [room.deck.pop()],
+            income: [],
             secret: [],
             color: colors[Object.keys(room.players).length - 1], //När vi startar spelet tar vi en färg från listan (ingen spelare kan ta samma färg)
             pId: playerId,
@@ -322,7 +322,6 @@ Data.prototype.buyCard = function (roomId, playerId, card, cost) {
     }
     room.players[playerId].items.push(...c);
     room.players[playerId].money -= cost;
-    room.players[playerId].bottles -= 1;
   }
 }
 
@@ -357,7 +356,6 @@ Data.prototype.buySkill = function (roomId, playerId, card, cost) {
     }
     room.players[playerId].skills.push(...c);
     room.players[playerId].money -= cost;
-    room.players[playerId].bottles -= 1;
   }
 }
 Data.prototype.buyMarket = function (roomId, playerId, card, cost) {
@@ -533,7 +531,7 @@ Data.prototype.startAuction = function (roomId, auctionCard, playerId, cost) {
         }
       }
     }
-    room.players[playerId].bottles -= 1;
+
     room.players[playerId].money -= cost;
   }
 }
