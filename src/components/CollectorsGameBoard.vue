@@ -545,6 +545,8 @@ export default {
   max-width: 100%;
   background-color: rgb(247, 193, 230);
   color: white;
+  margin: 5px;
+  border-radius:5px;
 }
 .cardBoxLeft {
   display: grid;
@@ -567,17 +569,20 @@ export default {
   color: white;
   grid-column: 2;
   grid-row: 3 / span 3;
+  margin: 2px;
+  border-radius:5px;
 }
 .workBox {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
-  padding: 5px;
+  margin: 2px;
   max-width: 100%;
   background-color: rgb(243, 243, 125);
   color: white;
   grid-column: 3;
   grid-row: 3 / span 3;
+  border-radius:5px;
 }
 .auctionBox {
   display: grid;
@@ -589,6 +594,8 @@ export default {
   grid-column: 4 / span 2;
   grid-row: 3 / span 3;
   max-width: 100%;
+  margin: 2px;
+  border-radius:5px;
 }
 .marketBox {
   display: grid;
@@ -601,6 +608,8 @@ export default {
   grid-column: 2 / span 4;
   grid-row: 6;
   max-width: 100%;
+  margin: 2px;
+  border-radius:5px;
 }
 
 .itemsOnSaleIcon {
@@ -763,7 +772,7 @@ export default {
 /* Small boxes in WorkBox */
 #buyWorkInfo {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 1;
   max-width: 100%;
@@ -771,35 +780,35 @@ export default {
 }
 #buyWorkBox1 {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 2;
   max-width: 100%;
 }
 #buyWorkBox2 {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 3;
   max-width: 100%;
 }
 #buyWorkBox3 {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 4;
   max-width: 100%;
 }
 #buyWorkBox4 {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 5;
   max-width: 100%;
 }
 #buyWorkBox5 {
   text-align: center;
-  border: dashed 1px;
+  border: solid 1px;
   color: black;
   grid-row: 6;
   max-width: 100%;
@@ -889,7 +898,6 @@ export default {
   margin-left: -75px;  */
   position: absolute;
 }
-
 #auctionArrow1 img,
 #auctionArrow2 img,
 #auctionArrow3 img,
@@ -898,6 +906,11 @@ export default {
 #auctionArrow6 img {
   max-width: 100%;
   max-height: 100%;
+}
+
+#auctionCards{
+  width:70%;
+  padding-top:20%;
 }
 
 /* Small boxes in MarketBox */

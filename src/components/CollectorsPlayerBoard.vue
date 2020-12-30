@@ -1,21 +1,64 @@
 <template>
-  <div id="wrapper" :style="'background-color:' + player.color">
+  <div id="wrapper">
     <!-- Här läggs det in vilken färg man "är" -->
     <!-- Översta raden - där det visas hur mycket pengar, poäng och income man har och chest -->
-    <div id="topRow">
-      <img id="chest" src="images/player_board/treasure.PNG" />
-      <div class="secretPopup" v-if="playerId == player.pId">
-        <CollectorsCard
-          v-for="(card, index) in player.secret"
-          :key="index"
-          :card="card"
-        />
+    <div id="topRow" :style="'background-color:' + player.color">
+      <div id="midRow">
+        <div class="box">
+          <CollectorsBottle v-if="player.bottles > 0" :color="player.color" />
+          <img v-else class="x bottle" src="images/player_board/bottle.JPG" />
+        </div>
+        <div class="box">
+          <CollectorsBottle v-if="player.bottles > 1" :color="player.color" />
+          <img v-else class="x bottle" src="images/player_board/bottle.JPG" />
+        </div>
+        <div class="box">
+          <CollectorsBottle v-if="player.bottles > 2" :color="player.color" />
+          <img
+            v-else
+            class="x addCard"
+            src="images/player_board/add_card.JPG"
+          />
+        </div>
+        <div class="box">
+          <CollectorsBottle v-if="player.bottles > 3" :color="player.color" />
+          <img
+            v-else
+            class="x oneDollar"
+            src="images/player_board/1_dollar.JPG"
+          />
+        </div>
+        <div class="box">
+          <CollectorsBottle v-if="player.bottles > 4" :color="player.color" />
+          <img
+            v-else
+            class="x twoDollar"
+            src="images/player_board/2_dollar.JPG"
+          />
+        </div>
       </div>
       <div id="wallet">
+        <div>
+          <img
+            id="chest"
+            src="images/player_board/treasure.PNG"
+            class="topRowIcons"
+          />
+        </div>
+        <div class="secretPopup" v-if="playerId == player.pId">
+          <CollectorsCard
+            v-for="(card, index) in player.secret"
+            :key="index"
+            :card="card"
+          />
+        </div>
         <div id="money">
           <div class="helper_wrapper">
             <span class="helper"></span>
-            <img src="images/player_board/current_money.png" />
+            <img
+              src="images/player_board/current_money.png"
+              class="topRowIcons"
+            />
           </div>
           <p>{{ player.money }}</p>
         </div>
@@ -23,14 +66,17 @@
         <div id="income">
           <div>
             <span class="helper"></span>
-            <img src="images/player_board/passive_income.png" />
+            <img
+              src="images/player_board/passive_income.png"
+              class="topRowIcons"
+            />
           </div>
-          <p>{{player.passiveIncome}}</p>
+          <p>{{ player.passiveIncome }}</p>
         </div>
 
         <div id="currentPoints">
           <div>
-            <img src="images/player_board/score.png" />
+            <img src="images/player_board/score.png" class="topRowIcons" />
           </div>
           <p>{{ player.points }}</p>
         </div>
@@ -38,40 +84,10 @@
     </div>
 
     <!-- Mellersta raden, där ens "bottles" ska ligga -->
-    <div id="midRow">
-      <div class="box">
-        <CollectorsBottle v-if="player.bottles > 0" :color="player.color" />
-        <img v-else class="x bottle" src="images/player_board/bottle.JPG" />
-      </div>
-      <div class="box">
-        <CollectorsBottle v-if="player.bottles > 1" :color="player.color" />
-        <img v-else class="x bottle" src="images/player_board/bottle.JPG" />
-      </div>
-      <div class="box">
-        <CollectorsBottle v-if="player.bottles > 2" :color="player.color" />
-        <img v-else class="x addCard" src="images/player_board/add_card.JPG" />
-      </div>
-      <div class="box">
-        <CollectorsBottle v-if="player.bottles > 3" :color="player.color" />
-        <img
-          v-else
-          class="x oneDollar"
-          src="images/player_board/1_dollar.JPG"
-        />
-      </div>
-      <div class="box">
-        <CollectorsBottle v-if="player.bottles > 4" :color="player.color" />
-        <img
-          v-else
-          class="x twoDollar"
-          src="images/player_board/2_dollar.JPG"
-        />
-      </div>
-    </div>
 
     <!-- Understa raden -->
     <div id="bottomRow">
-      <div id="skills">
+      <div id="skills" :style="'background-color:' + player.color">
         <div id="skillsImage">
           <span class="helper"></span>
           <img id="skillsButton" src="images/buySkillPic/Skillsbutton.png/" />
@@ -93,7 +109,7 @@
         </div>
       </div>
 
-      <div id="items">
+      <div id="items" :style="'background-color:' + player.color">
         <!-- Här skapas bilder för de items man äger -->
         <div id="itemsRefill">
           <div v-for="(card, index) in player.items" :key="index">
@@ -111,7 +127,7 @@
     </div>
 
     <!-- Här kommer nedersta raden för kort på hand -->
-    <div id="cardRow">
+    <div id="cardRow" :style="'background-color:' + player.color">
       <div id="cardsImage">
         <span class="helper"></span>
         <img src="images/player_board/card_hand.png" />
@@ -140,12 +156,10 @@ export default {
     CollectorsBottle,
   },
 
-
   props: {
     player: Object,
   },
 
-  
   computed: {
     playerId: function () {
       return this.$store.state.playerId;
@@ -153,8 +167,8 @@ export default {
   },
   methods: {
     handleAction: function (card) {
-      if (card.available){
-      this.$emit("handleAction", card);
+      if (card.available) {
+        this.$emit("handleAction", card);
       }
     },
   },
@@ -163,21 +177,28 @@ export default {
 <style scoped>
 #wrapper {
   display: grid;
-  border: 3px solid black;
+  border-radius: 10px;
   position: relative;
   height: 100%;
-  grid-template-rows:auto 1fr 1.25fr auto;
+  grid-template-rows: 2fr 2fr auto;
 }
 
 #topRow {
+  display: grid;
   grid-row: 1;
+  grid-template-columns: 7fr 1fr;
+  grid-template-rows: 1fr;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-top: 3px;
+  padding: 1%;
+  border: 4px solid #f8f1ae;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 /* Hover och style för treasure */
-#chest {
-  width: 7%;
-}
-
 #chest:hover + .secretPopup {
   display: inline-block;
   position: absolute;
@@ -191,49 +212,45 @@ export default {
 }
 
 #wallet {
-  width: 20%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  float: right;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   font-size: 100%;
+  max-width: 100%;
 }
-
 #money {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }
-
 #income {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
 }
-
 #currentPoints {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
 }
-
+.topRowIcons {
+  max-width: 50%;
+}
 #money p,
 #income p,
 #currentPoints p {
   margin: 0%;
   margin-top: 0.3em;
-  font-size: 140%;
+
 }
 #money img,
 #income img,
 #currentPoints img {
-  max-width: 100%;
   vertical-align: middle;
 }
 
 #midRow {
-  grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  height: 10%;
 }
 
 .box {
@@ -252,7 +269,6 @@ export default {
 
 /*  */
 #bottomRow {
-  grid-row: 3;
   display: grid;
   grid-template-columns: 2fr 2fr;
   height: 100%;
@@ -261,7 +277,10 @@ export default {
 #skills {
   display: grid;
   grid-template-columns: 1fr 5fr;
-  border: 2px dashed black;
+  border: 4px solid rgb(59, 165, 59);
+  border-radius: 5px;
+  margin: 5px;
+  padding: 1%;
 }
 
 /* En hjälp-div som gör att bilder centresas vertikalt */
@@ -289,8 +308,10 @@ export default {
 #items {
   display: grid;
   grid-template-columns: 5fr 1fr;
-  border: 2px dashed black;
-  /* height: 30vh; */
+  border: 4px solid rgb(253, 102, 102);
+  border-radius: 5px;
+  margin: 5px;
+  padding: 1%;
 }
 
 #itemsRefill {
@@ -322,6 +343,9 @@ export default {
   display: grid;
   grid-template-columns: 1fr 5fr;
   height: 100%;
+  margin: 5px;
+  border-radius: 5px;
+  border: 4px solid #f8f1ae;
 }
 
 #cardRefill {
@@ -338,8 +362,8 @@ export default {
   max-width: 100%;
 }
 @media screen and (max-width: 800px) {
-  #wallet{
-    font-size:3vw;
+  #wallet {
+    font-size: 3vw;
   }
 }
 </style>
