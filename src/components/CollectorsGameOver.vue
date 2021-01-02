@@ -2,22 +2,27 @@
   <div id="background">
     <div id="wrapper">
       <div id="headlineRow">
-        <h1>{{labels.gameOver}}</h1>
+        <h1>{{ labels.gameOver }}</h1>
+      
       </div>
       <div id="playerRow">
         <div v-for="(player, index) in players" :key="index">
-          <h1>{{ player.pId }}</h1>
-          <b>{{labels.collectedPoints}} </b>{{ player.points }} <br />
-          <b>{{labels.extraPointsMoney}}</b> {{ calcMoneyPoints(player) }} <br />
-          <b>{{labels.hiddenItem}} </b> {{ player.secret[0].item }} <br />
-          <b>{{labels.extraPointsSecret}}</b>
-          {{ calcSecretPoints(player, marketValues) }} <br />
-          <h3>
+          <h1 class="playerName">{{ player.pId }}</h1>
+          <p>
+            <b>{{ labels.collectedPoints }} </b>{{ player.points }} <br />
+            <b>{{ labels.extraPointsMoney }} </b> {{ calcMoneyPoints(player) }}
+            <br />
+            <b>{{ labels.hiddenItem }} </b> {{ player.secret[0].item }} <br />
+            <b>{{ labels.extraPointsSecret }}</b>
+            {{ calcSecretPoints(player, marketValues) }} <br />
+          </p>
 
-            {{labels.totalPoints +
+          <h3>
+            {{
+              labels.totalPoints +
               (player.points +
-              calcMoneyPoints(player) +
-              calcSecretPoints(player, marketValues))
+                calcMoneyPoints(player) +
+                calcSecretPoints(player, marketValues))
             }}
           </h3>
           <br />
@@ -25,7 +30,9 @@
       </div>
 
       <div id="winnerRow">
-        <h1>{{labels.auctionWinnerIs   + findWinner(players, marketValues) }}!</h1>
+        <h1>
+          {{ labels.auctionWinnerIs + findWinner(players, marketValues) }}!
+        </h1>
         <img src="images/trophy.png" />
       </div>
 
@@ -44,7 +51,7 @@ export default {
   props: {
     players: Object,
     marketValues: Object,
-    labels: Object
+    labels: Object,
   },
   methods: {
     findWinner: function (players, marketValues) {
@@ -55,7 +62,6 @@ export default {
         let totalPoints = extraPMoney + extraPsecret + players[x].points;
         allPlayerPoints[x] = totalPoints;
       }
-      console.log(allPlayerPoints);
       let winnerId;
       let winnerPoints = 0;
       let secondWinnerId = "";
@@ -67,18 +73,6 @@ export default {
         } else if (allPlayerPoints[z] === winnerPoints && z !== winnerId) {
           secondWinnerId = z;
         }
-        /* for (let y in allPlayerPoints) {
-          if (allPlayerPoints[z] < allPlayerPoints[y]) {
-            console.log("spelare" + y + "vann");
-            return y;
-          } else if (allPlayerPoints[z] === allPlayerPoints[y] && z !== y) {
-            console.log("oavgjort");
-            return "several of you";
-          } else {
-            console.log("spelare" + z + "vann");
-            return z;
-          }
-        } */
       }
       if (secondWinnerId === "") {
         return winnerId;
@@ -145,15 +139,17 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
 #background {
-  color: white;
   background-color: rgb(0, 0, 0, 0.7);
   width: 100%;
   height: 100vh;
   position: absolute;
   z-index: 10;
 }
-
 #wrapper {
   height: 90vh;
   width: 80%;
@@ -164,39 +160,62 @@ export default {
   background-color: rgb(12, 133, 86);
   z-index: 12;
 }
-
 #playerRow {
   display: grid;
   grid-template-columns: auto auto auto auto;
 }
-
 #winnerRow img {
   height: 15vh;
 }
-
 .playAgainButton {
-  box-shadow: 0px 1px 0px 0px #1c1b18;
-  background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
-  background-color: #eae0c2;
-  border-radius: 15px;
-  border: 2px solid #333029;
+  box-shadow: 0px 1px 0px 0px #3e7327;
+  background: linear-gradient(to bottom, #244912 5%, #5a973c 100%);
+  background-color: #3a6b21;
+  border-radius: 6px;
+  border: 1px solid #3f7723;
   display: inline-block;
   cursor: pointer;
-  color: white;
-  font-size: 90%;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
   font-weight: bold;
-  padding: 12px 16px;
+  padding: 6px 24px;
   text-decoration: none;
-  text-shadow: 0px 1px 0px #000000;
+  text-shadow: 0px 1px 0px #5b8a3c;
 }
-
 .playAgainButton:hover {
-  background: linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
-  background-color: #ccc2a6;
+  background: linear-gradient(to bottom, #72b352 5%, #3a6b21 100%);
+  background-color: #72b352;
 }
-
 .playAgainButton:active {
   position: relative;
   top: 1px;
+}
+.playerName {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 850px) {
+  img {
+    max-height: 10%;
+  }
+  h1 {
+    font-size: 2.5vw;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+  }
+  p {
+    font-size: 1.5vw;
+  }
+  h3 {
+    font-size: 2vw;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+  }
+  .playAgainButton {
+    max-height: 5%;
+    max-width: 40%;
+    font-size: 2vw;
+  }
 }
 </style>

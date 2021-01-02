@@ -83,7 +83,6 @@ img {
 .langBoxes {
   display: grid;
   grid-template-columns: 1fr 1fr;
-
 }
 ul {
   padding: 0;
@@ -138,6 +137,9 @@ li:active {
 }
 
 @media screen and (max-width: 850px) {
+  .headline {
+    font-size: 2vw;
+  }
   img {
     max-width: 15%;
   }
@@ -148,8 +150,11 @@ li:active {
   }
   ul li {
     max-height: 10%;
-    max-width: 80%;
+    max-width: 100%;
+    font-size: 1.3vw;
   }
-
+  .demoButton {
+    font-size:1.3vw ;
+  }
 }
 </style>
