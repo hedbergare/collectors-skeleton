@@ -42,7 +42,7 @@
               !players[playerId].auctionPass && players[playerId].auctionTurn
             "
           >
-            <h1>{{ labels.placeBetsHere }}</h1>
+            <h2>{{ labels.placeBetsHere }}</h2>
             <div>
               <button
                 id="betButton"
@@ -56,7 +56,7 @@
             </div>
           </div>
           <div v-if="players[playerId].auctionPass">
-            <h1>{{ labels.youPassed }}</h1>
+            <h2>{{ labels.youPassed }}</h2>
           </div>
           <div
             v-if="
@@ -66,7 +66,7 @@
             <p>{{ labels.noTurn }}</p>
           </div>
           <div>
-            <h1>{{ labels.leadingBet + this.leadingBet }}</h1>
+            <h3>{{ labels.leadingBet + this.leadingBet }}</h3>
           </div>
         </div>
         <div id="cardContainer">
@@ -80,9 +80,13 @@
             class="bettingBox"
           >
             <div v-if="!player.auctionPass">
-              <h2>{{ labels.player + player.pId }} {{ player.auctionTurn }}</h2>
-              <h3>{{ labels.betPlaced + player.auctionBet }}</h3>
-              <p>{{ labels.coinsLeft}} {{ (player.money - player.auctionBet) }}</p>
+              <div class="bettingBoxCont">
+                <h3>{{ labels.player + player.pId }}</h3>
+                <p>{{ labels.betPlaced + player.auctionBet }}</p>
+                <p>
+                  {{ labels.coinsLeft }} {{ player.money - player.auctionBet }}
+                </p>
+              </div>
             </div>
             <div v-else class="passed">
               <h2>{{ labels.player + player.pId }} {{ player.auctionTurn }}</h2>
@@ -239,7 +243,7 @@ export default {
 .auctionWrapper {
   z-index: 6;
   width: 80%;
-  background-color: rgb(247, 195, 137);
+  background-color: rgb(255, 197, 131);
   height: 80vh;
   margin: 0 auto;
   margin-top: 10vh;
@@ -273,13 +277,13 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
-  position:relative;
-  height:100%;
+  position: relative;
+  height: 100%;
 }
 #theCard {
   margin: 0 auto;
-  transform: scale(0.5) translate(-50%, -50%);
-  position:absolute;
+  transform: scale(0.4) translate(-60%, -60%);
+  position: absolute;
 }
 #yourBets {
   text-align: center;
@@ -288,11 +292,14 @@ export default {
   grid-column: 1/3;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  position:float;
-  bottom:0;
+  position: float;
+  bottom: 0;
 }
-.bettingBox {
-  border: 2px solid black;
+.bettingBoxCont{
+  margin:5px;
+  padding:5px;
+  border-radius:5px;
+  background-color: #84B082;
 }
 .passed {
   opacity: 0.6;
@@ -334,20 +341,20 @@ export default {
   top: 1px;
 }
 @media screen and (max-width: 800px) {
-  h1{
-    font-size:2.5vw;
+  h1 {
+    font-size: 2.5vw;
   }
-  h2{
-    font-size:2vw;
+  h2 {
+    font-size: 2vw;
   }
-  h3{
-    font-size:1.7vw;
+  h3 {
+    font-size: 1.7vw;
   }
-  h4{
-    font-size:1.5vw;
+  h4 {
+    font-size: 1.5vw;
   }
-  p{
-    font-size:1.5vw;
+  p {
+    font-size: 1.5vw;
   }
 }
 </style>
