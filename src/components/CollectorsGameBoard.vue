@@ -345,9 +345,7 @@ export default {
       this.infoText = "";
     },
     handleAction: function (card) {
-      console.log("i handle action game board");
       if (card.available) {
-        console.log("i handle action game board");
         this.$emit("handleAction", card);
         this.updatePoints();
       }
