@@ -235,6 +235,7 @@ export default {
   grid-template-columns: 1fr 1fr;
   font-size: 100%;
   max-width: 100%;
+      vertical-align: middle;
 }
 #money {
   display: grid;
@@ -254,7 +255,8 @@ export default {
   max-width: 100%;
 }
 #chest {
-  max-width: 50%;
+  max-width: 80%;
+
 }
 #money p,
 #income p,
@@ -418,6 +420,12 @@ export default {
 @media screen and (max-width: 800px) {
   #wallet {
     font-size: 3vw;
+    text-align: center;
   }
+
+  .topRowIcons {
+    vertical-align: middle;
+  }
+  
 }
 </style>
