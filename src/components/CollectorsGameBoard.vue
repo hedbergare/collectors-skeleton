@@ -142,7 +142,12 @@
     <div class="workBox">
       <!-- Här gör vi work box med köprutor -->
       <div id="buyWorkInfo">
-        <img id="imageWork" src="/images/workPic/imageWork.png" />
+        <img
+          id="imageWork"
+          src="/images/workPic/imageWork.png"
+          style="cursor: pointer"
+          @click="showInfoPopup(labels.workInfoTitle, labels.workInfo)"
+        />
       </div>
       <div id="buyWorkBox1"></div>
 
@@ -255,23 +260,23 @@
       </div>
       <div id="MarketArrow1">
         <img id="imagePingvin" src="/images/marketPic/image_fastaval.png" />
-        {{ "x" + marketValues.fastaval }}
+         <span class="marketValueText">{{ "x" + marketValues.fastaval }}</span>
       </div>
       <div id="MarketArrow2">
         <img id="imageRobot" src="/images/marketPic/image_figure.png" />
-        {{ "x" + marketValues.figures }}
+         <span class="marketValueText">{{ "x" + marketValues.figures }}</span>
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
-        {{ "x" + marketValues.music }}
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
+        <span class="marketValueText">{{ "x" + marketValues.music }}</span>
       </div>
       <div id="MarketArrow4">
         <img id="imageFilm" src="/images/marketPic/image_movie.png" />
-        {{ "x" + marketValues.movie }}
+         <span class="marketValueText">{{ "x" + marketValues.movie }}</span>
       </div>
       <div id="MarketArrow5">
         <img id="imageTeknik" src="/images/marketPic/image_technology.png" />
-        {{ "x" + marketValues.technology }}
+         <span class="marketValueText">{{ "x" + marketValues.technology }}</span>
       </div>
     </div>
 
@@ -963,6 +968,10 @@ export default {
   border: dashed 2px black;
   grid-column: 5;
   grid-row: 2;
+}
+.marketValueText{
+  vertical-align:top;
+  font-size:120%;
 }
 
 /* Bilder till Market Value */

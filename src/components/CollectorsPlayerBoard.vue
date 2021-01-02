@@ -64,17 +64,17 @@
             src="images/player_board/treasure.PNG"
             class="topRowIcons"
           />
+          <div class="secretPopup" v-if="playerId == player.pId">
+            <CollectorsCard
+              v-for="(card, index) in player.secret"
+              :key="index"
+              :card="card"
+            />
+          </div>
         </div>
-        <div class="secretPopup" v-if="playerId == player.pId">
-          <CollectorsCard
-            v-for="(card, index) in player.secret"
-            :key="index"
-            :card="card"
-          />
-        </div>
+
         <div id="money">
-          <div class="helper_wrapper">
-            <span class="helper"></span>
+          <div>
             <img
               src="images/player_board/current_money.png"
               class="topRowIcons"
@@ -85,7 +85,6 @@
 
         <div id="income">
           <div>
-            <span class="helper"></span>
             <img
               src="images/player_board/passive_income.png"
               class="topRowIcons"
@@ -110,7 +109,7 @@
       <div id="skills" :style="'background-color:' + player.color">
         <div id="skillsImage">
           <span class="helper"></span>
-          <img id="skillsButton" src="images/buySkillPic/Skillsbutton.png/" />
+          <img id="skillsButton" src="images/buySkillPic/SkillsbuttonP.png/" />
           <img id="skillsInfo" src="images/player_board/skills_info.PNG" />
         </div>
 
@@ -152,14 +151,15 @@
         <span class="helper"></span>
         <img src="images/player_board/card_hand.png" />
       </div>
+
       <div id="cardRefill" v-if="playerId == player.pId">
-        <CollectorsCard
-          v-for="(card, index) in player.hand"
-          :key="index"
-          :card="card"
-          :availableAction="card.available"
-          @doAction="handleAction(card)"
-        />
+        <div class="cardCont" v-for="(card, index) in player.hand" :key="index">
+          <CollectorsCard
+            :card="card"
+            :availableAction="card.available"
+            @doAction="handleAction(card)"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -211,7 +211,6 @@ export default {
   border-radius: 5px;
   margin-top: 3px;
   padding: 1%;
-  border: 4px solid #f8f1ae;
   margin: 5px;
 }
 
@@ -219,6 +218,8 @@ export default {
 #chest:hover + .secretPopup {
   display: inline-block;
   position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .secretPopup {
@@ -250,6 +251,9 @@ export default {
   width: 100%;
 }
 .topRowIcons {
+  max-width: 100%;
+}
+#chest {
   max-width: 50%;
 }
 #money p,
@@ -257,11 +261,6 @@ export default {
 #currentPoints p {
   margin: 0%;
   margin-top: 0.3em;
-}
-#money img,
-#income img,
-#currentPoints img {
-  vertical-align: middle;
 }
 
 #midRow {
@@ -361,17 +360,56 @@ export default {
   height: 100%;
   margin: 5px;
   border-radius: 5px;
-  border: 4px solid #f8f1ae;
 }
 
 #cardRefill {
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: repeat(auto-fill, 130px);
-  /*   grid-template-rows: repeat(auto-fill, 130px); */
+  overflow-x: scroll;
+  white-space: nowrap;
+  max-width: 100%;
+  border-radius:5px;
 }
-#cardRefill > * {
-  transform: scale(0.4) translate(-60%, -60%);
+#cardRefill::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+#cardRefill::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+#cardRefill::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+#cardRefill::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+#cardRefill::-webkit-scrollbar-thumb:active {
+  background: #ffffff;
+}
+#cardRefill::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 90px;
+}
+#cardRefill::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+#cardRefill::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+#cardRefill::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.cardCont{
+  display: inline-block;
+  max-width:25%;
+  max-height:200px;
+}
+.cardCont > *{
+   transform: scale(0.4) translate(-60%, -60%);
+  display: inline-block;
+  margin: 0;
 }
 
 #cardsImage img {
