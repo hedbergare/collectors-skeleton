@@ -307,14 +307,10 @@ export default {
 #items {
   display: grid;
   grid-template-columns: 5fr 1fr;
-<<<<<<< HEAD
-  border: 2px dashed black;
-=======
   border: 4px solid rgb(253, 102, 102);
   border-radius: 5px;
   margin: 5px;
   padding: 1%;
->>>>>>> b37df674de0d37ff7b5affc4a0ce57dfd9f7a41e
 }
 
 #itemsRefill {
