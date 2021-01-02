@@ -64,17 +64,17 @@
             src="images/player_board/treasure.PNG"
             class="topRowIcons"
           />
+          <div class="secretPopup" v-if="playerId == player.pId">
+            <CollectorsCard
+              v-for="(card, index) in player.secret"
+              :key="index"
+              :card="card"
+            />
+          </div>
         </div>
-        <div class="secretPopup" v-if="playerId == player.pId">
-          <CollectorsCard
-            v-for="(card, index) in player.secret"
-            :key="index"
-            :card="card"
-          />
-        </div>
+
         <div id="money">
-          <div class="helper_wrapper">
-            <span class="helper"></span>
+          <div>
             <img
               src="images/player_board/current_money.png"
               class="topRowIcons"
@@ -85,7 +85,7 @@
 
         <div id="income">
           <div>
-            <span class="helper"></span>
+            
             <img
               src="images/player_board/passive_income.png"
               class="topRowIcons"
@@ -110,7 +110,7 @@
       <div id="skills" :style="'background-color:' + player.color">
         <div id="skillsImage">
           <span class="helper"></span>
-          <img id="skillsButton" src="images/buySkillPic/Skillsbutton.png/" />
+          <img id="skillsButton" src="images/buySkillPic/SkillsButtonP.png/" />
           <img id="skillsInfo" src="images/player_board/skills_info.PNG" />
         </div>
 
@@ -219,6 +219,8 @@ export default {
 #chest:hover + .secretPopup {
   display: inline-block;
   position: absolute;
+  top:0;
+  left:0;
 }
 
 .secretPopup {
@@ -250,7 +252,10 @@ export default {
   width: 100%;
 }
 .topRowIcons {
-  max-width: 50%;
+  max-width: 100%;
+}
+#chest{
+  max-width:50%;
 }
 #money p,
 #income p,
@@ -258,11 +263,7 @@ export default {
   margin: 0%;
   margin-top: 0.3em;
 }
-#money img,
-#income img,
-#currentPoints img {
-  vertical-align: middle;
-}
+
 
 #midRow {
   display: grid;

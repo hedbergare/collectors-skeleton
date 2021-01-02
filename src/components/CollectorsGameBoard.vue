@@ -142,7 +142,12 @@
     <div class="workBox">
       <!-- Här gör vi work box med köprutor -->
       <div id="buyWorkInfo">
-        <img id="imageWork" src="/images/workPic/imageWork.png" />
+        <img
+          id="imageWork"
+          src="/images/workPic/imageWork.png"
+          style="cursor: pointer"
+          @click="showInfoPopup(labels.workInfoTitle, labels.workInfo)"
+        />
       </div>
       <div id="buyWorkBox1"></div>
 
@@ -262,7 +267,7 @@
         {{ "x" + marketValues.figures }}
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
         {{ "x" + marketValues.music }}
       </div>
       <div id="MarketArrow4">
