@@ -253,6 +253,7 @@ export default {
 }
 .topRowIcons {
   max-width: 100%;
+  margin-top: 0.2em;
 }
 #chest {
   max-width: 80%;
@@ -425,6 +426,7 @@ export default {
 
   .topRowIcons {
     vertical-align: middle;
+    margin-top: 0.35em;
   }
   
 }
