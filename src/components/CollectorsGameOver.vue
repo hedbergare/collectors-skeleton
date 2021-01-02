@@ -38,7 +38,7 @@
 
       <div>
         <a href="http://localhost:8080/#/" class="playAgainButton">
-          Do you want to play again?
+          {{ labels.playAgain }}
         </a>
       </div>
     </div>
@@ -139,6 +139,9 @@ export default {
 </script>
 
 <style scoped>
+#playerRow {
+  color: black;
+}
 h1 {
   margin-block-start: 0em;
   margin-block-end: 0em;
