@@ -66,9 +66,13 @@
           @click="placeBottle(p, 'item')"
         ></button>
 
-        <div v-if="p.playerId !== null">
-          {{ p.playerId }}
-        </div>
+        <button
+          v-if="p.playerId !== null"
+          disabled="true"
+          class="placeBottleAuction1"
+        >
+          <CollectorsBottle :color="players[p.playerId].color" />
+        </button>
       </div>
       <div id="buyItemBoxInfo">
         <img
@@ -108,9 +112,13 @@
           @click="placeBottle(p, 'skill')"
         ></button>
 
-        <div v-if="p.playerId !== null">
-          {{ p.playerId }}
-        </div>
+        <button
+          v-if="p.playerId !== null"
+          disabled="true"
+          class="placeBottleAuction1"
+        >
+          <CollectorsBottle :color="players[p.playerId].color" />
+        </button>
       </div>
 
       <!-- här gör vi pilarna till skillBox -->
@@ -134,7 +142,12 @@
     <div class="workBox">
       <!-- Här gör vi work box med köprutor -->
       <div id="buyWorkInfo">
-        <img id="imageWork" src="/images/workPic/imageWork.png" />
+        <img
+          id="imageWork"
+          src="/images/workPic/imageWork.png"
+          style="cursor: pointer"
+          @click="showInfoPopup(labels.workInfoTitle, labels.workInfo)"
+        />
       </div>
       <div id="buyWorkBox1"></div>
 
@@ -171,9 +184,13 @@
             v-if="p.playerId === null"
             @click="placeBottle(p, 'auction')"
           ></button>
-          <div v-if="p.playerId !== null">
-            {{ p.playerId }}
-          </div>
+          <button
+            v-if="p.playerId !== null"
+            disabled="true"
+            class="placeBottleAuction1"
+          >
+            <CollectorsBottle :color="players[p.playerId].color" />
+          </button>
         </div>
       </div>
 
@@ -233,30 +250,33 @@
           "
           @click="placeBottle(p, 'market' + p.numCards)"
         ></button>
-
-        <div v-if="p.playerId !== null">
-          {{ p.playerId }}
-        </div>
+        <button
+          v-if="p.playerId !== null"
+          disabled="true"
+          class="placeBottleAuction1"
+        >
+          <CollectorsBottle :color="players[p.playerId].color" />
+        </button>
       </div>
       <div id="MarketArrow1">
         <img id="imagePingvin" src="/images/marketPic/image_fastaval.png" />
-        {{ "x" + marketValues.fastaval }}
+         <span class="marketValueText">{{ "x" + marketValues.fastaval }}</span>
       </div>
       <div id="MarketArrow2">
         <img id="imageRobot" src="/images/marketPic/image_figure.png" />
-        {{ "x" + marketValues.figures }}
+         <span class="marketValueText">{{ "x" + marketValues.figures }}</span>
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
-        {{ "x" + marketValues.music }}
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
+        <span class="marketValueText">{{ "x" + marketValues.music }}</span>
       </div>
       <div id="MarketArrow4">
         <img id="imageFilm" src="/images/marketPic/image_movie.png" />
-        {{ "x" + marketValues.movie }}
+         <span class="marketValueText">{{ "x" + marketValues.movie }}</span>
       </div>
       <div id="MarketArrow5">
         <img id="imageTeknik" src="/images/marketPic/image_technology.png" />
-        {{ "x" + marketValues.technology }}
+         <span class="marketValueText">{{ "x" + marketValues.technology }}</span>
       </div>
     </div>
 
@@ -288,11 +308,13 @@
 
 <script>
 import CollectorsCard from "@/components/CollectorsCard.vue";
+import CollectorsBottle from "@/components/CollectorsBottle.vue";
 
 export default {
   name: "CollectorsGameBoard",
   components: {
     CollectorsCard,
+    CollectorsBottle,
   },
   data: function () {
     return {
@@ -312,6 +334,7 @@ export default {
     skillPlacement: Array,
     marketPlacement: Array,
     highlightCards: Boolean,
+    players: Object,
   },
 
   watch: {
@@ -327,9 +350,7 @@ export default {
       this.infoText = "";
     },
     handleAction: function (card) {
-      console.log("i handle action game board");
       if (card.available) {
-        console.log("i handle action game board");
         this.$emit("handleAction", card);
         this.updatePoints();
       }
@@ -500,10 +521,10 @@ export default {
   text-shadow: 0px 1px 0px #ffffff;
   padding: 5%;
   position: relative;
-  max-width:50%;
+  max-width: 50%;
 }
-.infoPopup p{
-  font-size:80%;
+.infoPopup p {
+  font-size: 80%;
 }
 .close {
   position: absolute;
@@ -539,14 +560,14 @@ export default {
   grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 50% 50%;
+  grid-template-rows: 30% 70%;
   padding: 5px;
   text-align: center;
   max-width: 100%;
   background-color: rgb(247, 193, 230);
   color: white;
   margin: 5px;
-  border-radius:5px;
+  border-radius: 5px;
 }
 .cardBoxLeft {
   display: grid;
@@ -570,7 +591,7 @@ export default {
   grid-column: 2;
   grid-row: 3 / span 3;
   margin: 2px;
-  border-radius:5px;
+  border-radius: 5px;
 }
 .workBox {
   display: grid;
@@ -582,7 +603,7 @@ export default {
   color: white;
   grid-column: 3;
   grid-row: 3 / span 3;
-  border-radius:5px;
+  border-radius: 5px;
 }
 .auctionBox {
   display: grid;
@@ -595,7 +616,7 @@ export default {
   grid-row: 3 / span 3;
   max-width: 100%;
   margin: 2px;
-  border-radius:5px;
+  border-radius: 5px;
 }
 .marketBox {
   display: grid;
@@ -609,7 +630,7 @@ export default {
   grid-row: 6;
   max-width: 100%;
   margin: 2px;
-  border-radius:5px;
+  border-radius: 5px;
 }
 
 .itemsOnSaleIcon {
@@ -640,7 +661,8 @@ export default {
   height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
-  border-radius:5px;
+  background-position: center;
+  border-radius: 5px;
 }
 .bottleSkill {
   max-height: 100%;
@@ -655,15 +677,17 @@ export default {
   height: 70%;
   background-size: contain;
   background-repeat: no-repeat;
-  border-radius:5px;
+  background-position: center;
+  border-radius: 5px;
 }
 .placeBottleMarket {
   color: blue;
   width: 50%;
-  height: 80%;
+  height: 90%;
   background-size: contain;
   background-repeat: no-repeat;
-  border-radius:5px;
+  background-position: center;
+  border-radius: 5px;
 }
 
 #buyItemBoxInfo {
@@ -827,11 +851,12 @@ export default {
 /* Small boxes in auctionBox */
 .placeBottleAuction1 {
   color: blue;
-  width: 55%;
-  height: 70%;
+  width: 65%;
+  height: 90%;
   background-size: contain;
   background-repeat: no-repeat;
-  border-radius:5px;
+  background-position: center;
+  border-radius: 5px;
 }
 .auctionBox1 {
   height: 100%;
@@ -840,12 +865,16 @@ export default {
 #auction2Boxes1 {
   grid-column: 1/3;
   grid-row: 2;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns:1fr 1fr;
+  grid-template-rows: 50% 50%;
+  grid-template-columns: 1fr 1fr;
   display: grid;
   max-width: 100%;
   max-height: 100%;
   padding: 5%;
+}
+.placeBottleAuction1 > * {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 /* Pilar i auctionbox */
@@ -908,9 +937,9 @@ export default {
   max-height: 100%;
 }
 
-#auctionCards{
-  width:70%;
-  padding-top:20%;
+#auctionCards {
+  width: 70%;
+  padding-top: 20%;
 }
 
 /* Small boxes in MarketBox */
@@ -919,31 +948,30 @@ export default {
   border: dashed 2px black;
   grid-column: 1;
   grid-row: 2;
-  padding-bottom: 4px;
 }
 #MarketArrow2 {
   border: dashed 2px black;
   grid-column: 2;
   grid-row: 2;
-  padding-bottom: 4px;
 }
 #MarketArrow3 {
   border: dashed 2px black;
   grid-column: 3;
   grid-row: 2;
-  padding-bottom: 4px;
 }
 #MarketArrow4 {
   border: dashed 2px black;
   grid-column: 4;
   grid-row: 2;
-  padding-bottom: 4px;
 }
 #MarketArrow5 {
   border: dashed 2px black;
   grid-column: 5;
   grid-row: 2;
-  padding-bottom: 4px;
+}
+.marketValueText{
+  vertical-align:top;
+  font-size:120%;
 }
 
 /* Bilder till Market Value */
@@ -959,8 +987,9 @@ export default {
 
 .itemsOnSaleIcon:hover + #itemsOnSalePic {
   display: inline-block;
-  height: 43%;
-  width: 30%;
+  width: 250px;
+  height: 350px;
+  transform: scale(0.5) translate(-50%, -50%);
 }
 #itemsOnSalePic {
   position: absolute;
@@ -969,12 +998,16 @@ export default {
 }
 .skillsOnSaleIcon:hover + #skillsOnSalePic {
   display: inline-block;
-  height: 43%;
-  width: 17%;
+  width: 250px;
+  height: 350px;
+  transform: scale(0.5) translate(-50%, -50%);
 }
 #skillsOnSalePic {
   position: absolute;
   display: none;
   width: 50%;
+}
+/* Här skriver vi den css som bara ska gälla för mobilversion (när skärmen är mindre än 800px) */
+@media screen and (max-width: 800px) {
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
-<div id="bottleWrapper">
+
     <img :src="'/images/bottles/' + color + '_bottle.png'"/>
 
-</div>
+
     
 </template>
 <script>
@@ -16,15 +16,9 @@ export default {
 </script>
 
 <style scoped>
-#bottleWrapper{
-    width:60%;
-    margin:0 auto;
-    margin-top:10%;
-    border:2px solid black;
-}
-
-#bottleWrapper img{
-    max-width:100%;
+img{
+    max-width:60%;
+    max-height:100%;
 }
 
 </style>

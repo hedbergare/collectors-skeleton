@@ -44,6 +44,8 @@
 	"auctionInfoTitle": "Information om 'Auction'",
 	"auctionInfo": "Det här är området där du kan starta en auktion. Om du lägger en flaska på en tillgänglig plats får du välja mellan ett auktionskort eller ett kort från ditt hand. När du startar en auktion placerar du automatiskt en första insats på 1 krona. Den person som satsar mest pengar får välja om den vill använda kortet som item, skill eller marknadsvärde.",
 	"marketInfoTitle": "Information om Marknadsvärden",
-	"marketInfo": "Det här är området där du kan öka marknadsvärden. Marknadsvärden är det som bestämmer hur mycket dina köpta 'Items' är värda. De flaskplatser med två symboler i övre högra hörn innebär att du får öka marknadsvärdet med två kort. Du får alltid välja kort från din hand samt det sista kortet från området 'Skills' och 'Auction'"
+	"marketInfo": "Det här är området där du kan öka marknadsvärden. Marknadsvärden är det som bestämmer hur mycket dina köpta 'Items' är värda. De flaskplatser med två symboler i övre högra hörn innebär att du får öka marknadsvärdet med två kort. Du får alltid välja kort från din hand samt det sista kortet från området 'Skills' och 'Auction'",
+	"workInfoTitle": "Information om Work",
+	"workInfo": "Info om work"
 
 }
