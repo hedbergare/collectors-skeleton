@@ -45,6 +45,7 @@
 	"auctionInfo": "This is the area where you can start an auction. If you place a bottle on an available slot, you can choose to put a card from your hand or from this area to put up for auction. Wheny you start an auction, you automatically place a 1 coin bet as a start. Whoever places the largest bet at the end, that person gets to choose what to use the card for: as an item, skill or to raise market value.",
 	"marketInfoTitle": "Information about market values",
 	"marketInfo": "This is the area where you can raise market values. Market values are what decides how much your items are worth. The bottle placements with two symbols in the top-right corner allows you to pick two cards for raising values. You are allowed to choose cards from your hand and the last available card in the skills & auction areas.",
-	"workInfoTitle": "Information om Work",
-	"workInfo": "Info om work"
+	"workInfoTitle": "Information about Work",
+	"workInfo": "This is the are where you can work. If you place your bottle in the uppermost action space (on the quarter tile), you must place two cards upside down from your hand next to your player board on its right side (this action is only available in round 4). If you place your bottle on the second action space from the top (round 1-3 it's the uppermost), you must discard the placed bottle and recieve 1 coin. If you place your bottle on the next space from the top, you must pay 1 coin and you get to draw two cards from the deck to your hand. If you place your bottle on the next space from the top, you get to draw one card and you take the first player token. If you place your bottle on the lowest space, you must draw one card from the deck to your hand and place one card from your hand to your passive income. On each card you can see the value.",
+	"playAgain": "Do you want to play again?"
 }

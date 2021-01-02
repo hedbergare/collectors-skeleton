@@ -263,11 +263,11 @@
          <span class="marketValueText">{{ "x" + marketValues.fastaval }}</span>
       </div>
       <div id="MarketArrow2">
-        <img id="imageRobot" src="/images/marketPic/image_figure.png" />
+        <img id="imageRobot" src="/images/marketPic/image_figures.png" />
          <span class="marketValueText">{{ "x" + marketValues.figures }}</span>
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
         <span class="marketValueText">{{ "x" + marketValues.music }}</span>
       </div>
       <div id="MarketArrow4">
