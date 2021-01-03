@@ -543,6 +543,7 @@ export default {
   grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5% 15% 21% 21% 21% 17%;
 }
+/* red icon design at the top of buyItem */
 .cardBoxTop {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -552,6 +553,7 @@ export default {
   grid-column: 2 / span 7;
   grid-row: 1;
 }
+/* Design för buyItem */
 .itemBox {
   grid-column: 2 / span 4;
   grid-row: 2;
@@ -566,6 +568,7 @@ export default {
   margin: 5px;
   border-radius: 5px;
 }
+/* design for green icons on the left in buySkill */
 .cardBoxLeft {
   display: grid;
   grid-template-columns: 1fr;
@@ -575,6 +578,7 @@ export default {
   grid-column: 1;
   grid-row: 3 / span 3;
 }
+/* Design for buySkill */
 .skillBox {
   display: grid;
   text-align: center;
@@ -590,6 +594,7 @@ export default {
   margin: 2px;
   border-radius: 5px;
 }
+/* Design for work */
 .workBox {
   display: grid;
   grid-template-columns: 1fr;
@@ -602,6 +607,7 @@ export default {
   grid-row: 3 / span 3;
   border-radius: 5px;
 }
+/* Design for Auction */
 .auctionBox {
   display: grid;
   text-align: center;
@@ -615,6 +621,7 @@ export default {
   margin: 2px;
   border-radius: 5px;
 }
+/* Design for market */
 .marketBox {
   display: grid;
   padding: 5px;
@@ -629,24 +636,21 @@ export default {
   margin: 2px;
   border-radius: 5px;
 }
-
+/* Design for icon buttons */
 .itemsOnSaleIcon {
   max-width: 50%;
 }
-
 .skillsOnSaleIcon {
   max-height: 40%;
   max-width: 100%;
 }
-
 .itemsOnSaleIconCont1,
 .skillsOnSaleIconCont {
   max-height: 100%;
   text-align: center;
 }
 
-/* Flaskor till Item */
-
+/* Bottles for Item */
 #itemInfo {
   max-width: 70%;
 }
@@ -661,6 +665,7 @@ export default {
   background-position: center;
   border-radius: 5px;
 }
+
 .bottleSkill {
   max-height: 100%;
   max-width: 100%;
@@ -698,7 +703,7 @@ export default {
   max-height: 100%;
 }
 
-/* Pilar till Item */
+/* Arrows for Item */
 #itemArrow1 {
   grid-column: 1;
   grid-row: 1;
@@ -749,8 +754,7 @@ export default {
   max-height: 100%;
 }
 
-/* Pilarna i Skillbox */
-
+/* Arrows in Skillbox */
 #skillArrow1 {
   text-align: left;
   grid-column: 1;
@@ -874,7 +878,7 @@ export default {
   max-width: 100%;
 }
 
-/* Pilar i auctionbox */
+/* Arrows in auctionbox */
 #auctionArrow1 {
   grid-column: 1/3;
   grid-row: 1;
@@ -940,7 +944,6 @@ export default {
 }
 
 /* Small boxes in MarketBox */
-
 #MarketArrow1 {
   border: dashed 2px black;
   grid-column: 1;
@@ -1000,6 +1003,7 @@ export default {
   display: none;
   width: 50%;
 }
+
 /* Här skriver vi den css som bara ska gälla för mobilversion (när skärmen är mindre än 800px) */
 @media screen and (max-width: 800px) {
 }
