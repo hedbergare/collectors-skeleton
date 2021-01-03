@@ -1,27 +1,33 @@
 <template>
   <div class="center">
     <div class="wrapper">
-      <div style="margin:0 auto;">
-      <h1>Welcome to Collectors</h1>
-      <p>- a worker-placement boardgame for everyone all ages!</p>
+      <div style="margin: 0 auto">
+        <div class="headline">
+          <h1>Welcome to Collectors</h1>
+          <p>- a worker-placement boardgame for everyone of all ages!</p>
+        </div>
 
-      <ul>
-        <img src="images/en_flag.png" />
-        <li v-for="i in 3" :key="i">
-          <a @click="setupCollectors(i + 1, 'en')"
-            >Set up a game of Collectors for {{ i + 1 }} players</a
-          >.
-        </li>
-      </ul>
+        <a href="#" class="demoButton">Watch demo and learn how to play. </a>
 
-      <ul>
-        <img src="images/se_flag.png" />
-        <li v-for="i in 3" :key="i">
-          <a @click="setupCollectors(i + 1, 'se')"
-            >Spela Collectors med {{ i + 1 }} spelare</a
-          >.
-        </li>
-      </ul>
+        <div class="langBoxes">
+          <ul>
+            <img src="images/en_flag.png" />
+            <li v-for="i in 3" :key="i">
+              <a @click="setupCollectors(i + 1, 'en')"
+                >Set up a game of Collectors for {{ i + 1 }} players</a
+              >.
+            </li>
+          </ul>
+
+          <ul>
+            <img src="images/se_flag.png" />
+            <li v-for="i in 3" :key="i">
+              <a @click="setupCollectors(i + 1, 'se')"
+                >Spela Collectors med {{ i + 1 }} spelare</a
+              >.
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -49,8 +55,11 @@ export default {
 };
 </script>
 <style scoped>
+.headline {
+  text-align: center;
+}
 img {
-  max-width: 10%;
+  max-width: 15%;
 }
 .center {
   display: flex;
@@ -59,9 +68,9 @@ img {
   padding: 1em;
 }
 .wrapper {
-  background-color: rgb(241, 174, 87);
+  background-color: rgb(247, 201, 118);
   color: white;
-  margin:0 auto;
+  margin: 0 auto;
   width: 50%;
   margin-top: 5%;
   padding: 0 10%;
@@ -71,40 +80,81 @@ img {
   -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
 }
+.langBoxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 ul {
   padding: 0;
-  margin:0 auto;
+  margin: 0 auto;
 }
 ul li {
-  margin:0 auto;
+  margin: 0 auto;
   list-style-type: none;
   box-shadow: 0px 1px 0px 0px #1c1b18;
-  background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
-  background-color: #eae0c2;
+  background: linear-gradient(to bottom, #e25f37 5%, #cfb418 100%);
   border-radius: 15px;
   border: 2px solid #333029;
   cursor: pointer;
-  color: #505739;
-  font-size: 14px;
+  color: #11130d;
+  font-size: 13px;
   font-weight: bold;
   padding: 12px 16px;
   text-decoration: none;
-  text-shadow: 0px 1px 0px #ffffff;
   margin: 5px;
-  max-width: 50%;
+  max-width: 70%;
 }
 li:hover {
-  background: linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
-  background-color: #ccc2a6;
+  background: linear-gradient(to bottom, #cfb418 5%, #e25f37 100%);
 }
 li:active {
   position: relative;
   top: 1px;
 }
-@media screen and (max-width: 800px) {
+
+.demoButton {
+  background: linear-gradient(to bottom, #e25f37 5%, #cfb418 100%);
+  border-radius: 15px;
+  border: 2px solid #333029;
+  display: inline-block;
+  cursor: pointer;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 16px;
+  text-decoration: none;
+  max-width: 100%;
+  max-height: 20%;
+  text-align: center;
+  margin: 4px;
+}
+.demoButton:hover {
+  background: linear-gradient(to bottom, #cfb418 5%, #e25f37 100%);
+}
+.demoButton:active {
+  position: relative;
+  top: 1px;
+}
+
+@media screen and (max-width: 850px) {
+  .headline {
+    font-size: 2vw;
+  }
+  img {
+    max-width: 15%;
+  }
   .wrapper {
-    max-height: none;
+    max-height: 95%;
     width: 90%;
+    margin-top: 0%;
+  }
+  ul li {
+    max-height: 10%;
+    max-width: 100%;
+    font-size: 1.3vw;
+  }
+  .demoButton {
+    font-size:1.3vw ;
   }
 }
 </style>

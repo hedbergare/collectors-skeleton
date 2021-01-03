@@ -37,13 +37,17 @@
 	"hiddenItem": "Gömt item: ",
 	"extraPointsSecret": "Extra poäng från det gömda kortet: ",
 	"totalPoints": "Totala poäng: ",
-	"itemsInfoTitle": "Information om 'Items'",
+	"itemsInfoTitle": "Information om Items",
 	"itemsInfo": "Det här är området där du kan köpa Items. Det finns 5 olika typer av items, och dessa är värda så många poäng som dess respektive marknadsvärde, samt ytterligare om du äger någon relevant 'Skill'. Dess kostnad bestäms av marknadsvärdet samt vart du placerar din flaska.",
-	"skillsInfoTitle": "Information om 'Skills'",
+	"skillsInfoTitle": "Information om Skills",
 	"skillsInfo": "Det här är området där du kan köpa Skills. Du kan se vad varje 'Skill' har för funktion genom att hålla på ikonen för skills på ditt spelarbräde. Vid slutet av varje runda´, åker den sista tillgängliga skillen ner på spelbrädet för att öka marknadsvärdet för det item som indikeras längst ner på kortet.",
-	"auctionInfoTitle": "Information om 'Auction'",
+	"auctionInfoTitle": "Information om Auction",
 	"auctionInfo": "Det här är området där du kan starta en auktion. Om du lägger en flaska på en tillgänglig plats får du välja mellan ett auktionskort eller ett kort från ditt hand. När du startar en auktion placerar du automatiskt en första insats på 1 krona. Den person som satsar mest pengar får välja om den vill använda kortet som item, skill eller marknadsvärde.",
 	"marketInfoTitle": "Information om Marknadsvärden",
-	"marketInfo": "Det här är området där du kan öka marknadsvärden. Marknadsvärden är det som bestämmer hur mycket dina köpta 'Items' är värda. De flaskplatser med två symboler i övre högra hörn innebär att du får öka marknadsvärdet med två kort. Du får alltid välja kort från din hand samt det sista kortet från området 'Skills' och 'Auction'"
+	"marketInfo": "Det här är området där du kan öka marknadsvärden. Marknadsvärden är det som bestämmer hur mycket dina köpta 'Items' är värda. De flaskplatser med två symboler i övre högra hörn innebär att du får öka marknadsvärdet med två kort. Du får alltid välja kort från din hand samt det sista kortet från området 'Skills' och 'Auction'",
+	"workInfoTitle": "Information om Work",
+	"workInfo": "Det här är området där du kan jobba. Lägg en flaska på översta rutan och du får en peng (pant). Rutan näst överst kostar en peng och du får då två till kort på handen. Placerar du din flaska på den tredje rutan får du ta ett till kort till din hand och även vara spelaren som börjar från och med nästa runda. Placerar du din flaska på rutan längst ner får du ta ett kort till din hand och även flytta ett av dina kort på din hand till din passiva inkomst. Se på kortet hur mycket det är värt. Det värdet får du i pengar varje runda. Runda 4 öppnas en till ruta som innebär att man får flytta två kort från sin hand till sin passiva inkomst.",
+	"playAgain": "Vill du spela igen?"
 
 }
+
