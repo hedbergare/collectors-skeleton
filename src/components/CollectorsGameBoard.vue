@@ -19,7 +19,7 @@
       >
         <div class="itemsOnSaleIconCont1" v-if="card.item !== undefined">
           <img
-            class="itemsOnSaleIcon"
+            :class="['itemsOnSaleIcon', {'iconAvailable': card.available}]"
             :src="'images/item_logos/' + card.item + '_item.png'"
           />
           <CollectorsCard
@@ -292,8 +292,8 @@
       >
         <div class="skillsOnSaleCont" v-if="card.skill !== undefined">
           <img
-            class="skillsOnSaleIcon"
             :src="'images/skill_logos/' + card.skill + '_skill.png'"
+            :class="['skillsOnSaleIcon', {'iconAvailable': card.available}]"
           />
           <CollectorsCard
             :card="skillsOnSale[index]"
@@ -640,6 +640,23 @@ export default {
   border-radius: 5px;
 }
 /* Design for icon buttons */
+.iconAvailable{
+    animation: jiggle 1s ease-in-out;
+    animation-iteration-count:infinite;
+}
+@keyframes jiggle {
+  0%{
+    transform: scale(1.1) rotate(2deg);
+  }
+  50%{
+    transform:scale(1.1) rotate(-2deg);
+  }
+  100%{
+    transform:scale(1.1) rotate(2deg);
+  }
+  
+  
+}
 .itemsOnSaleIcon {
   max-width: 50%;
 }

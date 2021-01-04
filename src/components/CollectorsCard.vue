@@ -39,11 +39,6 @@ export default {
     box-shadow: 0 0 10px yellow;
   }
 
-  @keyframes jiggle {
-    0% {transform:rotate(0.5deg);}
-    50% {transform:rotate(-0.5deg);}
-    100% {transform:rotate(0.5deg);}
-  }
 
 
 </style>
