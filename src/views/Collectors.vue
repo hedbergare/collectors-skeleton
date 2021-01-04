@@ -672,7 +672,7 @@ footer a:visited {
 }
 
 /* Här börjar småfix för skalning och mobilversion */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
   #browserWrapper {
     max-height: 100%;
     grid-template-columns: 1fr;

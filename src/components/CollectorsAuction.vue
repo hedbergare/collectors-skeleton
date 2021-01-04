@@ -427,7 +427,7 @@ export default {
 .cardsFromHand::-webkit-scrollbar-corner {
   background: transparent;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
   h1 {
     font-size: 2.5vw;
   }

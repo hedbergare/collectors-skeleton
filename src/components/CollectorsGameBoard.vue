@@ -260,11 +260,11 @@
       </div>
       <div id="MarketArrow1">
         <img id="imagePingvin" src="/images/marketPic/image_fastaval.png" />
-         <span class="marketValueText">{{ "x" + marketValues.fastaval }}</span>
+        <span class="marketValueText">{{ "x" + marketValues.fastaval }}</span>
       </div>
       <div id="MarketArrow2">
         <img id="imageRobot" src="/images/marketPic/image_figures.png" />
-         <span class="marketValueText">{{ "x" + marketValues.figures }}</span>
+        <span class="marketValueText">{{ "x" + marketValues.figures }}</span>
       </div>
       <div id="MarketArrow3">
         <img id="imageMusik" src="/images/marketPic/image_music.png" />
@@ -272,11 +272,11 @@
       </div>
       <div id="MarketArrow4">
         <img id="imageFilm" src="/images/marketPic/image_movie.png" />
-         <span class="marketValueText">{{ "x" + marketValues.movie }}</span>
+        <span class="marketValueText">{{ "x" + marketValues.movie }}</span>
       </div>
       <div id="MarketArrow5">
         <img id="imageTeknik" src="/images/marketPic/image_technology.png" />
-         <span class="marketValueText">{{ "x" + marketValues.technology }}</span>
+        <span class="marketValueText">{{ "x" + marketValues.technology }}</span>
       </div>
     </div>
 
@@ -456,8 +456,8 @@ export default {
       }
     },
 
-    cannotAffordAuction: function () {
-      if (this.player.isTurn) {
+    cannotAffordAuction: function (cost) {
+      if (this.player.isTurn && this.player.money >= cost + 1) {
         return false;
       } else {
         return true;
@@ -549,6 +549,7 @@ export default {
   grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 5% 15% 21% 21% 21% 17%;
 }
+/* red icon design at the top of buyItem */
 .cardBoxTop {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -558,6 +559,7 @@ export default {
   grid-column: 2 / span 7;
   grid-row: 1;
 }
+/* Design för buyItem */
 .itemBox {
   grid-column: 2 / span 4;
   grid-row: 2;
@@ -567,11 +569,12 @@ export default {
   padding: 5px;
   text-align: center;
   max-width: 100%;
-  background-color: rgb(247, 193, 230);
+  background-color: rgb(251, 168, 225);
   color: white;
   margin: 5px;
   border-radius: 5px;
 }
+/* design for green icons on the left in buySkill */
 .cardBoxLeft {
   display: grid;
   grid-template-columns: 1fr;
@@ -581,6 +584,7 @@ export default {
   grid-column: 1;
   grid-row: 3 / span 3;
 }
+/* Design for buySkill */
 .skillBox {
   display: grid;
   text-align: center;
@@ -596,6 +600,7 @@ export default {
   margin: 2px;
   border-radius: 5px;
 }
+/* Design for work */
 .workBox {
   display: grid;
   grid-template-columns: 1fr;
@@ -608,6 +613,7 @@ export default {
   grid-row: 3 / span 3;
   border-radius: 5px;
 }
+/* Design for Auction */
 .auctionBox {
   display: grid;
   text-align: center;
@@ -621,6 +627,7 @@ export default {
   margin: 2px;
   border-radius: 5px;
 }
+/* Design for market */
 .marketBox {
   display: grid;
   padding: 5px;
@@ -635,24 +642,21 @@ export default {
   margin: 2px;
   border-radius: 5px;
 }
-
+/* Design for icon buttons */
 .itemsOnSaleIcon {
   max-width: 50%;
 }
-
 .skillsOnSaleIcon {
   max-height: 40%;
   max-width: 100%;
 }
-
 .itemsOnSaleIconCont1,
 .skillsOnSaleIconCont {
   max-height: 100%;
   text-align: center;
 }
 
-/* Flaskor till Item */
-
+/* Bottles for Item */
 #itemInfo {
   max-width: 70%;
 }
@@ -660,13 +664,14 @@ export default {
 /* small boxes in itemBox */
 .placeBottleItem {
   color: blue;
-  width: 50%;
-  height: 100%;
+  width: 65%;
+  height: 90%;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 5px;
 }
+
 .bottleSkill {
   max-height: 100%;
   max-width: 100%;
@@ -704,7 +709,7 @@ export default {
   max-height: 100%;
 }
 
-/* Pilar till Item */
+/* Arrows for Item */
 #itemArrow1 {
   grid-column: 1;
   grid-row: 1;
@@ -755,8 +760,7 @@ export default {
   max-height: 100%;
 }
 
-/* Pilarna i Skillbox */
-
+/* Arrows in Skillbox */
 #skillArrow1 {
   text-align: left;
   grid-column: 1;
@@ -799,44 +803,32 @@ export default {
 /* Small boxes in WorkBox */
 #buyWorkInfo {
   text-align: center;
-  border: solid 1px;
-  color: black;
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;
 }
 #buyWorkBox1 {
   text-align: center;
-  border: solid 1px;
-  color: black;
   grid-row: 2;
   max-width: 100%;
 }
 #buyWorkBox2 {
   text-align: center;
-  border: solid 1px;
-  color: black;
   grid-row: 3;
   max-width: 100%;
 }
 #buyWorkBox3 {
   text-align: center;
-  border: solid 1px;
-  color: black;
   grid-row: 4;
   max-width: 100%;
 }
 #buyWorkBox4 {
   text-align: center;
-  border: solid 1px;
-  color: black;
   grid-row: 5;
   max-width: 100%;
 }
 #buyWorkBox5 {
   text-align: center;
-  border: solid 1px;
-  color: black;
   grid-row: 6;
   max-width: 100%;
 }
@@ -873,14 +865,13 @@ export default {
   display: grid;
   max-width: 100%;
   max-height: 100%;
-  padding: 5%;
 }
 .placeBottleAuction1 > * {
   max-height: 100%;
   max-width: 100%;
 }
 
-/* Pilar i auctionbox */
+/* Arrows in auctionbox */
 #auctionArrow1 {
   grid-column: 1/3;
   grid-row: 1;
@@ -918,18 +909,6 @@ export default {
   max-height: 100%;
 }
 
-/* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
-/* Ta tillbaka transform scale om korten är ivägen */
-.card {
-  /*  top: 0;
-  left: 0;*/
-  /*   transform: scale(0.3, 0.3);
- */
-  transform-origin: center;
-  /*   margin-top: -105%;
-  margin-left: -75px;  */
-  position: absolute;
-}
 #auctionArrow1 img,
 #auctionArrow2 img,
 #auctionArrow3 img,
@@ -942,11 +921,23 @@ export default {
 
 #auctionCards {
   width: 70%;
-  padding-top: 20%;
+  padding-top: 10%;
+}
+
+/* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
+/* Ta tillbaka transform scale om korten är ivägen */
+.card {
+  /*  top: 0;
+  left: 0;*/
+  /*   transform: scale(0.3, 0.3);
+ */
+  transform-origin: center;
+  /*   margin-top: -105%;
+  margin-left: -75px;  */
+  position: absolute;
 }
 
 /* Small boxes in MarketBox */
-
 #MarketArrow1 {
   border: dashed 2px black;
   grid-column: 1;
@@ -972,9 +963,9 @@ export default {
   grid-column: 5;
   grid-row: 2;
 }
-.marketValueText{
-  vertical-align:top;
-  font-size:120%;
+.marketValueText {
+  vertical-align: top;
+  font-size: 120%;
 }
 
 /* Bilder till Market Value */
@@ -1010,7 +1001,113 @@ export default {
   display: none;
   width: 50%;
 }
+
 /* Här skriver vi den css som bara ska gälla för mobilversion (när skärmen är mindre än 800px) */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
+  .wrapper {
+    grid-template-columns: 0.2fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 6% 18% 19% 19% 19% 19%;
+  }
+
+  /* red icon design at the top of buyItem */
+  .cardBoxTop {
+    grid-template-columns: 17% 17% 17% 17% 17%;
+  }
+  /* Design for icon buttons */
+  .itemsOnSaleIcon {
+    max-width: 25%;
+  }
+
+  /* Design för buyItem */
+  .itemBox {
+    grid-template-rows: 30% 70%;
+  }
+  .placeBottleItem {
+    width: 60%;
+    height: 90%;
+  }
+
+  /* design for green icons on the left in buySkill */
+  .cardBoxLeft {
+    grid-template-rows: 20% 16% 16% 16% 16% 16%;
+  }
+  .skillsOnSaleIcon {
+    max-width: 90%;
+  }
+  /* Small boxes in SkillBox */
+  #buySkillInfo {
+    max-width: 80%;
+  }
+  #skillButton {
+    max-width: 140%;
+    max-height: 140%;
+  }
+  /* Arrows in Skillbox */
+  #skillArrow1,
+  #skillArrow2,
+  #skillArrow3,
+  #skillArrow4 {
+    max-width: 70%;
+  }
+  #skillArrow5 {
+    max-width: 60%;
+  }
+  /* Size on boxes with bottles in skill */
+  .placeBottleSkill {
+    width: 60%;
+    height: 90%;
+  }
+  /* Design for Auction */
+  .auctionBox {
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 30% 33% 33%;
+    max-width: 98%;
+  }
+  /* Small boxes in auctionBox */
+  .placeBottleAuction1 {
+    width: 60%;
+    height: 98%;
+  }
+  .auctionBox1 {
+    height: 90%;
+  }
+
+  #auctionArrow1 img,
+  #auctionArrow2 img,
+  #auctionArrow3 img,
+  #auctionArrow4 img,
+  #auctionArrow5 img,
+  #auctionArrow6 img {
+    max-height: 120%;
+  }
+  #auctionCards {
+    width: 45%;
+    height: 100%;
+  }
+  /* Design for market */
+  .marketBox {
+    grid-template-rows: 60% 40%;
+  }
+  .placeBottleMarket {
+    width: 55%;
+    height: 95%;
+  }
+  .marketValueText {
+    font-size: 120%;
+  }
+
+  /* Picture to Market Value */
+  #imageTeknik,
+  #imageFilm,
+  #imageMusik,
+  #imageRobot,
+  #imagePingvin {
+    max-width: 120%;
+    max-height: 120%;
+  }
+  #marketInfo {
+    max-width: 100%;
+    max-height: 100%;
+  }
 }
 </style>

@@ -418,7 +418,7 @@ export default {
   max-width: 100%;
 }
 /* Här skriver vi css för mobilversion */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
   #wallet {
     font-size: 3vw;
     text-align: center;
