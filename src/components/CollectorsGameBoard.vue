@@ -453,8 +453,8 @@ export default {
       }
     },
 
-    cannotAffordAuction: function () {
-      if (this.player.isTurn) {
+    cannotAffordAuction: function (cost) {
+      if (this.player.isTurn && this.player.money >= cost + 1) {
         return false;
       } else {
         return true;
