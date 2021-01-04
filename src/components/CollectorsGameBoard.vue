@@ -248,7 +248,7 @@
             p.cost +
             '.png);'
           "
-          @click="placeBottle(p, 'market' + p.numCards)"
+          @click="placeBottle(p, 'market' + p.numCards,'ja')"
         ></button>
         <button
           v-if="p.playerId !== null"
@@ -408,6 +408,7 @@ export default {
       } else if (action === "skill") {
         this.highlightAvailableSkills(p.cost);
       } else if (action === "market2" || action === "market1") {
+        console.log(action)
         this.highlightAvailableMarket(p.cost);
       } else if (action === "auction") {
         this.initiateAuction();
@@ -421,6 +422,8 @@ export default {
           this.player.money - cost
         ) {
           this.$set(this.itemsOnSale[i], "available", true);
+          this.$set(this.placeBottleItem, "available", true);
+
         } else {
           this.$set(this.itemsOnSale[i], "available", false);
         }
@@ -487,7 +490,7 @@ export default {
     },
 
     cannotAffordSkill: function (cost) {
-      if (this.player.money >= cost && this.player.isTurn) {
+      if (this.player.money >= cost && this.player.isTurn ) {
         return false;
       } else {
         return true;

@@ -516,6 +516,7 @@ export default {
       }
 
       if (this.action === "market1") {
+        console.log("hej")
         this.buyMarket(card);
         this.action = "";
       }
