@@ -19,7 +19,7 @@
       >
         <div class="itemsOnSaleIconCont1" v-if="card.item !== undefined">
           <img
-            :class="['itemsOnSaleIcon', {'iconAvailable': card.available}]"
+            :class="['itemsOnSaleIcon', { iconAvailable: card.available }]"
             :src="'images/item_logos/' + card.item + '_item.png'"
           />
           <CollectorsCard
@@ -248,7 +248,7 @@
             p.cost +
             '.png);'
           "
-          @click="placeBottle(p, 'market' + p.numCards,'ja')"
+          @click="placeBottle(p, 'market' + p.numCards, 'ja')"
         ></button>
         <button
           v-if="p.playerId !== null"
@@ -293,7 +293,7 @@
         <div class="skillsOnSaleCont" v-if="card.skill !== undefined">
           <img
             :src="'images/skill_logos/' + card.skill + '_skill.png'"
-            :class="['skillsOnSaleIcon', {'iconAvailable': card.available}]"
+            :class="['skillsOnSaleIcon', { iconAvailable: card.available }]"
           />
           <CollectorsCard
             :card="skillsOnSale[index]"
@@ -408,7 +408,7 @@ export default {
       } else if (action === "skill") {
         this.highlightAvailableSkills(p.cost);
       } else if (action === "market2" || action === "market1") {
-        console.log(action)
+        console.log(action);
         this.highlightAvailableMarket(p.cost);
       } else if (action === "auction") {
         this.initiateAuction();
@@ -423,7 +423,6 @@ export default {
         ) {
           this.$set(this.itemsOnSale[i], "available", true);
           this.$set(this.placeBottleItem, "available", true);
-
         } else {
           this.$set(this.itemsOnSale[i], "available", false);
         }
@@ -490,7 +489,7 @@ export default {
     },
 
     cannotAffordSkill: function (cost) {
-      if (this.player.money >= cost && this.player.isTurn ) {
+      if (this.player.money >= cost && this.player.isTurn) {
         return false;
       } else {
         return true;
@@ -643,22 +642,20 @@ export default {
   border-radius: 5px;
 }
 /* Design for icon buttons */
-.iconAvailable{
-    animation: jiggle 1s ease-in-out;
-    animation-iteration-count:infinite;
+.iconAvailable {
+  animation: jiggle 1s ease-in-out;
+  animation-iteration-count: infinite;
 }
 @keyframes jiggle {
-  0%{
-    transform: scale(1.1) rotate(2deg);
+  0% {
+    transform: scale(1.1) rotate(3deg);
   }
-  50%{
-    transform:scale(1.1) rotate(-2deg);
+  50% {
+    transform: scale(1.1) rotate(-3deg);
   }
-  100%{
-    transform:scale(1.1) rotate(2deg);
+  100% {
+    transform: scale(1.1) rotate(3deg);
   }
-  
-  
 }
 .itemsOnSaleIcon {
   max-width: 50%;
