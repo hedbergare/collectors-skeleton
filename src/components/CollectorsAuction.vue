@@ -14,6 +14,7 @@
         <div class="chooseCard">
           <div class="cardsFromHand">
             <div
+              class="chooseCardCont"
               v-for="(card, index) in players[playerId].hand"
               :key="index"
               @click="putCardUpForAuction(card)"
@@ -23,6 +24,7 @@
           </div>
           <div class="cardsFromAuction">
             <div
+              class="chooseCardCont"
               v-for="(card, index) in auctionCards"
               :key="index"
               @click="putCardUpForAuction(card)"
@@ -243,7 +245,12 @@ export default {
 .auctionWrapper {
   z-index: 6;
   width: 80%;
-  background-color: rgb(255, 197, 131);
+  background: rgb(209, 147, 75);
+  background: linear-gradient(
+    90deg,
+    rgba(209, 147, 75, 1) 19%,
+    rgba(117, 82, 32, 1) 94%
+  );
   height: 80vh;
   margin: 0 auto;
   margin-top: 10vh;
@@ -262,16 +269,25 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
 .cardsFromAuction,
-.cardsFromHand {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 130px);
-  grid-template-rows: repeat(auto-fill, 180px);
-}
-.cardsFromAuction div,
-.cardsFromHand div {
-  transform: scale(0.7);
+.cardsFromHand{
   z-index: 0;
+  overflow-x: scroll;
+  overflow-y:hidden;
+  white-space: nowrap;
+  max-width: 100%;
+  border-radius: 5px;
+  margin:5px;
+  max-height:300px;
+}
+.chooseCardCont {
+  display: inline-block;
+  max-width: 25%;
+}
+.chooseCardCont > * {
+  display: inline-block;
+  transform: scale(0.7) translate(-20%, -20%);
 }
 #auctionStarted {
   display: grid;
@@ -279,6 +295,9 @@ export default {
   grid-template-rows: auto auto;
   position: relative;
   height: 100%;
+}
+#startAuction h1 {
+  padding: 2%;
 }
 #theCard {
   margin: 0 auto;
@@ -295,11 +314,11 @@ export default {
   position: float;
   bottom: 0;
 }
-.bettingBoxCont{
-  margin:5px;
-  padding:5px;
-  border-radius:5px;
-  background-color: #84B082;
+.bettingBoxCont {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #84b082;
 }
 .passed {
   opacity: 0.6;
@@ -340,7 +359,75 @@ export default {
   position: relative;
   top: 1px;
 }
-@media screen and (max-width: 800px) {
+
+/* Scrollbar */
+.cardsFromAuction::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+.cardsFromAuction::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+.cardsFromAuction::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.cardsFromAuction::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+.cardsFromAuction::-webkit-scrollbar-thumb:active {
+  background: #ffffff;
+}
+.cardsFromAuction::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 90px;
+}
+.cardsFromAuction::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+.cardsFromAuction::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+.cardsFromAuction::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.cardsFromHand::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+.cardsFromHand::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+.cardsFromHand::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+.cardsFromHand::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+.cardsFromHand::-webkit-scrollbar-thumb:active {
+  background: #ffffff;
+}
+.cardsFromHand::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 90px;
+}
+.cardsFromHand::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+.cardsFromHand::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+.cardsFromHand::-webkit-scrollbar-corner {
+  background: transparent;
+}
+@media screen and (max-width: 850px) {
   h1 {
     font-size: 2.5vw;
   }
@@ -355,6 +442,14 @@ export default {
   }
   p {
     font-size: 1.5vw;
+  }
+  .cardsFromAuction div,
+  .cardsFromHand div {
+    transform: scale(0.5) translate(-50%, -50%);
+    z-index: 0;
+  }
+  .cardsFromAuction, .cardsFromHand{
+    max-height:150px;
   }
 }
 </style>
