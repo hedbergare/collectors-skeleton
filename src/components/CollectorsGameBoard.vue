@@ -207,7 +207,7 @@
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
       </div>
       <div id="auctionArrow3">
-        <!-- <CollectorsCard :card="auctionCards[0]"/> -->
+        <!-- <CollectorsCard :card="auctionCards[0]"/>  -->
         <img id="auctionCard1" src="/images/auctionPic/auctionArrowDown.png" />
       </div>
       <div id="auctionArrow4">
@@ -923,9 +923,12 @@ export default {
   /*   transform: scale(0.3, 0.3);
  */
   transform-origin: center;
-  /*   margin-top: -105%;
-  margin-left: -75px;  */
+/*   margin-top: -105%;
+  margin-left: -75px; */  
   position: absolute;
+  margin-left: -7%;
+  margin-top: -10%;
+  transform: scale(0.25) translate(-45%, -45%);
 }
 #auctionArrow1 img,
 #auctionArrow2 img,
