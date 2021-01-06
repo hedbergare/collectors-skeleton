@@ -148,25 +148,25 @@
         <button
           v-if="roundCounter === 1"
           class="placeBottleWork"
-          @click="placeBottle(workPlacement[0], 'work', 0)"
+          @click="placeBottle(workPlacement[0], 'work2', 0)"
           :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
         <button
           v-if="roundCounter === 2"
           class="placeBottleWork"
-          @click="placeBottle(workPlacement[1], 'work', 1)"
+          @click="placeBottle(workPlacement[1], 'work2', 1)"
           :style="'background-image: url(/images/workPic/workBottle_-1.png);'"
         ></button>
         <button
           v-if="roundCounter === 3"
           class="placeBottleWork"
-          @click="placeBottle(workPlacement[2], 'work', 2)"
+          @click="placeBottle(workPlacement[2], 'work2', 2)"
           :style="'background-image: url(/images/workPic/workBottle_-2.png);'"
         ></button>
         <button
           v-if="roundCounter === 4"
           class="placeBottleWork"
-          @click="placeBottle(workPlacement[3], 'work', 3)"
+          @click="placeBottle(workPlacement[3], 'work1', 3)"
           :style="'background-image: url(/images/workPic/workBottle_-3.png);'"
         ></button>
         <img v-if="roundCounter === 1" src="images/workPic/workCards.png" />
@@ -177,7 +177,7 @@
       <div class="workBoxCont">
         <button
           class="placeBottleWork"
-          @click="placeBottle(workPlacement[4], 'work', 4)"
+          @click="placeBottle(workPlacement[4], 'work1', 4)"
           :style="'background-image: url(/images/workPic/workBottle_-1.png);'"
         ></button>
         <img src="images/workPic/work4.png" />
@@ -185,7 +185,7 @@
       <div class="workBoxCont">
         <button
           class="placeBottleWork"
-          @click="placeBottle(workPlacement[5], 'work', 5)"
+          @click="placeBottle(workPlacement[5], 'work1', 5)"
           :style="'background-image: url(/images/workPic/workBottle_1.png);'"
         ></button>
         <img src="images/workPic/work5.png" />
@@ -193,15 +193,16 @@
       <div class="workBoxCont">
         <button
           class="placeBottleWork"
-          @click="placeBottle(workPlacement[6], 'work', 6)"
+          @click="placeBottle(workPlacement[6], 'work1', 6)"
           :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
         <img src="images/workPic/work6.png" />
       </div>
       <div class="workBoxCont">
         <button
+        v-if="workPlacement[7].playerId === null"
           class="placeBottleWork"
-          @click="placeBottle(workPlacement[7], 'work', 7)"
+          @click="placeBottle(workPlacement[7], 'work1', 7)"
           :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
         <img src="images/workPic/work7.png" />
@@ -463,9 +464,7 @@ export default {
       this.$emit("updatePoints");
     },
     placeBottle: function (p, action, id = 10) {
-      console.log(
-        "Place bottle " + action + " kostnad " + p.cost + " i gameboard"
-      );
+      console.log(action + id);
       this.$emit("placeBottle", {
         cost: p.cost,
         action: action,
@@ -480,15 +479,28 @@ export default {
       } else if (action === "auction") {
         this.initiateAuction();
         /* min fantastiskt fula lösning på work */
-      } else if (action === "work") {
-        this.$emit("workActions", {
-          cost: p.cost,
-          workId: id,
-        });
-        /* Här kollar vi vilken work det är och gör respektive grej */
+      } else if (action === "work1" || action === "work2") {
+        if (id === 5) {
+          this.$emit("workActions", {
+            cost: p.cost,
+            workId: id,
+          });
+        } else if (id == 0 || id == 1 || id == 2) {
+          console.log("id 012 vi är här");
+          /* Här ska man dra ett kort och få lägga in ett kort i income.*/
+          this.highlightAvailableHand();
+        }else if (id == 7) {
+          console.log("id 7 vi är här");
+          /* Här ska man dra ett kort och få lägga in ett kort i income.*/
+          this.highlightAvailableHand();
+        }
       }
     },
-
+    highlightAvailableHand: function () {
+      for (let i = 0; i < this.player.hand.length; i += 1) {
+        this.$set(this.player.hand[i], "available", true);
+      }
+    },
     highlightAvailableCards: function (cost) {
       for (let i = 0; i < this.itemsOnSale.length; i += 1) {
         if (
