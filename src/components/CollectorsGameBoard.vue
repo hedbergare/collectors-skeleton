@@ -289,21 +289,39 @@
       <div id="auctionArrow2">
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
       </div>
+
       <div id="auctionArrow3">
         <img id="auctionCard1" src="/images/auctionPic/auctionArrowDown.png" />
-        <CollectorsCard :card="auctionCards[0]" />
+        <CollectorsCard
+          :card="auctionCards[0]"
+          :availableAction="auctionCards[0].available"
+          @doAction="handleAction(auctionCards[0])"
+        />
+        
       </div>
       <div id="auctionArrow4">
         <img id="auctionCard2" src="/images/auctionPic/auctionArrowBlue.png" />
-        <CollectorsCard :card="auctionCards[3]" />
+        <CollectorsCard
+          :card="auctionCards[3]"
+          :availableAction="auctionCards[3].available"
+          @doAction="handleAction(auctionCards[3])"
+        />
       </div>
       <div id="auctionArrow5">
         <img id="auctionCard3" src="/images/auctionPic/auctionArrowLeft.png" />
-        <CollectorsCard :card="auctionCards[2]" />
+        <CollectorsCard
+          :card="auctionCards[2]"
+          :availableAction="auctionCards[2].available"
+          @doAction="handleAction(auctionCards[2])"
+        />
+        
       </div>
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
-        <CollectorsCard :card="auctionCards[1]" />
+        <CollectorsCard 
+        :card="auctionCards[1]"
+        :availableAction="auctionCards[1].available"
+        @doAction="handleAction(auctionCards[1])"/>
       </div>
     </div>
 
@@ -331,7 +349,7 @@
             p.cost +
             '.png);'
           "
-          @click="placeBottle(p, 'market' + p.numCards, 'ja')"
+          @click="placeBottle(p, 'market' + p.numCards)"
         ></button>
         <button
           v-if="p.playerId !== null"
@@ -435,7 +453,9 @@ export default {
       this.infoText = "";
     },
     handleAction: function (card) {
+      console.log("Inne i handleAction");
       if (card.available) {
+        console.log("emittar");
         this.$emit("handleAction", card);
         this.updatePoints();
       }
@@ -1284,6 +1304,9 @@ export default {
     top: -130%;
     left: -20%;
     transform: scale(0.15) translate(-85%, -85%);
+  }
+  .auctionArrows {
+    height: 50px;
   }
 }
 </style>
