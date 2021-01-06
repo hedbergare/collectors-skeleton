@@ -33,7 +33,6 @@ function sockets(io, socket, data) {
     );
   });
   socket.on('collectorsBuyMarket', function (d) {
-    console.log("i collectorsbuymarket i socket")
     data.buyMarket(d.roomId, d.playerId, d.card, d.cost)
     io.to(d.roomId).emit('collectorsMarketBought', {
       playerId: d.playerId,
@@ -57,12 +56,13 @@ function sockets(io, socket, data) {
   });
 
   socket.on('collectorsPlaceBottle', function (d) {
-    console.log("inne i sockets placebottle");
-    data.placeBottle(d.roomId, d.playerId, d.action, d.cost);
+
+    data.placeBottle(d.roomId, d.playerId, d.action, d.cost, d.id);
     io.to(d.roomId).emit('collectorsBottlePlaced', {
       placements: data.getPlacements(d.roomId),
-      players: data.getPlayers(d.roomId)
-
+      players: data.getPlayers(d.roomId),
+      playerId: d.playerId,
+      id: d.id,
     }
 
     );
@@ -85,6 +85,8 @@ function sockets(io, socket, data) {
     data.handleWorkActions(d.roomId, d.playerId, d.cost, d.workId);
     io.to(d.roomId).emit('workActionDone', {
       players: data.getPlayers(d.roomId),
+      playerId: d.playerId,
+      id: d.workId
     });
   });
   socket.on('collectorsInsertIncome', function (d) {
