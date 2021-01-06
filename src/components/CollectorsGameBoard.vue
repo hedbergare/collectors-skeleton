@@ -241,20 +241,20 @@
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
       </div>
       <div id="auctionArrow3">
-        <!-- <CollectorsCard :card="auctionCards[0]"/> -->
         <img id="auctionCard1" src="/images/auctionPic/auctionArrowDown.png" />
+        <CollectorsCard :card="auctionCards[0]" />
       </div>
       <div id="auctionArrow4">
         <img id="auctionCard2" src="/images/auctionPic/auctionArrowBlue.png" />
-        <!-- <CollectorsCard :card="auctionCards[1]"/> -->
+        <CollectorsCard :card="auctionCards[3]" />
       </div>
       <div id="auctionArrow5">
         <img id="auctionCard3" src="/images/auctionPic/auctionArrowLeft.png" />
-        <!-- <CollectorsCard :card="auctionCards[2]"/> -->
+        <CollectorsCard :card="auctionCards[2]" />
       </div>
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
-        <!-- <CollectorsCard :card="auctionCards[3]"/> -->
+        <CollectorsCard :card="auctionCards[1]" />
       </div>
     </div>
 
@@ -962,36 +962,51 @@ export default {
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow2 {
   grid-column: 3;
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow3 {
   grid-column: 3;
   grid-row: 2;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow4 {
   grid-column: 1;
   grid-row: 3;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow5 {
   grid-column: 2;
   grid-row: 3;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow6 {
   grid-column: 3;
   grid-row: 3;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
+}
+
+/* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
+/* Ta tillbaka transform scale om korten är ivägen */
+.card {
+  position: absolute;
+  top: -40%;
+  left: -30%;
+  transform: scale(0.25) translate(-65%, -65%);
 }
 
 #auctionArrow1 img,
@@ -1007,19 +1022,7 @@ export default {
 #auctionCards {
   width: 70%;
   padding-top: 10%;
-}
-
-/* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
-/* Ta tillbaka transform scale om korten är ivägen */
-.card {
-  /*  top: 0;
-  left: 0;*/
-  /*   transform: scale(0.3, 0.3);
- */
-  transform-origin: center;
-  /*   margin-top: -105%;
-  margin-left: -75px;  */
-  position: absolute;
+  z-index: -1;
 }
 
 /* Small boxes in MarketBox */
@@ -1193,6 +1196,14 @@ export default {
   #marketInfo {
     max-width: 100%;
     max-height: 100%;
+  }
+
+  /* cards in auction */
+  .card {
+    position: absolute;
+    top: -130%;
+    left: -20%;
+    transform: scale(0.15) translate(-85%, -85%);
   }
 }
 </style>
