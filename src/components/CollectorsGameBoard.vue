@@ -149,28 +149,36 @@
           v-if="roundCounter === 1"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[0], 'work2', 0)"
+          :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
         <button
           v-if="roundCounter === 2"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[1], 'work2', 1)"
+          :style="'background-image: url(/images/workPic/workBottle_-1.png);'"
         ></button>
         <button
           v-if="roundCounter === 3"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[2], 'work2', 2)"
+          :style="'background-image: url(/images/workPic/workBottle_-2.png);'"
         ></button>
         <button
           v-if="roundCounter === 4"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[3], 'work1', 3)"
+          :style="'background-image: url(/images/workPic/workBottle_-3.png);'"
         ></button>
-        <img src="korv" />
+        <img v-if="roundCounter === 1" src="images/workPic/workCards.png" />
+        <img v-if="roundCounter === 2" src="images/workPic/workCards.png" />
+        <img v-if="roundCounter === 3" src="images/workPic/workCards.png" />
+        <img v-if="roundCounter === 4" src="images/workPic/work4.png" />
       </div>
       <div class="workBoxCont">
         <button
           class="placeBottleWork"
           @click="placeBottle(workPlacement[4], 'work1', 4)"
+          :style="'background-image: url(/images/workPic/workBottle_-1.png);'"
         ></button>
         <img src="images/workPic/work4.png" />
       </div>
@@ -178,6 +186,7 @@
         <button
           class="placeBottleWork"
           @click="placeBottle(workPlacement[5], 'work1', 5)"
+          :style="'background-image: url(/images/workPic/workBottle_1.png);'"
         ></button>
         <img src="images/workPic/work5.png" />
       </div>
@@ -185,13 +194,16 @@
         <button
           class="placeBottleWork"
           @click="placeBottle(workPlacement[6], 'work1', 6)"
+          :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
         <img src="images/workPic/work6.png" />
       </div>
       <div class="workBoxCont">
         <button
+        v-if="workPlacement[7].playerId === null"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[7], 'work1', 7)"
+          :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
         <img src="images/workPic/work7.png" />
       </div>

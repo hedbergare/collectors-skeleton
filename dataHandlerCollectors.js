@@ -477,7 +477,7 @@ Data.prototype.getPlacements = function (roomId) {
       skillPlacement: room.skillPlacement,
       auctionPlacement: room.auctionPlacement,
       marketPlacement: room.marketPlacement,
-      workPlacement: room.workPlacement
+      workPlacement: room.workPlacement,
     }
     return allPlacements
   }
@@ -764,6 +764,14 @@ Data.prototype.collectBottles = function (room) {
         }
       }
     }
+    for (let i in room.workPlacement) {
+      for (let x in room.players) {
+        if (room.players[x].pId === room.workPlacement[i].playerId) {
+          room.players[x].bottles += 1;
+
+        }
+      }
+    }
   }
 }
 Data.prototype.resetPlacement = function (room) {
@@ -786,6 +794,11 @@ Data.prototype.resetPlacement = function (room) {
     for (let i in room.marketPlacement) {
       if (room.marketPlacement[i].playerId !== null) {
         room.marketPlacement[i].playerId = null;
+      }
+    }
+    for (let i in room.workPlacement) {
+      if (room.workPlacement[i].playerId !== null) {
+        room.workPlacement[i].playerId = null;
       }
     }
   }
