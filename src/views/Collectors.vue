@@ -323,6 +323,7 @@ export default {
         this.consoleHistory.push(d.playerId, this.labels.raisedValue);
         this.players = d.players;
         this.skillsOnSale = d.skillsOnSale;
+        this.auctionCards = d.auctionCards;
         this.marketValues = d.marketValues;
         if (this.action === "market1") {
           this.highlightCards = true
