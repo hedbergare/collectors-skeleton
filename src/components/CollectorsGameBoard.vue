@@ -141,27 +141,61 @@
 
     <div class="workBox">
       <!-- Här gör vi work box med köprutor -->
-      <div id="buyWorkInfo">
-        <img
-          id="imageWork"
-          src="/images/workPic/imageWork.png"
-          style="cursor: pointer"
-          @click="showInfoPopup(labels.workInfoTitle, labels.workInfo)"
-        />
+      <div class="workBoxCont info">
+        <img src="/images/workPic/imageWork.png" />
       </div>
-      <div id="buyWorkBox1"></div>
-
-      <div id="buyWorkBox2">
-        <img id="qTile1" src="/images/workPic/qTile1.png" />
+      <div class="workBoxCont">
+        <button
+          v-if="roundCounter === 1"
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[0], 'work', 0)"
+        ></button>
+        <button
+          v-if="roundCounter === 2"
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[1], 'work', 1)"
+        ></button>
+        <button
+          v-if="roundCounter === 3"
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[2], 'work', 2)"
+        ></button>
+        <button
+          v-if="roundCounter === 4"
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[3], 'work', 3)"
+        ></button>
+        <img src="korv" />
       </div>
-      <div id="buyWorkBox3">
-        <img id="qTile2" src="/images/workPic/qTile2.png" />
+      <div class="workBoxCont">
+        <button
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[4], 'work', 4)"
+        ></button>
+        <img src="images/workPic/work4.png" />
       </div>
-      <div id="buyWorkBox4">
-        <img id="qTile3" src="/images/workPic/qTile3.png" />
+      <div class="workBoxCont">
+        <button
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[5], 'work', 5)"
+        ></button>
+        <img src="images/workPic/work5.png" />
       </div>
-      <div id="buyWorkBox5">
-        <img id="qTile4" src="/images/workPic/qTile4.png" />
+      <div class="workBoxCont">
+        <button
+          class="placeBottleWork"
+          :disabled="!player.isTurn || player.money < workPlacement[7].cost"
+          @click="placeBottle(workPlacement[6], 'work', 6)"
+        ></button>
+        <img src="images/workPic/work6.png" />
+      </div>
+      <div class="workBoxCont">
+        <button
+          class="placeBottleWork"
+          :disabled="!player.isTurn || player.money < workPlacement[7].cost"
+          @click="placeBottle(workPlacement[7], 'work', 7)"
+        ></button>
+        <img src="images/workPic/work7.png" />
       </div>
     </div>
 
@@ -333,8 +367,10 @@ export default {
     auctionPlacement: Array,
     skillPlacement: Array,
     marketPlacement: Array,
+    workPlacement: Array,
     highlightCards: Boolean,
     players: Object,
+    roundCounter: Number,
   },
 
   watch: {
@@ -397,7 +433,10 @@ export default {
     updatePoints: function () {
       this.$emit("updatePoints");
     },
-    placeBottle: function (p, action) {
+    placeBottle: function (p, action, id = 10) {
+      console.log(
+        "Place bottle " + action + " kostnad " + p.cost + " i gameboard"
+      );
       this.$emit("placeBottle", {
         cost: p.cost,
         action: action,
@@ -408,10 +447,16 @@ export default {
       } else if (action === "skill") {
         this.highlightAvailableSkills(p.cost);
       } else if (action === "market2" || action === "market1") {
-        console.log(action);
         this.highlightAvailableMarket(p.cost);
       } else if (action === "auction") {
         this.initiateAuction();
+        /* min fantastiskt fula lösning på work */
+      } else if (action === "work") {
+        this.$emit("workActions", {
+          cost: p.cost,
+          workId: id,
+        });
+        /* Här kollar vi vilken work det är och gör respektive grej */
       }
     },
 
@@ -422,7 +467,6 @@ export default {
           this.player.money - cost
         ) {
           this.$set(this.itemsOnSale[i], "available", true);
-          this.$set(this.placeBottleItem, "available", true);
         } else {
           this.$set(this.itemsOnSale[i], "available", false);
         }
@@ -602,7 +646,6 @@ export default {
 /* Design for work */
 .workBox {
   display: grid;
-  grid-template-columns: 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
   margin: 2px;
   max-width: 100%;
@@ -685,7 +728,18 @@ export default {
   background-position: center;
   border-radius: 5px;
 }
-
+/* small boxes in itemBox */
+.placeBottleWork {
+  color: blue;
+  width: 70%;
+  height: 75%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-top: 10%;
+}
 .bottleSkill {
   max-height: 100%;
   max-width: 100%;
@@ -815,46 +869,63 @@ export default {
 }
 
 /* Small boxes in WorkBox */
-#buyWorkInfo {
+
+.workBoxCont {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 100%;
+  border: 2px solid black;
+  text-align: center;
+}
+.info {
+  display: inline-block;
+}
+#workInfo {
+  column-span: all;
+}
+/* #buyWorkInfo {
   text-align: center;
   grid-row: 1;
+  grid-column: 2;
+  grid-column: 1/3;
   max-width: 100%;
   max-height: 100%;
 }
 #buyWorkBox1 {
   text-align: center;
   grid-row: 2;
+  grid-column: 2;
   max-width: 100%;
 }
 #buyWorkBox2 {
   text-align: center;
   grid-row: 3;
+  grid-column: 2;
   max-width: 100%;
 }
 #buyWorkBox3 {
   text-align: center;
   grid-row: 4;
+  grid-column: 2;
   max-width: 100%;
 }
 #buyWorkBox4 {
   text-align: center;
   grid-row: 5;
+  grid-column: 2;
   max-width: 100%;
 }
 #buyWorkBox5 {
   text-align: center;
   grid-row: 6;
+  grid-column: 2;
   max-width: 100%;
 }
-
-#buyWorkInfo img,
-#buyWorkBox1 img,
-#buyWorkBox2 img,
-#buyWorkBox3 img,
-#buyWorkBox4 img,
-#buyWorkBox5 img {
+*/
+.workBoxCont img {
   max-width: 100%;
-  max-height: 100%;
+  height: 100%;
+  margin: 0 auto;
 }
 
 /* Small boxes in auctionBox */

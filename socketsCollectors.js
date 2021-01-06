@@ -57,7 +57,7 @@ function sockets(io, socket, data) {
   });
 
   socket.on('collectorsPlaceBottle', function (d) {
-    console.log("inne i sockets placebottle")
+    console.log("inne i sockets placebottle");
     data.placeBottle(d.roomId, d.playerId, d.action, d.cost);
     io.to(d.roomId).emit('collectorsBottlePlaced', {
       placements: data.getPlacements(d.roomId),
@@ -78,6 +78,12 @@ function sockets(io, socket, data) {
       marketValues: data.getMarketValues(d.roomId),
       placements: data.getPlacements(d.roomId),
       roundCounter: data.getRoundCounter(d.roomId),
+      players: data.getPlayers(d.roomId),
+    });
+  });
+  socket.on('handleWorkActions', function (d) {
+    data.handleWorkActions(d.roomId, d.playerId, d.cost, d.workId);
+    io.to(d.roomId).emit('workActionDone', {
       players: data.getPlayers(d.roomId),
     });
   });
