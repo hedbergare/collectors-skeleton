@@ -280,7 +280,6 @@ Data.prototype.updatePoints = function (roomId) {
         room.players[x].passiveIncome += 1;
         if (room.players[x].income[y].skill === 'VP-fastaval' || room.players[x].income[y].skill === 'VP-figures' || room.players[x].income[y].skill === 'VP-movie' || room.players[x].income[y].skill === 'VP-music' || room.players[x].income[y].skill === 'VP-technology') {
           room.players[x].passiveIncome += 1;
-          console.log("Inne i sjuk if-sats i datahandler getPassiveIncome");
         }
       }
     }
@@ -897,6 +896,21 @@ Data.prototype.handleWorkActions = function (roomId, playerId, cost, workId) {
     /* Dra ett kort och välj ett kort att lägga i income från handen */
     if (workId === 7) {
 
+    }
+
+    for (let x in room.players) {
+      for (let y in room.players[x].skills) {
+        /* Om en spelare äger skillet workerIncome får den 2 coins när den gör något i work */
+        if (room.players[x].skills[y].skill === 'workerIncome') {
+          room.players[x].money += 2;
+
+        }
+        /* Om en spelare äger skiller workerCard får den ett kort på hand när den gör något i work */
+        if (room.players[x].skills[y].skill === 'workerCard') {
+          let card = room.deck.splice(0, 1);
+          room.players[playerId].hand.push(...card);
+        }
+      }
     }
   }
 }

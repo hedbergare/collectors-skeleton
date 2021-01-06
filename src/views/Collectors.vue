@@ -416,7 +416,6 @@ export default {
     this.$store.state.socket.on(
       "workActionDone",
       function (d) {
-        console.log("Work action done i collectors.vue");
         this.players = d.players;
       }.bind(this)
     );
