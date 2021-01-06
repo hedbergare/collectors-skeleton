@@ -19,7 +19,7 @@
       >
         <div class="itemsOnSaleIconCont1" v-if="card.item !== undefined">
           <img
-            :class="['itemsOnSaleIcon', {'iconAvailable': card.available}]"
+            :class="['itemsOnSaleIcon', { iconAvailable: card.available }]"
             :src="'images/item_logos/' + card.item + '_item.png'"
           />
           <CollectorsCard
@@ -141,27 +141,61 @@
 
     <div class="workBox">
       <!-- Här gör vi work box med köprutor -->
-      <div id="buyWorkInfo">
-        <img
-          id="imageWork"
-          src="/images/workPic/imageWork.png"
-          style="cursor: pointer"
-          @click="showInfoPopup(labels.workInfoTitle, labels.workInfo)"
-        />
+      <div class="workBoxCont info">
+        <img src="/images/workPic/imageWork.png" />
       </div>
-      <div id="buyWorkBox1"></div>
-
-      <div id="buyWorkBox2">
-        <img id="qTile1" src="/images/workPic/qTile1.png" />
+      <div class="workBoxCont">
+        <button
+          v-if="roundCounter === 1"
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[0], 'work', 0)"
+        ></button>
+        <button
+          v-if="roundCounter === 2"
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[1], 'work', 1)"
+        ></button>
+        <button
+          v-if="roundCounter === 3"
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[2], 'work', 2)"
+        ></button>
+        <button
+          v-if="roundCounter === 4"
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[3], 'work', 3)"
+        ></button>
+        <img src="korv" />
       </div>
-      <div id="buyWorkBox3">
-        <img id="qTile2" src="/images/workPic/qTile2.png" />
+      <div class="workBoxCont">
+        <button
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[4], 'work', 4)"
+        ></button>
+        <img src="images/workPic/work4.png" />
       </div>
-      <div id="buyWorkBox4">
-        <img id="qTile3" src="/images/workPic/qTile3.png" />
+      <div class="workBoxCont">
+        <button
+          class="placeBottleWork"
+          @click="placeBottle(workPlacement[5], 'work', 5)"
+        ></button>
+        <img src="images/workPic/work5.png" />
       </div>
-      <div id="buyWorkBox5">
-        <img id="qTile4" src="/images/workPic/qTile4.png" />
+      <div class="workBoxCont">
+        <button
+          class="placeBottleWork"
+          :disabled="!player.isTurn || player.money < workPlacement[7].cost"
+          @click="placeBottle(workPlacement[6], 'work', 6)"
+        ></button>
+        <img src="images/workPic/work6.png" />
+      </div>
+      <div class="workBoxCont">
+        <button
+          class="placeBottleWork"
+          :disabled="!player.isTurn || player.money < workPlacement[7].cost"
+          @click="placeBottle(workPlacement[7], 'work', 7)"
+        ></button>
+        <img src="images/workPic/work7.png" />
       </div>
     </div>
 
@@ -207,20 +241,20 @@
         <img id="auctionCards" src="/images/auctionPic/auctionCard.png" />
       </div>
       <div id="auctionArrow3">
-        <!-- <CollectorsCard :card="auctionCards[0]"/> -->
         <img id="auctionCard1" src="/images/auctionPic/auctionArrowDown.png" />
+        <CollectorsCard :card="auctionCards[0]" />
       </div>
       <div id="auctionArrow4">
         <img id="auctionCard2" src="/images/auctionPic/auctionArrowBlue.png" />
-        <!-- <CollectorsCard :card="auctionCards[1]"/> -->
+        <CollectorsCard :card="auctionCards[3]" />
       </div>
       <div id="auctionArrow5">
         <img id="auctionCard3" src="/images/auctionPic/auctionArrowLeft.png" />
-        <!-- <CollectorsCard :card="auctionCards[2]"/> -->
+        <CollectorsCard :card="auctionCards[2]" />
       </div>
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
-        <!-- <CollectorsCard :card="auctionCards[3]"/> -->
+        <CollectorsCard :card="auctionCards[1]" />
       </div>
     </div>
 
@@ -248,7 +282,7 @@
             p.cost +
             '.png);'
           "
-          @click="placeBottle(p, 'market' + p.numCards,'ja')"
+          @click="placeBottle(p, 'market' + p.numCards, 'ja')"
         ></button>
         <button
           v-if="p.playerId !== null"
@@ -293,7 +327,7 @@
         <div class="skillsOnSaleCont" v-if="card.skill !== undefined">
           <img
             :src="'images/skill_logos/' + card.skill + '_skill.png'"
-            :class="['skillsOnSaleIcon', {'iconAvailable': card.available}]"
+            :class="['skillsOnSaleIcon', { iconAvailable: card.available }]"
           />
           <CollectorsCard
             :card="skillsOnSale[index]"
@@ -333,8 +367,10 @@ export default {
     auctionPlacement: Array,
     skillPlacement: Array,
     marketPlacement: Array,
+    workPlacement: Array,
     highlightCards: Boolean,
     players: Object,
+    roundCounter: Number,
   },
 
   watch: {
@@ -397,7 +433,10 @@ export default {
     updatePoints: function () {
       this.$emit("updatePoints");
     },
-    placeBottle: function (p, action) {
+    placeBottle: function (p, action, id = 10) {
+      console.log(
+        "Place bottle " + action + " kostnad " + p.cost + " i gameboard"
+      );
       this.$emit("placeBottle", {
         cost: p.cost,
         action: action,
@@ -408,10 +447,16 @@ export default {
       } else if (action === "skill") {
         this.highlightAvailableSkills(p.cost);
       } else if (action === "market2" || action === "market1") {
-        console.log(action)
         this.highlightAvailableMarket(p.cost);
       } else if (action === "auction") {
         this.initiateAuction();
+        /* min fantastiskt fula lösning på work */
+      } else if (action === "work") {
+        this.$emit("workActions", {
+          cost: p.cost,
+          workId: id,
+        });
+        /* Här kollar vi vilken work det är och gör respektive grej */
       }
     },
 
@@ -489,7 +534,7 @@ export default {
     },
 
     cannotAffordSkill: function (cost) {
-      if (this.player.money >= cost && this.player.isTurn ) {
+      if (this.player.money >= cost && this.player.isTurn) {
         return false;
       } else {
         return true;
@@ -602,7 +647,6 @@ export default {
 /* Design for work */
 .workBox {
   display: grid;
-  grid-template-columns: 1fr;
   grid-template-rows: 15% 17% 17% 17% 17% 17%;
   margin: 2px;
   max-width: 100%;
@@ -642,22 +686,20 @@ export default {
   border-radius: 5px;
 }
 /* Design for icon buttons */
-.iconAvailable{
-    animation: jiggle 1s ease-in-out;
-    animation-iteration-count:infinite;
+.iconAvailable {
+  animation: jiggle 1s ease-in-out;
+  animation-iteration-count: infinite;
 }
 @keyframes jiggle {
-  0%{
-    transform: scale(1.1) rotate(2deg);
+  0% {
+    transform: scale(1.1) rotate(3deg);
   }
-  50%{
-    transform:scale(1.1) rotate(-2deg);
+  50% {
+    transform: scale(1.1) rotate(-3deg);
   }
-  100%{
-    transform:scale(1.1) rotate(2deg);
+  100% {
+    transform: scale(1.1) rotate(3deg);
   }
-  
-  
 }
 .itemsOnSaleIcon {
   max-width: 50%;
@@ -687,7 +729,18 @@ export default {
   background-position: center;
   border-radius: 5px;
 }
-
+/* small boxes in itemBox */
+.placeBottleWork {
+  color: blue;
+  width: 70%;
+  height: 75%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-top: 10%;
+}
 .bottleSkill {
   max-height: 100%;
   max-width: 100%;
@@ -817,46 +870,63 @@ export default {
 }
 
 /* Small boxes in WorkBox */
-#buyWorkInfo {
+
+.workBoxCont {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 100%;
+  border: 2px solid black;
+  text-align: center;
+}
+.info {
+  display: inline-block;
+}
+#workInfo {
+  column-span: all;
+}
+/* #buyWorkInfo {
   text-align: center;
   grid-row: 1;
+  grid-column: 2;
+  grid-column: 1/3;
   max-width: 100%;
   max-height: 100%;
 }
 #buyWorkBox1 {
   text-align: center;
   grid-row: 2;
+  grid-column: 2;
   max-width: 100%;
 }
 #buyWorkBox2 {
   text-align: center;
   grid-row: 3;
+  grid-column: 2;
   max-width: 100%;
 }
 #buyWorkBox3 {
   text-align: center;
   grid-row: 4;
+  grid-column: 2;
   max-width: 100%;
 }
 #buyWorkBox4 {
   text-align: center;
   grid-row: 5;
+  grid-column: 2;
   max-width: 100%;
 }
 #buyWorkBox5 {
   text-align: center;
   grid-row: 6;
+  grid-column: 2;
   max-width: 100%;
 }
-
-#buyWorkInfo img,
-#buyWorkBox1 img,
-#buyWorkBox2 img,
-#buyWorkBox3 img,
-#buyWorkBox4 img,
-#buyWorkBox5 img {
+*/
+.workBoxCont img {
   max-width: 100%;
-  max-height: 100%;
+  height: 100%;
+  margin: 0 auto;
 }
 
 /* Small boxes in auctionBox */
@@ -893,36 +963,51 @@ export default {
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow2 {
   grid-column: 3;
   grid-row: 1;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow3 {
   grid-column: 3;
   grid-row: 2;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow4 {
   grid-column: 1;
   grid-row: 3;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow5 {
   grid-column: 2;
   grid-row: 3;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
 }
 #auctionArrow6 {
   grid-column: 3;
   grid-row: 3;
   max-width: 100%;
   max-height: 100%;
+  position: relative;
+}
+
+/* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
+/* Ta tillbaka transform scale om korten är ivägen */
+.card {
+  position: absolute;
+  top: -40%;
+  left: -30%;
+  transform: scale(0.25) translate(-65%, -65%);
 }
 
 #auctionArrow1 img,
@@ -938,19 +1023,7 @@ export default {
 #auctionCards {
   width: 70%;
   padding-top: 10%;
-}
-
-/* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
-/* Ta tillbaka transform scale om korten är ivägen */
-.card {
-  /*  top: 0;
-  left: 0;*/
-  /*   transform: scale(0.3, 0.3);
- */
-  transform-origin: center;
-  /*   margin-top: -105%;
-  margin-left: -75px;  */
-  position: absolute;
+  z-index: -1;
 }
 
 /* Small boxes in MarketBox */
@@ -1124,6 +1197,14 @@ export default {
   #marketInfo {
     max-width: 100%;
     max-height: 100%;
+  }
+
+  /* cards in auction */
+  .card {
+    position: absolute;
+    top: -130%;
+    left: -20%;
+    transform: scale(0.15) translate(-85%, -85%);
   }
 }
 </style>

@@ -40,12 +40,15 @@
             :marketPlacement="marketPlacement"
             :highlightCards="highlightCards"
             :players="players"
+            :roundCounter="roundCounter"
+            :workPlacement="workPlacement"
             @buyCard="buyCard($event)"
             @updatePoints="updatePoints($event)"
             @buySkill="buySkill($event)"
             @placeBottle="placeBottle($event)"
             @initiateAuction="initiateAuction($event)"
             @handleAction="handleAction($event)"
+            @workActions="workActions($event)"
           />
         </div>
         <div id="rightColumn">
@@ -197,6 +200,7 @@ export default {
       skillPlacement: [],
       auctionPlacement: [],
       marketPlacement: [],
+      workPlacement:[],
       highlightCards: false,
       chosenPlacementCost: null,
       marketValues: {
@@ -264,6 +268,7 @@ export default {
         this.skillPlacement = d.placements.skillPlacement;
         this.marketPlacement = d.placements.marketPlacement;
         this.auctionPlacement = d.placements.auctionPlacement;
+        this.workPlacement = d.placements.workPlacement;
       }.bind(this)
     );
 
@@ -274,6 +279,7 @@ export default {
         this.skillPlacement = d.placements.skillPlacement;
         this.marketPlacement = d.placements.marketPlacement;
         this.auctionPlacement = d.placements.auctionPlacement;
+        this.workPlacement = d.placements.workPlacement;
         for (let x in this.players){
           this.players[x].bottles = d.players[x].bottles
         }
@@ -371,6 +377,7 @@ export default {
         this.skillPlacement = d.placements.skillPlacement;
         this.marketPlacement = d.placements.marketPlacement;
         this.auctionPlacement = d.placements.auctionPlacement;
+        this.workPlacement = d.placements.workPlacement;
         this.roundCounter = d.roundCounter;
         this.players = d.players;
       }.bind(this)
@@ -391,6 +398,13 @@ export default {
       "auctionWinnerSet",
       function (d) {
         this.auctionWinner = d.auctionWinner;
+      }.bind(this)
+    );
+    this.$store.state.socket.on(
+      "workActionDone",
+      function (d) {
+        console.log("Work action done i collectors.vue")
+        this.players = d.players;
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -501,6 +515,15 @@ export default {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         action: p.action,
+        cost: p.cost,
+      });
+    },
+    workActions: function(p){
+      console.log(p);
+      this.$store.state.socket.emit("handleWorkActions", {
+        roomId: this.$route.params.id,
+        playerId: this.playerId,
+        workId: p.workId,
         cost: p.cost,
       });
     },
