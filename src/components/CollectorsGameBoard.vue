@@ -422,7 +422,6 @@ export default {
           this.player.money - cost
         ) {
           this.$set(this.itemsOnSale[i], "available", true);
-          this.$set(this.placeBottleItem, "available", true);
 
         } else {
           this.$set(this.itemsOnSale[i], "available", false);
