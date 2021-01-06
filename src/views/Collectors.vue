@@ -24,7 +24,7 @@
         @setAuctionWinner="setAuctionWinner($event)"
         @winnerPlaceCard="winnerPlaceCard($event)"
       />
-      
+
       <div id="browserWrapper">
         <div id="gameboardColumn">
           <CollectorsGameBoard
@@ -135,7 +135,8 @@
           v-for="(card, index) in auctionCards"
           :card="card"
           :key="index"
-          :availableAction="card.available"/>
+          :availableAction="card.available"
+        />
       </div>
 
       {{ players }}
@@ -200,7 +201,7 @@ export default {
       skillPlacement: [],
       auctionPlacement: [],
       marketPlacement: [],
-      workPlacement:[],
+      workPlacement: [],
       highlightCards: false,
       chosenPlacementCost: null,
       marketValues: {
@@ -280,18 +281,17 @@ export default {
         this.marketPlacement = d.placements.marketPlacement;
         this.auctionPlacement = d.placements.auctionPlacement;
         this.workPlacement = d.placements.workPlacement;
-        for (let x in this.players){
-          this.players[x].bottles = d.players[x].bottles
+        for (let x in this.players) {
+          this.players[x].bottles = d.players[x].bottles;
         }
-
       }.bind(this)
     );
 
     this.$store.state.socket.on(
       "collectorsPointsUpdated",
       function (d) {
-       for (let x in this.players){
-          this.players[x].points = d.players[x].points
+        for (let x in this.players) {
+          this.players[x].points = d.players[x].points;
         }
       }.bind(this)
     );
@@ -325,7 +325,7 @@ export default {
         this.skillsOnSale = d.skillsOnSale;
         this.marketValues = d.marketValues;
         if (this.action === "market1") {
-          this.highlightCards = true
+          this.highlightCards = true;
         }
         if (this.playerId === d.playerId && this.action === "") {
           this.changeTurn();
@@ -389,6 +389,18 @@ export default {
       }.bind(this)
     );
     this.$store.state.socket.on(
+      "incomeCardInserted",
+      function (d) {
+        this.players = d.players;
+        if (this.action === "work1") {
+          this.highlightCards = true;
+        }
+        if (this.playerId === d.playerId && this.action === "") {
+          this.changeTurn();
+        }
+      }.bind(this)
+    );
+    this.$store.state.socket.on(
       "playersUpdated",
       function (d) {
         this.players = d.players;
@@ -403,7 +415,7 @@ export default {
     this.$store.state.socket.on(
       "workActionDone",
       function (d) {
-        console.log("Work action done i collectors.vue")
+        console.log("Work action done i collectors.vue");
         this.players = d.players;
       }.bind(this)
     );
@@ -508,7 +520,7 @@ export default {
       n.target.select();
     },
     placeBottle: function (p) {
-      console.log("inne i placebottle")
+      console.log("inne i placebottle");
       this.chosenPlacementCost = p.cost;
       this.action = p.action;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
@@ -518,7 +530,7 @@ export default {
         cost: p.cost,
       });
     },
-    workActions: function(p){
+    workActions: function (p) {
       console.log(p);
       this.$store.state.socket.emit("handleWorkActions", {
         roomId: this.$route.params.id,
@@ -528,7 +540,7 @@ export default {
       });
     },
     handleAction: function (card) {
-      console.log("i handleaction collectors.vue")
+      console.log("i handleaction collectors.vue");
       if (this.action === "skill") {
         this.buySkill(card);
         this.action = "";
@@ -539,7 +551,7 @@ export default {
       }
 
       if (this.action === "market1") {
-        console.log("hej")
+        console.log("hej");
         this.buyMarket(card);
         this.action = "";
       }
@@ -547,14 +559,30 @@ export default {
         this.buyMarket(card);
         this.action = "market1";
       }
+      if (this.action === "work1") {
+        this.insertIncomeCard(card);
+        this.action = "";
+      }
+      if (this.action === "work2") {
+        console.log(this.action + " ihandleAction");
+        this.insertIncomeCard(card);
+        this.action = "work1";
+      }
     },
     buyMarket: function (card) {
-      console.log("i buymarket collectors.vue")
+      console.log("i buymarket collectors.vue");
       this.$store.state.socket.emit("collectorsBuyMarket", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
         cost: this.chosenPlacementCost,
+      });
+    },
+    insertIncomeCard: function (card) {
+      this.$store.state.socket.emit("collectorsInsertIncome", {
+        roomId: this.$route.params.id,
+        playerId: this.playerId,
+        card: card,
       });
     },
 
@@ -649,13 +677,13 @@ footer a:visited {
   max-width: 80%;
 }
 .playerBoardTab {
-  border-radius:10px;
+  border-radius: 10px;
   background-color: white;
   color: white;
   text-align: center;
   font-weight: bold;
   border: 2px solid transparent;
-  margin:3px;
+  margin: 3px;
 }
 .activeTab {
   border: 2px solid gold;
@@ -701,11 +729,11 @@ footer a:visited {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
   }
-    #playerBoardContainer {
+  #playerBoardContainer {
     max-width: 100%;
   }
   .playerBoardTab p {
-    font-size:0.7em;
+    font-size: 0.7em;
   }
 }
 </style>

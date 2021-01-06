@@ -87,14 +87,14 @@ Data.prototype.createRoom = function (roomId, playerCount, lang = "en") {
   room.marketPlacement = [{ cost: 0, playerId: null, numCards: 2 },
   { cost: 2, playerId: null, numCards: 2 },
   { cost: 1, playerId: null, numCards: 1 }];
-  room.workPlacement = [{ cost: 0, playerId: null},
+  room.workPlacement = [{ cost: 0, playerId: null },
   { cost: -1, playerId: null },
-  { cost: -2, playerId: null},
-  { cost: -3, playerId: null},
-  { cost: -1, playerId: null},
-  { cost: 1, playerId: null},
-  { cost: 0, playerId: null},
-  { cost: 0, playerId: null}];
+  { cost: -2, playerId: null },
+  { cost: -3, playerId: null },
+  { cost: -1, playerId: null },
+  { cost: 1, playerId: null },
+  { cost: 0, playerId: null },
+  { cost: 0, playerId: null }];
   this.rooms[roomId] = room;
 }
 
@@ -303,6 +303,30 @@ Data.prototype.drawCard = function (roomId, playerId) {
   else return [];
 }
 
+Data.prototype.insertIncomeCard = function (roomId, playerId, card) {
+  let room = this.rooms[roomId];
+  if (typeof room !== 'undefined') {
+    /* Lägger in ett kort in i incomelistan */
+    room.players[playerId].income.push(card);
+    /* Lägger in värdet för kortet */
+    if (card.skill === 'VP-all') {
+      room.players[playerId].passiveIncome += 2;
+    }
+    else {
+      room.players[playerId].passiveIncome += 1;
+    }
+    for (let i = 0; i < room.players[playerId].hand.length; i += 1) {
+      // since card comes from the client, it is NOT the same object (reference)
+      // so we need to compare properties for determining equality      
+      if (room.players[playerId].hand[i].x === card.x &&
+        room.players[playerId].hand[i].y === card.y) {
+        room.players[playerId].hand.splice(i, 1);
+        break;
+      }
+    }
+  }
+}
+
 /* moves card from itemsOnSale to a player's hand */
 Data.prototype.buyCard = function (roomId, playerId, card, cost) {
   let room = this.rooms[roomId];
@@ -418,6 +442,9 @@ Data.prototype.placeBottle = function (roomId, playerId, action, cost) {
     }
     else if (action === "market1" || action === "market2") {
       activePlacement = room.marketPlacement;
+    }
+    else if (action === "work1" || action === "work2") {
+      activePlacement = room.workPlacement;
     }
     /* Här måste vi lägga in ifall det är work - MED UNDANTAGET om man lägger sin bottle på recycle*/
     for (let i = 0; i < activePlacement.length; i += 1) {
@@ -838,24 +865,24 @@ Data.prototype.handleWorkActions = function (roomId, playerId, cost, workId) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
     /* Här är det typ bara välja två kort och stoppa in i income tror jag*/
-    if(workId < 4){
-      
+    if (workId < 4) {
+
     }
     /* Dra två kort */
-    if(workId === 4){
-      
+    if (workId === 4) {
+
     }
     /* Dra två kort */
-    if(workId === 5){
-      let cards = room.deck.splice(0,2);
+    if (workId === 5) {
+      let cards = room.deck.splice(0, 2);
       room.players[playerId].hand.push(...cards);
     }
     /* Dra ett kort och bli första spelare nästa runda (något med unshift) */
-    if(workId === 6){
-    
+    if (workId === 6) {
+
     }
     /* Dra ett kort och välj ett kort att lägga i income från handen */
-    if(workId === 7){
+    if (workId === 7) {
 
     }
   }
