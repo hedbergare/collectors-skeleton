@@ -238,7 +238,8 @@ export default {
       for (let p in this.players) {
         for (let c = 0; c < this.players[p].hand.length; c += 1) {
           if (typeof this.players[p].hand[c].item !== "undefined")
-            this.$set(this.players[p].hand[c], "available", false);
+            /* this.$set(this.players[p].hand[c], "available", false); */
+            console.log("hejhej");
         }
       }
     },
@@ -283,6 +284,12 @@ export default {
         this.workPlacement = d.placements.workPlacement;
         for (let x in this.players) {
           this.players[x].bottles = d.players[x].bottles;
+          this.players[x].money = d.players[x].money;
+        }
+        if (this.playerId === d.playerId) {
+          if (d.id < 5) {
+            this.changeTurn();
+          }
         }
       }.bind(this)
     );
@@ -417,6 +424,11 @@ export default {
       "workActionDone",
       function (d) {
         this.players = d.players;
+        if(this.playerId === d.playerId){
+          if(d.id === 5 || d.id === 6){
+            this.changeTurn();
+          }
+        }
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -520,7 +532,6 @@ export default {
       n.target.select();
     },
     placeBottle: function (p) {
-      console.log("inne i placebottle");
       this.chosenPlacementCost = p.cost;
       this.action = p.action;
       this.$store.state.socket.emit("collectorsPlaceBottle", {
@@ -528,10 +539,10 @@ export default {
         playerId: this.playerId,
         action: p.action,
         cost: p.cost,
+        id: p.id,
       });
     },
     workActions: function (p) {
-      console.log(p);
       this.$store.state.socket.emit("handleWorkActions", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
@@ -551,7 +562,6 @@ export default {
       }
 
       if (this.action === "market1") {
-        console.log("hej");
         this.buyMarket(card);
         this.action = "";
       }
@@ -564,7 +574,6 @@ export default {
         this.action = "";
       }
       if (this.action === "work2") {
-        console.log(this.action + " ihandleAction");
         this.insertIncomeCard(card);
         this.action = "work1";
       }
@@ -610,9 +619,6 @@ export default {
     },
 
     startAuction: function (card) {
-      console.log(
-        "this.choseplacementcost i startauction()" + this.chosenPlacementCost
-      );
       this.cardUpForAuction = card;
       this.$store.state.socket.emit("startAuction", {
         roomId: this.$route.params.id,

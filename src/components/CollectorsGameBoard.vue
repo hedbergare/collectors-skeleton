@@ -147,24 +147,28 @@
       <div class="workBoxCont">
         <button
           v-if="roundCounter === 1"
+          :disabled="cannotAffordWork(workPlacement[0].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[0], 'work2', 0)"
           :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
         <button
           v-if="roundCounter === 2"
+          :disabled="cannotAffordWork(workPlacement[1].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[1], 'work2', 1)"
           :style="'background-image: url(/images/workPic/workBottle_-1.png);'"
         ></button>
         <button
           v-if="roundCounter === 3"
+          :disabled="cannotAffordWork(workPlacement[2].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[2], 'work2', 2)"
           :style="'background-image: url(/images/workPic/workBottle_-2.png);'"
         ></button>
         <button
           v-if="roundCounter === 4"
+          :disabled="cannotAffordWork(workPlacement[3].cost, 0)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[3], 'work1', 3)"
           :style="'background-image: url(/images/workPic/workBottle_-3.png);'"
@@ -176,35 +180,70 @@
       </div>
       <div class="workBoxCont">
         <button
+          v-if="workPlacement[4].playerId === null"
+          :disabled="cannotAffordWork(workPlacement[4].cost, 0)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[4], 'work1', 4)"
           :style="'background-image: url(/images/workPic/workBottle_-1.png);'"
         ></button>
+        <button
+          v-if="workPlacement[4].playerId !== null"
+          disabled="true"
+          class="placeBottleWork"
+        >
+          <CollectorsBottle :color="players[workPlacement[4].playerId].color" />
+        </button>
         <img src="images/workPic/work4.png" />
       </div>
       <div class="workBoxCont">
         <button
+          v-if="workPlacement[5].playerId === null"
+          :disabled="cannotAffordWork(workPlacement[5].cost, 0)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[5], 'work1', 5)"
           :style="'background-image: url(/images/workPic/workBottle_1.png);'"
         ></button>
+        <button
+          v-if="workPlacement[5].playerId !== null"
+          disabled="true"
+          class="placeBottleWork"
+        >
+          <CollectorsBottle :color="players[workPlacement[5].playerId].color" />
+        </button>
         <img src="images/workPic/work5.png" />
       </div>
       <div class="workBoxCont">
         <button
+          v-if="workPlacement[6].playerId === null"
+          :disabled="cannotAffordWork(workPlacement[6].cost, 0)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[6], 'work1', 6)"
           :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
+        <button
+          v-if="workPlacement[6].playerId !== null"
+          disabled="true"
+          class="placeBottleWork"
+        >
+          <CollectorsBottle :color="players[workPlacement[6].playerId].color" />
+        </button>
         <img src="images/workPic/work6.png" />
       </div>
       <div class="workBoxCont">
         <button
-        v-if="workPlacement[7].playerId === null"
+          v-if="workPlacement[7].playerId === null"
+          :disabled="cannotAffordWork(workPlacement[7].cost, 0)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[7], 'work1', 7)"
           :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
+        <button
+          v-if="workPlacement[7].playerId !== null"
+          disabled="true"
+          class="placeBottleWork"
+        >
+          <CollectorsBottle :color="players[workPlacement[7].playerId].color" />
+        </button>
         <img src="images/workPic/work7.png" />
       </div>
     </div>
@@ -464,11 +503,11 @@ export default {
       this.$emit("updatePoints");
     },
     placeBottle: function (p, action, id = 10) {
-      console.log(action + id);
       this.$emit("placeBottle", {
         cost: p.cost,
         action: action,
         playerId: p.playerId,
+        id: id,
       });
       if (action === "item") {
         this.highlightAvailableCards(p.cost);
@@ -486,13 +525,22 @@ export default {
             workId: id,
           });
         } else if (id == 0 || id == 1 || id == 2) {
-          console.log("id 012 vi är här");
           /* Här ska man dra ett kort och få lägga in ett kort i income.*/
           this.highlightAvailableHand();
-        }else if (id == 7) {
-          console.log("id 7 vi är här");
+        } else if (id == 6) {
+          this.$emit("workActions", {
+            cost: p.cost,
+            workId: id,
+          });
+        } else if (id == 7) {
           /* Här ska man dra ett kort och få lägga in ett kort i income.*/
-          this.highlightAvailableHand();
+          this.$emit("workActions", {
+            cost: p.cost,
+            workId: id,
+          });
+          setTimeout(() => {
+            this.highlightAvailableHand();
+          }, 1000);
         }
       }
     },
@@ -542,6 +590,17 @@ export default {
 
     cannotAffordAuction: function (cost) {
       if (this.player.isTurn && this.player.money >= cost + 1) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    cannotAffordWork: function (cost, numberOfCards) {
+      if (
+        this.player.isTurn &&
+        this.player.money >= cost &&
+        this.player.hand.length >= numberOfCards
+      ) {
         return false;
       } else {
         return true;
@@ -1043,7 +1102,7 @@ export default {
 
 /* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
 /* Ta tillbaka transform scale om korten är ivägen */
-.card {
+#auctionArrow3 > .card, #auctionArrow4 > .card, #auctionArrow5 > .card, #auctionArrow6 > .card {
   position: absolute;
   top: -40%;
   left: -30%;
@@ -1240,7 +1299,7 @@ export default {
   }
 
   /* cards in auction */
-  .card {
+  #auctionArrow3 > .card, #auctionArrow4 > .card, #auctionArrow5 > .card, #auctionArrow6 > .card{
     position: absolute;
     top: -130%;
     left: -20%;
