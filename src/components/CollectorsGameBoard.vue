@@ -142,37 +142,49 @@
     <div class="workBox">
       <!-- Här gör vi work box med köprutor -->
       <div class="workBoxCont info">
-        <img src="/images/workPic/imageWork.png" />
+        <img
+          src="/images/workPic/imageWork.png"
+          @click="showInfoPopup(labels.workInfoTitle, labels.workInfo)"
+          style="cursor: pointer"
+        />
       </div>
       <div class="workBoxCont">
         <button
-          v-if="roundCounter === 1"
+          v-if="roundCounter === 1 && workPlacement[0].playerId === null"
           :disabled="cannotAffordWork(workPlacement[0].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[0], 'work2', 0)"
           :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
         <button
-          v-if="roundCounter === 2"
+          v-if="workPlacement[0].playerId !== null"
+          disabled="true"
+          class="placeBottleWork"
+        >
+          <CollectorsBottle :color="players[workPlacement[0].playerId].color" />
+        </button>
+        <button
+          v-if="roundCounter === 2 && workPlacement[3].playerId === null"
           :disabled="cannotAffordWork(workPlacement[1].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[1], 'work2', 1)"
           :style="'background-image: url(/images/workPic/workBottle_-1.png);'"
         ></button>
         <button
-          v-if="roundCounter === 3"
+          v-if="roundCounter === 3 && workPlacement[3].playerId === null"
           :disabled="cannotAffordWork(workPlacement[2].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[2], 'work2', 2)"
           :style="'background-image: url(/images/workPic/workBottle_-2.png);'"
         ></button>
         <button
-          v-if="roundCounter === 4"
+          v-if="roundCounter === 4 && workPlacement[3].playerId === null"
           :disabled="cannotAffordWork(workPlacement[3].cost, 0)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[3], 'work1', 3)"
           :style="'background-image: url(/images/workPic/workBottle_-3.png);'"
         ></button>
+
         <img v-if="roundCounter === 1" src="images/workPic/workCards.png" />
         <img v-if="roundCounter === 2" src="images/workPic/workCards.png" />
         <img v-if="roundCounter === 3" src="images/workPic/workCards.png" />
@@ -297,7 +309,6 @@
           :availableAction="auctionCards[0].available"
           @doAction="handleAction(auctionCards[0])"
         />
-        
       </div>
       <div id="auctionArrow4">
         <img id="auctionCard2" src="/images/auctionPic/auctionArrowBlue.png" />
@@ -314,14 +325,14 @@
           :availableAction="auctionCards[2].available"
           @doAction="handleAction(auctionCards[2])"
         />
-        
       </div>
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
-        <CollectorsCard 
-        :card="auctionCards[1]"
-        :availableAction="auctionCards[1].available"
-        @doAction="handleAction(auctionCards[1])"/>
+        <CollectorsCard
+          :card="auctionCards[1]"
+          :availableAction="auctionCards[1].available"
+          @doAction="handleAction(auctionCards[1])"
+        />
       </div>
     </div>
 
@@ -438,11 +449,13 @@ export default {
     highlightCards: Boolean,
     players: Object,
     roundCounter: Number,
+    action: String,
   },
 
   watch: {
     highlightCards: function (h) {
       if (h) {
+        console.log("Inne i watch, kör highlightavailablemarket");
         this.highlightAvailableMarket();
       }
     },
@@ -487,7 +500,11 @@ export default {
     },
 
     cannotAffordMarket: function (cost) {
-      if (this.player.money >= cost && this.player.isTurn) {
+      if (
+        this.player.money >= cost &&
+        this.player.isTurn &&
+        this.action === ""
+      ) {
         return false;
       } else {
         return true;
@@ -581,7 +598,11 @@ export default {
         if (cost + this.marketValues[key] < minCost)
           minCost = cost + this.marketValues[key];
       }
-      if (this.player.money >= minCost && this.player.isTurn) {
+      if (
+        this.player.money >= minCost &&
+        this.player.isTurn &&
+        this.action === ""
+      ) {
         return false;
       } else {
         return true;
@@ -589,7 +610,11 @@ export default {
     },
 
     cannotAffordAuction: function (cost) {
-      if (this.player.isTurn && this.player.money >= cost + 1) {
+      if (
+        this.player.isTurn &&
+        this.player.money >= cost + 1 &&
+        this.action === ""
+      ) {
         return false;
       } else {
         return true;
@@ -599,7 +624,8 @@ export default {
       if (
         this.player.isTurn &&
         this.player.money >= cost &&
-        this.player.hand.length >= numberOfCards
+        this.player.hand.length >= numberOfCards &&
+        this.action === ""
       ) {
         return false;
       } else {
@@ -633,7 +659,11 @@ export default {
     },
 
     cannotAffordSkill: function (cost) {
-      if (this.player.money >= cost && this.player.isTurn) {
+      if (
+        this.player.money >= cost &&
+        this.player.isTurn &&
+        this.action === ""
+      ) {
         return false;
       } else {
         return true;
@@ -1025,7 +1055,7 @@ export default {
 .workBoxCont img {
   max-width: 100%;
   max-height: 90%;
-   margin: 0 auto;
+  margin: 0 auto;
 }
 
 /* Small boxes in auctionBox */
@@ -1102,7 +1132,10 @@ export default {
 
 /* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
 /* Ta tillbaka transform scale om korten är ivägen */
-#auctionArrow3 > .card, #auctionArrow4 > .card, #auctionArrow5 > .card, #auctionArrow6 > .card {
+#auctionArrow3 > .card,
+#auctionArrow4 > .card,
+#auctionArrow5 > .card,
+#auctionArrow6 > .card {
   position: absolute;
   top: -40%;
   left: -30%;
@@ -1299,7 +1332,10 @@ export default {
   }
 
   /* cards in auction */
-  #auctionArrow3 > .card, #auctionArrow4 > .card, #auctionArrow5 > .card, #auctionArrow6 > .card{
+  #auctionArrow3 > .card,
+  #auctionArrow4 > .card,
+  #auctionArrow5 > .card,
+  #auctionArrow6 > .card {
     position: absolute;
     top: -130%;
     left: -20%;

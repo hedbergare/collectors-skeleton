@@ -391,7 +391,7 @@ Data.prototype.buySkill = function (roomId, playerId, card, cost) {
     room.players[playerId].money -= cost;
   }
 }
-Data.prototype.buyMarket = function (roomId, playerId, card, cost, numCards) {
+Data.prototype.buyMarket = function (roomId, playerId, card, cost, action) {
   let room = this.rooms[roomId];
   if (typeof room !== 'undefined') {
     let c = null;
@@ -420,7 +420,11 @@ Data.prototype.buyMarket = function (roomId, playerId, card, cost, numCards) {
       }
     }
     room.market.push(c[0]);
-    room.players[playerId].money -= cost;
+    console.log(action + " i data buymarket");
+    if (action !== 'market2') {
+      room.players[playerId].money -= cost;
+
+    }
     this.updatePoints(roomId);
 
   }
