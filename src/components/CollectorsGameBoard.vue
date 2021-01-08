@@ -1024,8 +1024,8 @@ export default {
 */
 .workBoxCont img {
   max-width: 100%;
-  height: 100%;
-  margin: 0 auto;
+  max-height: 90%;
+   margin: 0 auto;
 }
 
 /* Small boxes in auctionBox */

@@ -72,7 +72,7 @@
                 </div>
               </div>
               <!-- Sedan skapas flikarna för de andra spelarna -->
-              <div v-for="(player, index) in players" :key="index">
+              <div v-for="(player, index) in players" :key="index" :style="playerId === player.pId ? 'display:none;' : 'display:inline-block;'">
                 <div
                   v-if="player.pId !== playerId"
                   :class="['playerBoardTab', { activeTab: player.isTurn }]"
