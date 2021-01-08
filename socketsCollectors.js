@@ -33,7 +33,7 @@ function sockets(io, socket, data) {
     );
   });
   socket.on('collectorsBuyMarket', function (d) {
-    data.buyMarket(d.roomId, d.playerId, d.card, d.cost)
+    data.buyMarket(d.roomId, d.playerId, d.card, d.cost, d.action)
     io.to(d.roomId).emit('collectorsMarketBought', {
       playerId: d.playerId,
       players: data.getPlayers(d.roomId),

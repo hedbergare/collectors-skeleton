@@ -142,37 +142,49 @@
     <div class="workBox">
       <!-- Här gör vi work box med köprutor -->
       <div class="workBoxCont info">
-        <img src="/images/workPic/imageWork.png" />
+        <img
+          src="/images/workPic/imageWork.png"
+          @click="showInfoPopup(labels.workInfoTitle, labels.workInfo)"
+          style="cursor: pointer"
+        />
       </div>
       <div class="workBoxCont">
         <button
-          v-if="roundCounter === 1"
+          v-if="roundCounter === 1 && workPlacement[0].playerId === null"
           :disabled="cannotAffordWork(workPlacement[0].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[0], 'work2', 0)"
           :style="'background-image: url(/images/workPic/workBottle_0.png);'"
         ></button>
         <button
-          v-if="roundCounter === 2"
+          v-if="workPlacement[0].playerId !== null"
+          disabled="true"
+          class="placeBottleWork"
+        >
+          <CollectorsBottle :color="players[workPlacement[0].playerId].color" />
+        </button>
+        <button
+          v-if="roundCounter === 2 && workPlacement[3].playerId === null"
           :disabled="cannotAffordWork(workPlacement[1].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[1], 'work2', 1)"
           :style="'background-image: url(/images/workPic/workBottle_-1.png);'"
         ></button>
         <button
-          v-if="roundCounter === 3"
+          v-if="roundCounter === 3 && workPlacement[3].playerId === null"
           :disabled="cannotAffordWork(workPlacement[2].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[2], 'work2', 2)"
           :style="'background-image: url(/images/workPic/workBottle_-2.png);'"
         ></button>
         <button
-          v-if="roundCounter === 4"
+          v-if="roundCounter === 4 && workPlacement[3].playerId === null"
           :disabled="cannotAffordWork(workPlacement[3].cost, 0)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[3], 'work1', 3)"
           :style="'background-image: url(/images/workPic/workBottle_-3.png);'"
         ></button>
+
         <img v-if="roundCounter === 1" src="images/workPic/workCards.png" />
         <img v-if="roundCounter === 2" src="images/workPic/workCards.png" />
         <img v-if="roundCounter === 3" src="images/workPic/workCards.png" />
@@ -367,7 +379,7 @@
         <span class="marketValueText">{{ "x" + marketValues.figures }}</span>
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
         <span class="marketValueText">{{ "x" + marketValues.music }}</span>
       </div>
       <div id="MarketArrow4">
@@ -437,12 +449,15 @@ export default {
     highlightCards: Boolean,
     players: Object,
     roundCounter: Number,
+    action: String,
   },
 
   watch: {
     highlightCards: function (h) {
       if (h) {
+        console.log("Inne i watch, kör highlightavailablemarket");
         this.highlightAvailableMarket();
+        this.hightlightAvailableHand();
       }
     },
   },
@@ -486,7 +501,11 @@ export default {
     },
 
     cannotAffordMarket: function (cost) {
-      if (this.player.money >= cost && this.player.isTurn) {
+      if (
+        this.player.money >= cost &&
+        this.player.isTurn &&
+        this.action === ""
+      ) {
         return false;
       } else {
         return true;
@@ -580,7 +599,11 @@ export default {
         if (cost + this.marketValues[key] < minCost)
           minCost = cost + this.marketValues[key];
       }
-      if (this.player.money >= minCost && this.player.isTurn) {
+      if (
+        this.player.money >= minCost &&
+        this.player.isTurn &&
+        this.action === ""
+      ) {
         return false;
       } else {
         return true;
@@ -588,7 +611,11 @@ export default {
     },
 
     cannotAffordAuction: function (cost) {
-      if (this.player.isTurn && this.player.money >= cost + 1) {
+      if (
+        this.player.isTurn &&
+        this.player.money >= cost + 1 &&
+        this.action === ""
+      ) {
         return false;
       } else {
         return true;
@@ -598,7 +625,8 @@ export default {
       if (
         this.player.isTurn &&
         this.player.money >= cost &&
-        this.player.hand.length >= numberOfCards
+        this.player.hand.length >= numberOfCards &&
+        this.action === ""
       ) {
         return false;
       } else {
@@ -632,7 +660,11 @@ export default {
     },
 
     cannotAffordSkill: function (cost) {
-      if (this.player.money >= cost && this.player.isTurn) {
+      if (
+        this.player.money >= cost &&
+        this.player.isTurn &&
+        this.action === ""
+      ) {
         return false;
       } else {
         return true;
@@ -661,7 +693,7 @@ export default {
   background-color: #eae0c2;
   border-radius: 15px;
   border: 2px solid #333029;
-  color: #505739;
+  color: #14160e;
   font-weight: bold;
   text-shadow: 0px 1px 0px #ffffff;
   padding: 5%;
@@ -984,7 +1016,7 @@ export default {
 }
 .workBoxCont img {
   max-width: 100%;
-  height: 100%;
+  max-height: 90%;
   margin: 0 auto;
 }
 

@@ -98,7 +98,9 @@
         </div>
       </div>
       <div v-if="auctionWinner !== ''">
-        <h1>{{ labels.auctionWinnerIs + auctionWinner }}</h1>
+        <h1 class="auctionWinnerTitle">
+          {{ labels.auctionWinnerIs + auctionWinner }}
+        </h1>
         <div v-if="auctionWinner == playerId">
           <h2>
             {{ labels.auctionWinnerChoose }}
@@ -118,6 +120,9 @@
             :src="'images/marketPic/image_' + cardUpForAuction.market + '.png'"
             @click="placeCardAsMarket()"
           />
+        </div>
+        <div v-else>
+          <h3>Please wait for the winner use the card...</h3>
         </div>
       </div>
     </div>
@@ -271,15 +276,15 @@ export default {
 }
 
 .cardsFromAuction,
-.cardsFromHand{
+.cardsFromHand {
   z-index: 0;
   overflow-x: scroll;
-  overflow-y:hidden;
+  overflow-y: hidden;
   white-space: nowrap;
   max-width: 100%;
   border-radius: 5px;
-  margin:5px;
-  max-height:300px;
+  margin: 5px;
+  max-height: 300px;
 }
 .chooseCardCont {
   display: inline-block;
@@ -298,6 +303,9 @@ export default {
 }
 #startAuction h1 {
   padding: 2%;
+}
+.auctionWinnerTitle {
+  padding-top: 5%;
 }
 #theCard {
   margin: 0 auto;
@@ -318,7 +326,8 @@ export default {
   margin: 5px;
   padding: 5px;
   border-radius: 5px;
-  background-color: #84b082;
+  -webkit-box-shadow: 5px 5px 11px 5px rgba(0, 0, 0, 0.74);
+  box-shadow: 5px 5px 11px 5px rgba(0, 0, 0, 0.74);
 }
 .passed {
   opacity: 0.6;
@@ -448,8 +457,9 @@ export default {
     transform: scale(0.5) translate(-50%, -50%);
     z-index: 0;
   }
-  .cardsFromAuction, .cardsFromHand{
-    max-height:150px;
+  .cardsFromAuction,
+  .cardsFromHand {
+    max-height: 150px;
   }
 }
 </style>

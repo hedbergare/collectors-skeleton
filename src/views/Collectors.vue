@@ -42,6 +42,7 @@
             :players="players"
             :roundCounter="roundCounter"
             :workPlacement="workPlacement"
+            :action="action"
             @buyCard="buyCard($event)"
             @updatePoints="updatePoints($event)"
             @buySkill="buySkill($event)"
@@ -72,7 +73,15 @@
                 </div>
               </div>
               <!-- Sedan skapas flikarna för de andra spelarna -->
-              <div v-for="(player, index) in players" :key="index">
+              <div
+                v-for="(player, index) in players"
+                :key="index"
+                :style="
+                  playerId === player.pId
+                    ? 'display:none;'
+                    : 'display:inline-block;'
+                "
+              >
                 <div
                   v-if="player.pId !== playerId"
                   :class="['playerBoardTab', { activeTab: player.isTurn }]"
@@ -93,6 +102,7 @@
                 v-if="players[playerId]"
                 :player="players[playerId]"
                 :class="playerId"
+                :labels="labels"
                 @handleAction="handleAction($event)"
               />
             </div>
@@ -106,6 +116,7 @@
               <CollectorsPlayerBoard
                 v-if="p !== players[playerId]"
                 :player="p"
+                :labels="labels"
               />
             </div>
           </div>
@@ -239,7 +250,7 @@ export default {
       for (let p in this.players) {
         for (let c = 0; c < this.players[p].hand.length; c += 1) {
           if (typeof this.players[p].hand[c].item !== "undefined")
-            /* this.$set(this.players[p].hand[c], "available", false); */
+            /*     */
             console.log("hejhej");
         }
       }
@@ -291,6 +302,9 @@ export default {
           if (d.id < 5) {
             this.changeTurn();
           }
+          if (d.id === 4 || d.id === 3) {
+            this.action = "";
+          }
         }
       }.bind(this)
     );
@@ -333,10 +347,12 @@ export default {
         this.skillsOnSale = d.skillsOnSale;
         this.auctionCards = d.auctionCards;
         this.marketValues = d.marketValues;
+        console.log(this.action + "inne i collectorsMarketBought");
         if (this.action === "market1") {
           this.highlightCards = true;
         }
         if (this.playerId === d.playerId && this.action === "") {
+          this.highlightCards = false;
           this.changeTurn();
         }
       }.bind(this)
@@ -401,12 +417,11 @@ export default {
       "incomeCardInserted",
       function (d) {
         this.players = d.players;
-        if (this.action === "work1") {
-          this.highlightCards = true;
-        }
         if (this.playerId === d.playerId && this.action === "") {
           this.changeTurn();
+          this.hightlightCards = false;
         }
+
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -427,6 +442,7 @@ export default {
         this.players = d.players;
         if (this.playerId === d.playerId) {
           if (d.id === 5 || d.id === 6) {
+            this.action = "";
             this.changeTurn();
           }
         }
@@ -563,11 +579,11 @@ export default {
       }
 
       if (this.action === "market1") {
-        this.buyMarket(card);
+        this.buyMarket(card, this.action);
         this.action = "";
       }
       if (this.action === "market2") {
-        this.buyMarket(card);
+        this.buyMarket(card, this.action);
         this.action = "market1";
       }
       if (this.action === "work1") {
@@ -579,13 +595,14 @@ export default {
         this.action = "work1";
       }
     },
-    buyMarket: function (card) {
+    buyMarket: function (card, action) {
       console.log("i buymarket collectors.vue");
       this.$store.state.socket.emit("collectorsBuyMarket", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
         card: card,
         cost: this.chosenPlacementCost,
+        action: action,
       });
     },
     insertIncomeCard: function (card) {

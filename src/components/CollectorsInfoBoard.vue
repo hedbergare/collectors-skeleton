@@ -69,10 +69,11 @@ export default {
   grid-template-columns: 1fr 1fr;
 }
 .right {
-    margin-top: 10%;
+    margin-top: 5%;
   grid-template-rows: 1fr 1fr;
   background-color: white;
   border-radius: 10px;
+  height:100%;
 }
 .roundCont {
   grid-column: 1/3;
