@@ -73,7 +73,15 @@
                 </div>
               </div>
               <!-- Sedan skapas flikarna för de andra spelarna -->
-              <div v-for="(player, index) in players" :key="index" :style="playerId === player.pId ? 'display:none;' : 'display:inline-block;'">
+              <div
+                v-for="(player, index) in players"
+                :key="index"
+                :style="
+                  playerId === player.pId
+                    ? 'display:none;'
+                    : 'display:inline-block;'
+                "
+              >
                 <div
                   v-if="player.pId !== playerId"
                   :class="['playerBoardTab', { activeTab: player.isTurn }]"
@@ -239,7 +247,7 @@ export default {
       for (let p in this.players) {
         for (let c = 0; c < this.players[p].hand.length; c += 1) {
           if (typeof this.players[p].hand[c].item !== "undefined")
-            /* this.$set(this.players[p].hand[c], "available", false); */
+            /*     */
             console.log("hejhej");
         }
       }
@@ -291,8 +299,8 @@ export default {
           if (d.id < 5) {
             this.changeTurn();
           }
-          if(d.id === 4){
-            this.action = '';
+          if (d.id === 4 || d.id === 3) {
+            this.action = "";
           }
         }
       }.bind(this)
@@ -408,7 +416,9 @@ export default {
         this.players = d.players;
         if (this.playerId === d.playerId && this.action === "") {
           this.changeTurn();
+          this.hightlightCards = false;
         }
+
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -427,8 +437,9 @@ export default {
       "workActionDone",
       function (d) {
         this.players = d.players;
-        if(this.playerId === d.playerId){
-          if(d.id === 5 || d.id === 6){
+        if (this.playerId === d.playerId) {
+          if (d.id === 5 || d.id === 6) {
+            this.action = "";
             this.changeTurn();
           }
         }

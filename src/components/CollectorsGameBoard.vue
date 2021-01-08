@@ -457,6 +457,7 @@ export default {
       if (h) {
         console.log("Inne i watch, kör highlightavailablemarket");
         this.highlightAvailableMarket();
+        this.hightlightAvailableHand();
       }
     },
   },
