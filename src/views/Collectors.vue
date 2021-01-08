@@ -73,7 +73,15 @@
                 </div>
               </div>
               <!-- Sedan skapas flikarna för de andra spelarna -->
-              <div v-for="(player, index) in players" :key="index" :style="playerId === player.pId ? 'display:none;' : 'display:inline-block;'">
+              <div
+                v-for="(player, index) in players"
+                :key="index"
+                :style="
+                  playerId === player.pId
+                    ? 'display:none;'
+                    : 'display:inline-block;'
+                "
+              >
                 <div
                   v-if="player.pId !== playerId"
                   :class="['playerBoardTab', { activeTab: player.isTurn }]"
@@ -94,6 +102,7 @@
                 v-if="players[playerId]"
                 :player="players[playerId]"
                 :class="playerId"
+                :labels="labels"
                 @handleAction="handleAction($event)"
               />
             </div>
@@ -107,6 +116,7 @@
               <CollectorsPlayerBoard
                 v-if="p !== players[playerId]"
                 :player="p"
+                :labels="labels"
               />
             </div>
           </div>
@@ -291,8 +301,8 @@ export default {
           if (d.id < 5) {
             this.changeTurn();
           }
-          if(d.id === 4){
-            this.action = '';
+          if (d.id === 4) {
+            this.action = "";
           }
         }
       }.bind(this)
@@ -427,8 +437,8 @@ export default {
       "workActionDone",
       function (d) {
         this.players = d.players;
-        if(this.playerId === d.playerId){
-          if(d.id === 5 || d.id === 6){
+        if (this.playerId === d.playerId) {
+          if (d.id === 5 || d.id === 6) {
             this.changeTurn();
           }
         }

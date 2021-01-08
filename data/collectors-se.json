@@ -47,7 +47,9 @@
 	"marketInfo": "Det här är området där du kan öka marknadsvärden. Marknadsvärden är det som bestämmer hur mycket dina köpta 'Items' är värda. De flaskplatser med två symboler i övre högra hörn innebär att du får öka marknadsvärdet med två kort. Du får alltid välja kort från din hand samt det sista kortet från området 'Skills' och 'Auction'",
 	"workInfoTitle": "Information om Work",
 	"workInfo": "Det här är området där du kan jobba. Lägg en flaska på översta rutan och du får en peng (pant). Rutan näst överst kostar en peng och du får då två till kort på handen. Placerar du din flaska på den tredje rutan får du ta ett till kort till din hand och även vara spelaren som börjar från och med nästa runda. Placerar du din flaska på rutan längst ner får du ta ett kort till din hand och även flytta ett av dina kort på din hand till din passiva inkomst. Se på kortet hur mycket det är värt. Det värdet får du i pengar varje runda. Runda 4 öppnas en till ruta som innebär att man får flytta två kort från sin hand till sin passiva inkomst.",
-	"playAgain": "Vill du spela igen?"
+	"playAgain": "Vill du spela igen?", 
+	"secretCardInfo": "Detta är ditt hemliga kort:", 
+	"secretCardTitle": "Detta korts item kan hjälpa dig få extra poäng när spelet är över. Håll koll på hur många i market!"
 
 }
 

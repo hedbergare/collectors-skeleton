@@ -692,7 +692,7 @@ export default {
   background-color: #eae0c2;
   border-radius: 15px;
   border: 2px solid #333029;
-  color: #505739;
+  color: #14160e;
   font-weight: bold;
   text-shadow: 0px 1px 0px #ffffff;
   padding: 5%;
