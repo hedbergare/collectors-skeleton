@@ -109,7 +109,7 @@
       <div id="skills" :style="'background-color:' + player.color">
         <div id="skillsImage">
           <span class="helper"></span>
-          <img id="skillsButton" src="images/buySkillPic/SkillsbuttonP.png/" />
+          <img id="skillsButton" src="/images/buySkillPic/Skillsbutton.png" />
           <img id="skillsInfo" src="images/player_board/skills_info.PNG" />
         </div>
 

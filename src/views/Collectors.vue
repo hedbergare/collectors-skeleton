@@ -115,12 +115,21 @@
               :roundCounter="roundCounter"
               :labels="labels"
             />
+            <p>
+              {{ labels.invite }}
+              <input
+                type="text"
+                :value="publicPath + $route.path"
+                @click="selectAll"
+                readonly="readonly"
+              />
+            </p>
           </div>
         </div>
       </div>
     </main>
-    <div style="margin-top: 1000px">
-      <div class="buttons">
+    <div style="margin-top: ">
+      <!--  <div class="buttons">
         Draw a card here
         <button @click="drawCard">
           {{ labels.draw }}
@@ -129,33 +138,25 @@
       Testknapp för "fill pools"
       <button @click="fillPools()">Fill pools (fas 2) testknapp</button> <br />
       <button @click="changeTurn()">Byt tur testknapp</button> <br />
-      Auction cards
+      Auction cards -->
       <div class="cardslots">
         <CollectorsCard
           v-for="(card, index) in auctionCards"
-          :card="card"
+          :card="disabel"
           :key="index"
           :availableAction="card.available"
         />
       </div>
 
-      {{ players }}
-      <button v-if="players[playerId]" @click="players[playerId].money += 1">
+      <!--       {{ players }}
+ -->
+      <!-- <button v-if="players[playerId]" @click="players[playerId].money += 1">
         <br />
         fake more money
-      </button>
+      </button> -->
     </div>
-    <footer>
-      <p>
-        {{ labels.invite }}
-        <input
-          type="text"
-          :value="publicPath + $route.path"
-          @click="selectAll"
-          readonly="readonly"
-        />
-      </p>
-    </footer>
+
+    <footer></footer>
   </div>
 </template>
 
@@ -424,8 +425,8 @@ export default {
       "workActionDone",
       function (d) {
         this.players = d.players;
-        if(this.playerId === d.playerId){
-          if(d.id === 5 || d.id === 6){
+        if (this.playerId === d.playerId) {
+          if (d.id === 5 || d.id === 6) {
             this.changeTurn();
           }
         }

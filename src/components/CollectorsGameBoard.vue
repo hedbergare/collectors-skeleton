@@ -297,7 +297,6 @@
           :availableAction="auctionCards[0].available"
           @doAction="handleAction(auctionCards[0])"
         />
-        
       </div>
       <div id="auctionArrow4">
         <img id="auctionCard2" src="/images/auctionPic/auctionArrowBlue.png" />
@@ -314,14 +313,14 @@
           :availableAction="auctionCards[2].available"
           @doAction="handleAction(auctionCards[2])"
         />
-        
       </div>
       <div id="auctionArrow6">
         <img id="auctionCard4" src="/images/auctionPic/auctionArrowLeft.png" />
-        <CollectorsCard 
-        :card="auctionCards[1]"
-        :availableAction="auctionCards[1].available"
-        @doAction="handleAction(auctionCards[1])"/>
+        <CollectorsCard
+          :card="auctionCards[1]"
+          :availableAction="auctionCards[1].available"
+          @doAction="handleAction(auctionCards[1])"
+        />
       </div>
     </div>
 
@@ -801,7 +800,7 @@ export default {
   }
 }
 .itemsOnSaleIcon {
-  max-width: 50%;
+  max-width: 40%;
 }
 .skillsOnSaleIcon {
   max-height: 40%;
@@ -983,45 +982,6 @@ export default {
 #workInfo {
   column-span: all;
 }
-/* #buyWorkInfo {
-  text-align: center;
-  grid-row: 1;
-  grid-column: 2;
-  grid-column: 1/3;
-  max-width: 100%;
-  max-height: 100%;
-}
-#buyWorkBox1 {
-  text-align: center;
-  grid-row: 2;
-  grid-column: 2;
-  max-width: 100%;
-}
-#buyWorkBox2 {
-  text-align: center;
-  grid-row: 3;
-  grid-column: 2;
-  max-width: 100%;
-}
-#buyWorkBox3 {
-  text-align: center;
-  grid-row: 4;
-  grid-column: 2;
-  max-width: 100%;
-}
-#buyWorkBox4 {
-  text-align: center;
-  grid-row: 5;
-  grid-column: 2;
-  max-width: 100%;
-}
-#buyWorkBox5 {
-  text-align: center;
-  grid-row: 6;
-  grid-column: 2;
-  max-width: 100%;
-}
-*/
 .workBoxCont img {
   max-width: 100%;
   height: 100%;
@@ -1102,11 +1062,14 @@ export default {
 
 /* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
 /* Ta tillbaka transform scale om korten är ivägen */
-#auctionArrow3 > .card, #auctionArrow4 > .card, #auctionArrow5 > .card, #auctionArrow6 > .card {
+#auctionArrow3 > .card,
+#auctionArrow4 > .card,
+#auctionArrow5 > .card,
+#auctionArrow6 > .card {
   position: absolute;
-  top: -40%;
-  left: -30%;
-  transform: scale(0.25) translate(-65%, -65%);
+  top: -14%;
+  left: -20%;
+  transform: scale(0.3) translate(-65%, -65%);
 }
 
 #auctionArrow1 img,
@@ -1299,7 +1262,10 @@ export default {
   }
 
   /* cards in auction */
-  #auctionArrow3 > .card, #auctionArrow4 > .card, #auctionArrow5 > .card, #auctionArrow6 > .card{
+  #auctionArrow3 > .card,
+  #auctionArrow4 > .card,
+  #auctionArrow5 > .card,
+  #auctionArrow6 > .card {
     position: absolute;
     top: -130%;
     left: -20%;
@@ -1307,6 +1273,17 @@ export default {
   }
   .auctionArrows {
     height: 50px;
+  }
+  /* Här kommer scaling för auctioncards vara sedan som automatiskt har klassen card */
+  /* Ta tillbaka transform scale om korten är ivägen */
+  #auctionArrow3 > .card,
+  #auctionArrow4 > .card,
+  #auctionArrow5 > .card,
+  #auctionArrow6 > .card {
+    position: absolute;
+    top: -150%;
+    left: -50%;
+    transform: scale(0.15) translate(-60%, -60%);
   }
 }
 </style>
