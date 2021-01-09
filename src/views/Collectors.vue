@@ -128,7 +128,7 @@
               :roundCounter="roundCounter"
               :labels="labels"
             />
-            <p>
+            <p style="font-size:70%">
               {{ labels.invite }}
               <input
                 type="text"
@@ -141,35 +141,7 @@
         </div>
       </div>
     </main>
-    <div style="margin-top: ">
-      <!--  <div class="buttons">
-        Draw a card here
-        <button @click="drawCard">
-          {{ labels.draw }}
-        </button>
-      </div>
-      Testknapp för "fill pools"
-      <button @click="fillPools()">Fill pools (fas 2) testknapp</button> <br />
-      <button @click="changeTurn()">Byt tur testknapp</button> <br />
-      Auction cards -->
-      <div class="cardslots">
-        <CollectorsCard
-          v-for="(card, index) in auctionCards"
-          :card="disabel"
-          :key="index"
-          :availableAction="card.available"
-        />
-      </div>
-
-      <!--       {{ players }}
- -->
-      <!-- <button v-if="players[playerId]" @click="players[playerId].money += 1">
-        <br />
-        fake more money
-      </button> -->
-    </div>
-
-    <footer></footer>
+    
   </div>
 </template>
 
@@ -177,7 +149,7 @@
 <script>
 /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "[iI]gnored" }]*/
 
-import CollectorsCard from "@/components/CollectorsCard.vue";
+/* import CollectorsCard from "@/components/CollectorsCard.vue"; */
 import CollectorsGameBoard from "@/components/CollectorsGameBoard.vue";
 import CollectorsPlayerBoard from "@/components/CollectorsPlayerBoard.vue";
 import CollectorsInfoBoard from "@/components/CollectorsInfoBoard.vue";
@@ -187,7 +159,7 @@ import CollectorsGameOver from "@/components/CollectorsGameOver.vue";
 export default {
   name: "Collectors",
   components: {
-    CollectorsCard,
+    /* CollectorsCard, */
     CollectorsGameBoard,
     CollectorsPlayerBoard,
     CollectorsInfoBoard,
@@ -732,7 +704,6 @@ footer a:visited {
 
 #infoboardColumn {
   width: 100%;
-  height: 100%;
 }
 
 #playerboardRow {
