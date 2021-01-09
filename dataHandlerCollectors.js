@@ -420,7 +420,6 @@ Data.prototype.buyMarket = function (roomId, playerId, card, cost, action) {
       }
     }
     room.market.push(c[0]);
-    console.log(action + " i data buymarket");
     if (action !== 'market2') {
       room.players[playerId].money -= cost;
 
