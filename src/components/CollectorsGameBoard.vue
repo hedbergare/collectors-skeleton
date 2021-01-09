@@ -164,19 +164,33 @@
           <CollectorsBottle :color="players[workPlacement[0].playerId].color" />
         </button>
         <button
-          v-if="roundCounter === 2 && workPlacement[3].playerId === null"
+          v-if="roundCounter === 2 && workPlacement[1].playerId === null"
           :disabled="cannotAffordWork(workPlacement[1].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[1], 'work2', 1)"
           :style="'background-image: url(/images/workPic/workBottle_-1.png);'"
         ></button>
         <button
-          v-if="roundCounter === 3 && workPlacement[3].playerId === null"
+          v-if="workPlacement[1].playerId !== null"
+          disabled="true"
+          class="placeBottleWork"
+        >
+          <CollectorsBottle :color="players[workPlacement[1].playerId].color" />
+        </button>
+        <button
+          v-if="roundCounter === 3 && workPlacement[2].playerId === null"
           :disabled="cannotAffordWork(workPlacement[2].cost, 2)"
           class="placeBottleWork"
           @click="placeBottle(workPlacement[2], 'work2', 2)"
           :style="'background-image: url(/images/workPic/workBottle_-2.png);'"
         ></button>
+        <button
+          v-if="workPlacement[2].playerId !== null"
+          disabled="true"
+          class="placeBottleWork"
+        >
+          <CollectorsBottle :color="players[workPlacement[2].playerId].color" />
+        </button>
         <button
           v-if="roundCounter === 4 && workPlacement[3].playerId === null"
           :disabled="cannotAffordWork(workPlacement[3].cost, 0)"
@@ -184,6 +198,13 @@
           @click="placeBottle(workPlacement[3], 'work1', 3)"
           :style="'background-image: url(/images/workPic/workBottle_-3.png);'"
         ></button>
+        <button
+          v-if="workPlacement[3].playerId !== null"
+          disabled="true"
+          class="placeBottleWork"
+        >
+          <CollectorsBottle :color="players[workPlacement[3].playerId].color" />
+        </button>
 
         <img v-if="roundCounter === 1" src="images/workPic/workCards.png" />
         <img v-if="roundCounter === 2" src="images/workPic/workCards.png" />
@@ -447,6 +468,7 @@ export default {
     marketPlacement: Array,
     workPlacement: Array,
     highlightCards: Boolean,
+    highlightHand: Boolean,
     players: Object,
     roundCounter: Number,
     action: String,
@@ -455,9 +477,12 @@ export default {
   watch: {
     highlightCards: function (h) {
       if (h) {
-        console.log("Inne i watch, kör highlightavailablemarket");
         this.highlightAvailableMarket();
-        this.hightlightAvailableHand();
+      }
+    },
+    highlightHand: function (h) {
+      if (h) {
+        this.highlightAvailableHand();
       }
     },
   },
@@ -467,9 +492,7 @@ export default {
       this.infoText = "";
     },
     handleAction: function (card) {
-      console.log("Inne i handleAction");
       if (card.available) {
-        console.log("emittar");
         this.$emit("handleAction", card);
         this.updatePoints();
       }

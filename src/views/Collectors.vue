@@ -28,6 +28,7 @@
       <div id="browserWrapper">
         <div id="gameboardColumn">
           <CollectorsGameBoard
+            v-if="players[playerId]"
             :player="players[playerId]"
             :labels="labels"
             :itemsOnSale="itemsOnSale"
@@ -39,6 +40,7 @@
             :auctionPlacement="auctionPlacement"
             :marketPlacement="marketPlacement"
             :highlightCards="highlightCards"
+            :highlightHand="highlightHand"
             :players="players"
             :roundCounter="roundCounter"
             :workPlacement="workPlacement"
@@ -212,6 +214,7 @@ export default {
       marketPlacement: [],
       workPlacement: [],
       highlightCards: false,
+      highlightHand: false,
       chosenPlacementCost: null,
       marketValues: {
         fastaval: 0,
@@ -242,13 +245,12 @@ export default {
     },
   },
   watch: {
-    players: function (newP, oldP) {
-      console.log(newP, oldP);
+    players: function () {
       for (let p in this.players) {
         for (let c = 0; c < this.players[p].hand.length; c += 1) {
           if (typeof this.players[p].hand[c].item !== "undefined")
             /*     */
-            console.log("hejhej");
+            console.log("");
         }
       }
     },
@@ -296,11 +298,9 @@ export default {
           this.players[x].money = d.players[x].money;
         }
         if (this.playerId === d.playerId) {
-          if (d.id < 5) {
-            this.changeTurn();
-          }
           if (d.id === 4 || d.id === 3) {
             this.action = "";
+            this.changeTurn();
           }
         }
       }.bind(this)
@@ -344,7 +344,6 @@ export default {
         this.skillsOnSale = d.skillsOnSale;
         this.auctionCards = d.auctionCards;
         this.marketValues = d.marketValues;
-        console.log(this.action + "inne i collectorsMarketBought");
         if (this.action === "market1") {
           this.highlightCards = true;
         }
@@ -416,9 +415,10 @@ export default {
         this.players = d.players;
         if (this.playerId === d.playerId && this.action === "") {
           this.changeTurn();
-          this.hightlightCards = false;
+          this.highlightHand = false;
+        } else {
+          this.highlightHand = true;
         }
-
       }.bind(this)
     );
     this.$store.state.socket.on(
@@ -565,7 +565,6 @@ export default {
       });
     },
     handleAction: function (card) {
-      console.log("i handleaction collectors.vue");
       if (this.action === "skill") {
         this.buySkill(card);
         this.action = "";
@@ -593,7 +592,6 @@ export default {
       }
     },
     buyMarket: function (card, action) {
-      console.log("i buymarket collectors.vue");
       this.$store.state.socket.emit("collectorsBuyMarket", {
         roomId: this.$route.params.id,
         playerId: this.playerId,
