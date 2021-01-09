@@ -38,7 +38,7 @@
 	"extraPointsSecret": "Extra points from secret card: ",
 	"totalPoints": "Total points: ",
 	"itemsInfoTitle": "Information about 'Items'",
-	"itemsInfo": "This is the area where you can buy items. There are 5 different types of items, and they are all as many points as their respective market value, plus any relevant skills you own.'</br>' Their cost is decided by where you place your bottle & the market value of the item.",
+	"itemsInfo": "This is the area where you can buy items. There are 5 different types of items, and they are all as many points as their respective market value, plus any relevant skills you own. Their cost is decided by where you place your bottle & the market value of the item.",
 	"skillsInfoTitle": "Information about 'Skills'",
 	"skillsInfo": "This is the area where you can buy skills. You can see what the different skills does by hovering on the Skills icon on your player board. At the end of each round, the last skill on the board will move down and raise the value of it's specified market on the bottom of the card.",
 	"auctionInfoTitle": "Information about 'Auction'",
@@ -47,5 +47,7 @@
 	"marketInfo": "This is the area where you can raise market values. Market values are what decides how much your items are worth. The bottle placements with two symbols in the top-right corner allows you to pick two cards for raising values. You are allowed to choose cards from your hand and the last available card in the skills & auction areas.",
 	"workInfoTitle": "Information about Work",
 	"workInfo": "This is the are where you can work. If you place your bottle in the uppermost action space (on the quarter tile), you must place two cards upside down from your hand next to your player board on its right side (this action is only available in round 4). If you place your bottle on the second action space from the top (round 1-3 it's the uppermost), you must discard the placed bottle and recieve 1 coin. If you place your bottle on the next space from the top, you must pay 1 coin and you get to draw two cards from the deck to your hand. If you place your bottle on the next space from the top, you get to draw one card and you take the first player token. If you place your bottle on the lowest space, you must draw one card from the deck to your hand and place one card from your hand to your passive income. On each card you can see the value.",
-	"playAgain": "Do you want to play again?"
+	"playAgain": "Do you want to play again?", 
+	"secretCardInfo": "This is your secret card:",
+	"secretCardTitle": "The item of this card can help you gain extra points when the game is over. Keep track on how many thanks to the market value!"
 }

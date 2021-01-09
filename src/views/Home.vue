@@ -7,7 +7,9 @@
           <p>- a worker-placement boardgame for everyone of all ages!</p>
         </div>
 
-        <a href="#" class="demoButton">Watch demo and learn how to play. </a>
+        <button class="demoButton" v-on:click="btnClick">
+          Watch demo and learn how to play / Se en demo för att lära dig spelet
+        </button>
 
         <div class="langBoxes">
           <ul>
@@ -51,10 +53,18 @@ export default {
       });
       this.$router.push("/room/" + this.$store.state.roomId);
     },
+    /*     Hemsidan som öppnas för att visa Demo*/
+      btnClick: function () {
+      window.open("https://docs.google.com/document/d/1w1OYkHwi56UHyc0rSQ3AbHBJfouA9fA-aU-a_YTuQ5g/edit?usp=sharing");
+    },
   },
 };
 </script>
+
 <style scoped>
+button {
+  margin: 25px 5px 20px 20px;
+}
 .headline {
   text-align: center;
 }
@@ -154,7 +164,7 @@ li:active {
     font-size: 1.3vw;
   }
   .demoButton {
-    font-size:1.3vw ;
+    font-size: 1.3vw;
   }
 }
 </style>

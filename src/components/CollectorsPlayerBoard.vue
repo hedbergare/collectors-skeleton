@@ -1,7 +1,19 @@
 <template>
   <div id="wrapper">
+    <!-- Popup till secret card i treasure -->
+    <div class="Absolute-Center" v-if="this.infoText !== ''">
+      <div class="infoPopup">
+        <button @click="resetInfo()" class="close">X</button>
+        <h2>{{ this.infoText }} </h2> 
+        <CollectorsCard
+          v-for="(card, index) in player.secret"
+          :key="index"
+          :card="card"
+        />
+        <p> {{ this.infoTitle }} </p>
+      </div>
+    </div>
     <!-- Här läggs det in vilken färg man "är" -->
-    <!-- Översta raden - där det visas hur mycket pengar, poäng och income man har och chest -->
     <div id="topRow" :style="'background-color:' + player.color">
       <div id="midRow">
         <div class="box">
@@ -57,20 +69,17 @@
           />
         </div>
       </div>
+      <!-- här visas hur mycket pengar, poäng och income man har och chest -->
       <div id="wallet">
         <div>
           <img
             id="chest"
             src="images/player_board/treasure.PNG"
             class="topRowIcons"
+            style="cursor: pointer"
+            v-if="playerId === player.pId"
+            @click="showSecret(labels.secretCardInfo, labels.secretCardTitle)"
           />
-          <div class="secretPopup" v-if="playerId == player.pId">
-            <CollectorsCard
-              v-for="(card, index) in player.secret"
-              :key="index"
-              :card="card"
-            />
-          </div>
         </div>
 
         <div id="money">
@@ -109,7 +118,7 @@
       <div id="skills" :style="'background-color:' + player.color">
         <div id="skillsImage">
           <span class="helper"></span>
-          <img id="skillsButton" src="images/buySkillPic/SkillsbuttonP.png/" />
+          <img id="skillsButton" src="/images/buySkillPic/Skillsbutton.png" />
           <img id="skillsInfo" src="images/player_board/skills_info.PNG" />
         </div>
 
@@ -175,9 +184,16 @@ export default {
     CollectorsCard,
     CollectorsBottle,
   },
+  data: function () {
+    return {
+      infoText: "",
+      infoTitle: "",
+    };
+  },
 
   props: {
     player: Object,
+    labels: Object,
   },
 
   computed: {
@@ -191,10 +207,67 @@ export default {
         this.$emit("handleAction", card);
       }
     },
+    showSecret: function (text, title) {
+      this.infoText = text;
+      this.infoTitle = title;
+    },
+    resetInfo: function () {
+      this.infoText = "";
+    },
   },
 };
 </script>
 <style scoped>
+.Absolute-Center {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 102%;
+  z-index: 10;
+}
+.infoPopup {
+  box-shadow: 0px 1px 0px 0px #1c1b18;
+  background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+  background-color: #eae0c2;
+  border-radius: 15px;
+  border: 2px solid #333029;
+  color: #0e0f0a;
+  font-weight: bold;
+  text-shadow: 0px 1px 0px #ffffff;
+  padding: 5%;
+  position: relative;
+  max-width: 50%;
+  max-height: 100%;
+}
+.card {
+  transform: scale(0.8);
+}
+
+.infoPopup h2 {
+  margin-block-start: 0em;
+    margin-block-end: 0em;
+}
+.infoPopup p {
+  font-size: 80%;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+}
+.close {
+  position: absolute;
+  background: rgb(75, 0, 0);
+  color: #d1c8ad;
+  top: -2px;
+  right: -2px;
+  font-size: 160%;
+  /* padding:10px; */
+  border-radius: 10px;
+  border: 2px solid black;
+  cursor: pointer;
+}
 #wrapper {
   display: grid;
   border-radius: 10px;
@@ -235,7 +308,7 @@ export default {
   grid-template-columns: 1fr 1fr;
   font-size: 100%;
   max-width: 100%;
-      vertical-align: middle;
+  vertical-align: middle;
 }
 #money {
   display: grid;
@@ -257,7 +330,6 @@ export default {
 }
 #chest {
   max-width: 80%;
-
 }
 #money p,
 #income p,
@@ -368,7 +440,7 @@ export default {
   overflow-x: scroll;
   white-space: nowrap;
   max-width: 100%;
-  border-radius:5px;
+  border-radius: 5px;
 }
 #cardRefill::-webkit-scrollbar {
   width: 15px;
@@ -403,13 +475,13 @@ export default {
 #cardRefill::-webkit-scrollbar-corner {
   background: transparent;
 }
-.cardCont{
+.cardCont {
   display: inline-block;
-  max-width:25%;
-  max-height:200px;
+  max-width: 25%;
+  max-height: 200px;
 }
-.cardCont > *{
-   transform: scale(0.4) translate(-60%, -60%);
+.cardCont > * {
+  transform: scale(0.4) translate(-60%, -60%);
   display: inline-block;
   margin: 0;
 }
@@ -428,6 +500,5 @@ export default {
     vertical-align: middle;
     margin-top: 0.35em;
   }
-  
 }
 </style>
