@@ -8,7 +8,7 @@
         </div>
 
         <button class="demoButton" v-on:click="btnClick">
-          Watch demo and learn how to play / Se en demo för att lära dig spelet
+          Watch demo and learn how to play 
         </button>
 
         <div class="langBoxes">
