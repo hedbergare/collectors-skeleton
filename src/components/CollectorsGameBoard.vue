@@ -400,7 +400,7 @@
         <span class="marketValueText">{{ "x" + marketValues.figures }}</span>
       </div>
       <div id="MarketArrow3">
-        <img id="imageMusik" src="/images/marketPic/image_Music.png" />
+        <img id="imageMusik" src="/images/marketPic/image_music.png" />
         <span class="marketValueText">{{ "x" + marketValues.music }}</span>
       </div>
       <div id="MarketArrow4">

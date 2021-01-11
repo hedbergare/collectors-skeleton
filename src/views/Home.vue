@@ -55,7 +55,7 @@ export default {
     },
     /*     Hemsidan som öppnas för att visa Demo*/
       btnClick: function () {
-      window.open("https://docs.google.com/document/d/1w1OYkHwi56UHyc0rSQ3AbHBJfouA9fA-aU-a_YTuQ5g/edit?usp=sharing");
+      window.open("https://docs.google.com/presentation/d/1AFC3ulvGyigvaEGkeUpGniZZLDRS3i4CyLyY6terZYE/edit?usp=sharing");
     },
   },
 };
