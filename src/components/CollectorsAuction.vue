@@ -225,7 +225,7 @@ export default {
         Object.values(this.players)[newPlayerIndex].auctionTurn = true;
         this.hasWon(newPlayerIndex);
       } else {
-        this.changeTurn(this.nextPlayerIndex(newPlayerIndex));
+        this.changeTurn(newPlayerIndex);
       }
       /* Kolla ifall spelaren som vi byter till har vunnit */
     },

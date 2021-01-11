@@ -128,7 +128,7 @@
               :roundCounter="roundCounter"
               :labels="labels"
             />
-            <p style="font-size:70%">
+            <p style="font-size: 70%">
               {{ labels.invite }}
               <input
                 type="text"
@@ -141,7 +141,6 @@
         </div>
       </div>
     </main>
-    
   </div>
 </template>
 
@@ -391,7 +390,7 @@ export default {
         if (this.playerId === d.playerId && this.action === "") {
           this.changeTurn();
           this.highlightHand = false;
-        } else {
+        } else if (this.playerId === d.playerId && this.action !== "") {
           this.highlightHand = true;
         }
       }.bind(this)
@@ -429,6 +428,7 @@ export default {
         this.auctionWinner = d.auctionWinner;
         this.leadingBet = d.leadingBet;
         this.auctionInitiated = false;
+        this.action = "";
       }.bind(this)
     );
   },
